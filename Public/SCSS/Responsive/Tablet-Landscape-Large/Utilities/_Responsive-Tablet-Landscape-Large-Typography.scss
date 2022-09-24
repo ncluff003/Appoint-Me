@@ -1,0 +1,42 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+.r__master-grid-container {
+  @include responsiveBreakPoint('largeTabLand') {
+    .r__application-flex-container {
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            &__header {
+              &__text {
+                font-size: 5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.r__form__header__title {
+  @include responsiveBreakPoint('largeTabLand') {
+    font-size: 7rem;
+  }
+}
+
+.r__button {
+  &--small {
+    &-create-main-category {
+      font-size: 1.6rem;
+    }
+  }
+}

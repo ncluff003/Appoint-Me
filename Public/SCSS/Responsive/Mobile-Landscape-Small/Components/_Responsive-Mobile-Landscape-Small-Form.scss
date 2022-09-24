@@ -1,0 +1,158 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // Contact Page
+    .r__form-container {
+      &__contact-form {
+        @include combo-max-responsive(800px, 375px) {
+          @include SizeAndPositioning(relative, 90%, 100%, flex, center, center, 7rem, 0, 0);
+          flex-direction: column;
+          &__name-containers {
+            @include SizeAndPositioning(relative, 10%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0;
+            &__first-name-container,
+            &__last-name-container {
+              @include SizeAndPositioning(relative, 100%, 25%, flex, center, center, 0, 0, 0);
+              margin: 0 1rem;
+              &--first-name,
+              &--last-name {
+                @include SizingItem(relative, 80%, 100%);
+                background-color: transparent;
+                border: none;
+                border-bottom: 0.3rem solid rgba($secondaryColor, 0.75);
+                padding: 0.5rem;
+              }
+            }
+            &__first-name-container {
+              &--first-name-label {
+                @include SizingItem(absolute, max-content, max-content);
+                top: 50%;
+                left: 0;
+                transform: translate(calc(-100% - 2rem), -50%);
+              }
+            }
+          }
+          &__organization-info-containers {
+            @include SizeAndPositioning(relative, 10%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0;
+            &__organization-name-container,
+            &__organization-position-container {
+              @include SizeAndPositioning(relative, 100%, 25%, flex, center, center, 0, 0, 0);
+              margin: 0 1rem;
+              &--organization-name,
+              &--organization-position {
+                @include SizingItem(relative, 80%, 100%);
+                background-color: transparent;
+                border: none;
+                border-bottom: 0.3rem solid rgba($secondaryColor, 0.75);
+                padding: 0.5rem;
+              }
+              &--organization-name-label {
+                @include SizingItem(absolute, max-content, max-content);
+                top: 50%;
+                left: 0;
+                transform: translate(calc(-100% - 2rem), -50%);
+              }
+            }
+          }
+          &__email-containers {
+            @include SizeAndPositioning(relative, 10%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0;
+            &__email-container {
+              @include SizeAndPositioning(relative, 100%, 50%, flex, center, center, 0, 0, 0);
+              &--email {
+                @include SizingItem(relative, 80%, 100%);
+                background-color: transparent;
+                border: none;
+                border-bottom: 0.3rem solid rgba($secondaryColor, 0.75);
+                padding: 0.5rem;
+              }
+              &--email-label {
+                @include SizingItem(absolute, max-content, max-content);
+                top: 50%;
+                left: 0;
+                transform: translate(calc(-100% - 2rem), -50%);
+              }
+            }
+          }
+          &__subject-containers {
+            @include SizeAndPositioning(relative, 10%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0;
+            &__subject-container {
+              @include SizeAndPositioning(relative, 100%, 50%, flex, center, center, 0, 0, 0);
+              &--subject {
+                @include SizingItem(relative, 80%, 100%);
+                background-color: transparent;
+                border: none;
+                border-bottom: 0.3rem solid rgba($secondaryColor, 0.75);
+                padding: 0.5rem;
+              }
+              &--subject-label {
+                @include SizingItem(absolute, max-content, max-content);
+                top: 50%;
+                left: 0;
+                transform: translate(calc(-100% - 2rem), -50%);
+              }
+            }
+          }
+          &__message-containers {
+            @include SizeAndPositioning(relative, 40%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0;
+            &::before {
+              display: none;
+            }
+            &__message-container {
+              @include SizeAndPositioning(relative, 100%, 50%, flex, center, center, 0, 0, 0);
+              &--message {
+                @include SizingItem(relative, 100%, 100%);
+                background-color: transparent;
+                border: 0.3rem solid rgba($secondaryColor, 0.75);
+                padding: 0.5rem 0.5rem;
+                resize: none;
+              }
+              &--message-label {
+                @include SizingItem(absolute, max-content, max-content);
+                top: 18%;
+                left: 0;
+                transform: translate(calc(-100% - 2rem), -50%);
+              }
+            }
+            &__message-counter {
+              @include SizingItem(absolute, max-content, max-content);
+              top: 48%;
+              left: 0;
+              transform: translate(calc(-100% - 2rem), -50%);
+            }
+          }
+          &__submit-containers {
+            @include SizeAndPositioning(relative, 20%, 100%, flex, center, center, 0, 0, 0);
+            margin: 0.5rem 0 1rem;
+            &__submit-container {
+              @include SizeAndPositioning(relative, 100%, 25%, flex, center, center, 0, 0, 0);
+              &--submit {
+                @include SizeAndPositioning(relative, 100%, 100%, flex, center, center, 0, 0, 0);
+                background-color: transparent;
+                border: 0.3rem outset rgba($secondaryColor, 0.75);
+                padding: 0.5rem;
+                transition: background-color 0.5s, color 0.5s;
+                &:hover {
+                  cursor: pointer;
+                  background-color: $secondaryColor;
+                }
+                &:active {
+                  border: 0.3rem inset $primaryColor;
+                  background-color: $primaryColor;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

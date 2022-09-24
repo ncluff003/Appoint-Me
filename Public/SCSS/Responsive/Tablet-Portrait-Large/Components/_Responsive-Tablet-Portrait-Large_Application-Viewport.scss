@@ -1,0 +1,9 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__application-viewport {
+  @include responsiveBreakPoint('largeTabPort') {
+    height: 80%;
+    width: 100%;
+  }
+}

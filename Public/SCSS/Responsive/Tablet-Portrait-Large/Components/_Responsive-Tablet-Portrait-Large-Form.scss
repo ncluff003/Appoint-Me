@@ -1,0 +1,122 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__transaction-plan,
+.r__transaction-plan__alt {
+  @include responsiveBreakPoint('largeTabPort') {
+    justify-content: space-between;
+    height: 20rem;
+    min-height: 20rem;
+    padding: 2rem;
+    &:nth-of-type(2n) {
+      background-color: $colorLightestGrey;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: $primaryColor;
+
+      .button--extra-extra-small__transaction-plan-small {
+        border: 0.2rem solid rgba($colorOffWhite, 0.8);
+        &:hover {
+          background-color: $secondaryColor;
+        }
+      }
+
+      transition: color 0.5s, background-color 0.5s;
+    }
+    &__part {
+      @include SizeAndPositioning(relative, 50%, calc(100% / 12), flex, column, nowrap, space-evenly, center, 0, 0, 0);
+      padding: 0.5rem;
+      &__header {
+        @include SizeAndPositioning(relative, 3rem, 100%, flex, row, wrap, center, center, 0, 0, 0);
+      }
+    }
+  }
+}
+
+.r__form {
+  @include responsiveBreakPoint('largeTabPort') {
+    @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    overflow-y: auto;
+
+    &--full-width {
+      height: 100%;
+    }
+
+    &--update-photo {
+      width: 100%;
+      .r__form__row--update-photo {
+        .r__form__path-preview {
+          width: 40%;
+        }
+      }
+    }
+
+    &--framed {
+      width: 100%;
+    }
+
+    &__section {
+      height: min-content;
+      height: -moz-min-content;
+      &--emergency {
+        &__header {
+          width: 28.5%;
+        }
+      }
+
+      &--page {
+        &-number-display {
+          height: 20%;
+        }
+      }
+
+      &.emergency-input {
+        height: min-content;
+        height: -moz-min-content;
+      }
+    }
+
+    &__input {
+      width: 42.5%;
+      &-container--latter-day-saint {
+        width: 18%;
+      }
+
+      &--comms,
+      &--comms--text-preferred {
+        width: 23%;
+      }
+
+      &--dark {
+        &-small {
+          width: 28%;
+        }
+        &-extra-small {
+          width: 25.5%;
+        }
+      }
+    }
+
+    &__label {
+      left: calc(29% + 2rem);
+      &--latter-day-saint {
+        &-white {
+          width: 20%;
+          transform: translate(0, 0);
+        }
+      }
+      &--comms {
+        width: 26%;
+        transform: translate(0, 0);
+      }
+
+      &--extra-small {
+        width: 21%;
+        left: calc(41.25% + 2rem);
+      }
+    }
+  }
+}

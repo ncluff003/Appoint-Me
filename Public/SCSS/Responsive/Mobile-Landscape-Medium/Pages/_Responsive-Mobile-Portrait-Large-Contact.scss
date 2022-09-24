@@ -1,0 +1,49 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // Contact Page
+    .r__form-container {
+      @include combo-max-responsive(425px, 930px) {
+        @include SizeAndPositioning(relative, 90%, 90%, flex, space-between, space-evenly, 0, 0, 0); // Only The Width of the form container changed.
+        background: url('/DIST/CSS/Images/Letter-Border-Mobile-Portrait.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 4rem;
+        box-shadow: 0 0 1rem 0.35rem $colorDarkGrey;
+        flex-direction: column;
+        &__form-header {
+          @include SizeAndPositioning(relative, 20%, 100%, flex, center, space-evenly, 0, 0, 0);
+          &__addressed {
+            @include SizeAndPositioning(absolute, max-content, max-content, flex, center, center, 0, 0, 0);
+            top: 2rem;
+            left: 3rem;
+          }
+          .r__stamp {
+            @include SizeAndPositioning(absolute, 7.5rem, auto, none, center, center, 0, 0, 0);
+            top: 0;
+            right: 0;
+            &--active {
+              display: flex;
+            }
+          }
+        }
+        .r__form-response {
+          @include SizeAndPositioning(absolute, max-content, max-content, flex, center, center, -2rem, 3rem, 0);
+          bottom: 0;
+          right: 0;
+        }
+        &__requirement-reminder {
+          @include SizeAndPositioning(absolute, max-content, max-content, flex, center, center, 2rem, -2.5rem, 0);
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+}

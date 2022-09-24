@@ -1,0 +1,14 @@
+section.modal__2FA.r__modal__2FA.closed
+  i.fas.fa-window-close.modal__2FA-close.r__modal__2FA-close
+  header.modal__2FA__header.r__modal__2FA__header 
+    p.modal__2FA__header__text.r__modal__2FA__header__text 2-Factor Authentication Setup
+  section.modal__2FA__qrcode-container.r__modal__2FA__qrcode-container 
+    section.modal__2FA__qrcode-container__qrcode.r__modal__2FA__qrcode-container__qrcode
+      img.modal__2FA__qrcode-container__qrcode--image.r__modal__2FA__qrcode-container__qrcode--image(src=``, alt="QR Code")
+    p.modal__2FA__qrcode-container__text.r__modal__2FA__qrcode-container__text Scan To Setup 2FA With Your OTP Authentication App
+    form.modal__2FA__token-form.r__.modal__2FA__token-form.closed
+      section.form__section--qrcode-token.r__form__section--qrcode-token
+        input.form__input--qrcode-token.r__form__input--qrcode-token#token(type="text" name="token" placeholder="Enter Token" required)
+        label.form__label--qrcode-token.r__form__label--qrcode-token(for="token") Enter Token
+      section.form__section--qrcode-token.r__form__section--qrcode-token
+        button.button--submit-token.r__button--submit-token Submit Token

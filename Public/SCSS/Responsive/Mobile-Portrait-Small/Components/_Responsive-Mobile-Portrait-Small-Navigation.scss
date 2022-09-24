@@ -1,0 +1,204 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__navigation {
+  @include responsiveBreakPoint('smallMobilePort') {
+    &--side-screen {
+      opacity: 1;
+      height: 10%;
+      width: 100%;
+      flex-flow: row-reverse nowrap;
+      justify-content: space-evenly;
+      border-right: none;
+      border-bottom: 0.5rem groove $tertiaryColor;
+
+      &__section {
+        height: 100%;
+        width: 30%;
+        flex-direction: row;
+        padding: 1rem;
+        &--user-information {
+          height: 100%;
+          width: 50%;
+          flex-direction: row;
+          justify-content: flex-end;
+          margin-right: 3rem;
+          &__profile-picture-container {
+            height: 60%;
+            width: auto;
+            flex-direction: row;
+            margin-bottom: 0;
+            &__picture {
+              margin-right: 1rem;
+              border: 0.3rem solid #fafafa;
+            }
+          }
+          &__update-picture-container {
+            @include SizeAndPositioning(relative, max-content, max-content, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+          }
+        }
+        &--account-links {
+          display: none;
+          height: 90%;
+          width: 42.5%;
+          &__link-container {
+            flex-flow: column nowrap;
+            justify-content: space-evenly;
+            &__link {
+              height: 25%;
+              width: 75%;
+              &:not(:last-of-type) {
+                margin-bottom: 0rem;
+              }
+              &--link {
+                border-radius: 0;
+                border-style: groove;
+                border-width: 0.3rem;
+              }
+              &:first-of-type {
+                .r__navigation--side-screen__section--account-links__link-container__link--link {
+                  border-top-left-radius: 0.9rem;
+                  border-top-right-radius: 0.9rem;
+                }
+              }
+              &:nth-of-type(2) {
+                .r__navigation--side-screen__section--account-links__link-container__link--link {
+                }
+              }
+              &:nth-of-type(3) {
+                .r__navigation--side-screen__section--account-links__link-container__link--link {
+                }
+              }
+              &:last-of-type {
+                .r__navigation--side-screen__section--account-links__link-container__link--link {
+                  border-bottom-left-radius: 0.9rem;
+                  border-bottom-right-radius: 0.9rem;
+                }
+              }
+            }
+          }
+        }
+        &--application-logo {
+          height: 100%;
+          width: 50%;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          &__logo {
+            height: 40%;
+            margin: 1rem 1rem 1rem 2rem;
+          }
+          &__text {
+            margin-right: 1rem;
+          }
+        }
+      }
+    }
+    &__link-list {
+      @include SizeAndPositioning(relative, 85%, 85%, flex, column, nowrap, flex-start, center, 0, 5rem, 0);
+      overflow-y: auto;
+      &__list-item {
+        @include SizeAndPositioning(relative, max-content, 60%, flex, row, nowrap, center, center, 0, 0, 0);
+        min-height: 12.5%;
+        &:first-of-type {
+          margin-top: 0;
+        }
+        &:nth-of-type(4),
+        &:nth-of-type(6),
+        &:nth-of-type(8) {
+          flex-direction: column;
+          align-items: flex-end;
+          padding-right: 2rem;
+        }
+        &:nth-of-type(4) {
+          margin: 3rem 0;
+        }
+        &:nth-of-type(6) {
+          min-height: 9%;
+        }
+        &:nth-of-type(8) {
+          margin: 11rem 0;
+        }
+        margin: 0.5rem 0;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        list-style: none;
+        &__link,
+        &__link-button {
+          @include SizeAndPositioning(relative, 100%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          min-height: 8.345rem;
+          border-radius: 1.5rem;
+          border: 0.3rem solid rgba($colorOffWhite, 0.8);
+          background-color: rgba($primaryColorDarker, 0.8);
+          &:hover {
+            cursor: pointer;
+            border: 0.3rem solid $colorOffWhite;
+            background-color: $secondaryColor;
+            transition: border 0.5s, background-color 0.5s, color 0.5s;
+            .budget-navigation__link-list__link-item__sub-link-container__sub-link {
+              transition: border 0.5s, background-color 0.5s, color 0.5s;
+            }
+          }
+          &:active {
+            background-color: $tertiaryColor;
+            .budget-navigation__link-list__link-item__sub-link-container__sub-link {
+              background-color: $tertiaryColor;
+            }
+          }
+        }
+        &__sub-link-container {
+          @include SizeAndPositioning(relative, 6.676rem, 60%, flex, column, nowrap, center, center, 0, 0, 0);
+          min-height: 6.676rem;
+          border-radius: 1.5rem;
+          border: 0.3rem solid rgba($colorOffWhite, 0.8);
+          background-color: rgba($primaryColorDarker, 0.8);
+          margin: 0.5rem 0;
+          &:hover {
+            cursor: pointer;
+            border: 0.3rem solid $colorOffWhite;
+            background-color: $secondaryColor;
+            transition: border 0.5s, background-color 0.5s, color 0.5s;
+          }
+          &:active {
+            background-color: $tertiaryColor;
+          }
+          &__sub-link {
+            @include SizeAndPositioning(relative, 100%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          }
+        }
+      }
+    }
+  }
+}
+
+.r__mobile-user-profile-navigation {
+  @include responsiveBreakPoint('smallMobilePort') {
+    @include SizeAndPositioning(relative, max-content, 100%, flex, column, nowrap, space-around, center, 0, 0, 0);
+    background-color: rgba($primaryColor, 0.9);
+    padding: 0.5rem 0 0.5rem;
+    &__section {
+      &--account-links {
+        &__link-container {
+          @include SizeAndPositioning(relative, max-content, 100%, flex, row, wrap, space-evenly, center, 0, 0, 0);
+          list-style-type: none;
+          &__link {
+            @include SizeAndPositioning(relative, 6rem, 45%, flex, row, wrap, center, center, 0, 0, 0);
+            &--link {
+              @include SizeAndPositioning(relative, 90%, 100%, flex, row, wrap, center, center, 0, 0, 0);
+              border: 0.2rem solid rgba($colorOffWhite, 0.8);
+              border-radius: 0.75rem;
+              background-color: transparent;
+              &:hover {
+                cursor: pointer;
+                background-color: $secondaryColor;
+                border: 0.2rem solid $colorOffWhite;
+                transition: background-color 0.5s, color 0.5s, border 0.5s;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

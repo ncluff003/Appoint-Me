@@ -1,0 +1,111 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    .r__contact-me-section {
+      .r__form {
+        @include SizeAndPositioning(relative, 100%, 50%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+        padding-top: 10rem;
+        .r__form-section {
+          @include SizeAndPositioning(relative, 7rem, 100%, flex, column, wrap, space-evenly, center, 0, 0, 0);
+          margin: 2rem 0;
+          &--message {
+            @include SizeAndPositioning(relative, 50%, 100%, flex, column, wrap, space-evenly, center, 0, 0, 0);
+            margin: 2rem 0;
+          }
+
+          .r__form-input {
+            @include SizeAndPositioning(relative, 100%, 97.5%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+            padding-left: 2rem;
+            border-radius: 0.5rem;
+            &--name {
+              @include SizeAndPositioning(relative, 100%, 47.5%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+              padding-left: 2rem;
+              border-radius: 0.5rem;
+
+              &:not(:placeholder-shown) + .form-label--name,
+              &:focus + .form-label--name {
+                transform: translate(-2rem, -9rem) scale(0.8);
+              }
+            }
+            &--message {
+              @include SizeAndPositioning(relative, 97.5%, 97%, flex, row, wrap, flex-start, flex-start, 0, 0, 0);
+              border-radius: 0.5rem;
+              padding: 2rem;
+              resize: none;
+              z-index: 5;
+              &:focus {
+                outline: none;
+              }
+            }
+            &::-webkit-input-placeholder,
+            &::-moz-placeholder,
+            &::placeholder {
+              opacity: 0;
+              transition: opacity 0.5s;
+            }
+            &:focus {
+              outline: none;
+              &::-webkit-input-placeholder,
+              &::-moz-placeholder,
+              &::placeholder {
+                opacity: 1;
+              }
+            }
+
+            &:valid {
+              border: 0.2rem solid $secondaryColor;
+            }
+            &:invalid {
+              border: 0.2rem solid $colorError;
+            }
+
+            &:not(:placeholder-shown) + label,
+            &:focus + label {
+              transform: translate(-5rem, -9rem) scale(0.8);
+            }
+          }
+
+          .r__form-label {
+            @include SizeAndPositioning(absolute, 100%, 100%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+            transition: transform 0.5s;
+            top: 50%;
+            left: 2rem;
+            transform: translate(0, -50%);
+            &--name {
+              @include SizeAndPositioning(absolute, 100%, 47.5%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+              transition: transform 0.5s;
+              top: 50%;
+              left: 2rem;
+              transform: translate(0, -50%);
+              &:first-of-type {
+                top: 50%;
+                left: 2rem;
+                transform: translate(0, -50%);
+              }
+              &:last-of-type {
+                top: 50%;
+                left: calc(52.5% + 0.5rem);
+                transform: translate(0, -50%);
+              }
+            }
+
+            &--message {
+              @include SizeAndPositioning(absolute, 4rem, 100%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+              transform: translate(0, -50%);
+              transition: transform 0.5s;
+              top: -1rem;
+              left: 2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.r__character-count {
+  @include SizingItem(relative, max-content, max-content);
+  transform: translate(18rem, -2rem);
+}

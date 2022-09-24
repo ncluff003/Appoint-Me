@@ -1,0 +1,12 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  .r__application-flex-container {
+    @include responsiveBreakPoint('smallTabLand') {
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      flex-direction: column;
+    }
+  }
+}

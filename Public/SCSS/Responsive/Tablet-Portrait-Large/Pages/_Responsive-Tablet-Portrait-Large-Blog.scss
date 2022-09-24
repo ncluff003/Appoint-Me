@@ -1,0 +1,26 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('largeTabPort') {
+    .r__blog-container {
+      grid-column: 2 / span 10;
+      grid-row: 3 / span 16;
+      .r__blog {
+        width: 75%;
+        .r__blog-heading {
+          &__title {
+          }
+        }
+        .r__blog-search-container {
+          width: 100%;
+        }
+        .r__blog-post-container {
+          .r__blog-exerpt {
+            width: 75%;
+          }
+        }
+      }
+    }
+  }
+}

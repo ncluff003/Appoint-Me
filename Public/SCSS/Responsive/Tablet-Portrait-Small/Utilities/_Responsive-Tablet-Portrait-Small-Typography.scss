@@ -1,0 +1,155 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid-container {
+  @include responsiveBreakPoint('smallTabPort') {
+    .r__application-flex-container {
+      .r__navigation {
+        &--side-screen {
+          &__section {
+            &--user-information {
+              &__username {
+                font-size: 2.4rem;
+              }
+            }
+            &--account-links {
+              &__link-container {
+                &__link {
+                  &--link {
+                    font-size: 1.6rem;
+                  }
+                }
+              }
+            }
+            &--application-logo {
+              &__text {
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+      }
+      .r__mobile-user-profile-navigation {
+        &__section {
+          &--account-links {
+            &__link-container {
+              &__link {
+                &--link {
+                  font-family: MADE Tommy Soft, Purely Me, Century Gothic, Verdana, sans-serif;
+                  color: rgba($colorOffWhite, 0.8);
+                  font-size: 1.6rem;
+                  &:hover {
+                    color: $colorOffWhite;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .r__button {
+          &--extra-small {
+            &-mobile {
+              font-family: MADE Tommy Soft, Purely Me, Century Gothic, Verdana, sans-serif;
+              color: rgba($colorOffWhite, 0.8);
+              font-size: 1.6rem;
+              &:hover {
+                color: $colorOffWhite;
+              }
+            }
+          }
+        }
+      }
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            &__header {
+              &__text {
+                font-size: 5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__form-container {
+      .r__form {
+        &__header {
+          text-align: center;
+        }
+        &__label {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+.r__container {
+  @include responsiveBreakPoint('smallTabPort') {
+    &--extra-small {
+      &__content {
+        &__account-total {
+          font-size: 4rem;
+        }
+      }
+    }
+
+    &--large {
+      .r__budget-goal-summary-container {
+        .r__budget-single-goal-summary {
+          &__amount {
+            font-size: 2.4rem;
+          }
+        }
+      }
+
+      .r__recent-transaction-display {
+        .r__recent-transaction {
+          color: $primaryColor;
+          &__header {
+            font-size: 2rem;
+            color: $colorOffWhite;
+          }
+
+          &__detail-container {
+            &__section {
+              &__cost {
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.r__upcoming-bills-container {
+  @include responsiveBreakPoint('smallTabPort') {
+    &__titles {
+      &__title {
+        text-align: center;
+      }
+    }
+    .r__upcoming-bills {
+      &__bill {
+        &__bill-item {
+        }
+        &:hover {
+          .r__upcoming-bills__bill__bill-item {
+          }
+        }
+      }
+    }
+  }
+}

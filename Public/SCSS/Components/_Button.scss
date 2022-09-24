@@ -1,0 +1,18 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.button {
+  &--modal {
+    @extend .button;
+    @include SizeAndPositioning(relative, max-content, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border-radius: 5rem;
+    &:hover {
+      transition: background-color 0.5s, border 0.5s, color 0.5s;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

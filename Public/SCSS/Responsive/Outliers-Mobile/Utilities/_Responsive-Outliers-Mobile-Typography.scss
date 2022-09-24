@@ -1,0 +1,579 @@
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  @include combo-max-responsive(720px, 360px) {
+    .r__navigation {
+      &__links {
+        list-style: none;
+        &__link-item {
+          &__link {
+            &:link,
+            &:visited {
+              text-decoration: none;
+              font-size: 3.6rem;
+              color: rgba($colorOffWhite, 0.75);
+            }
+
+            &:hover {
+              color: $colorOffWhite;
+              &:not(.navigation__links__linkItem__llink:hover) {
+                color: rgba($colorOffWhite, 0.5);
+              }
+              & + &:link {
+                color: rgba($colorOffWhite, 0.5);
+              }
+            }
+          }
+        }
+      }
+      &-menu-button {
+        font-size: 4rem;
+        color: rgba($colorOffWhite, 0.75);
+      }
+      &-mobile {
+        &-close {
+          font-size: 4rem;
+          color: rgba($colorOffWhite, 0.75);
+        }
+        &__links {
+          list-style: none;
+          &__link-item {
+            &__link {
+              &:link,
+              &:visited {
+                text-decoration: none;
+                font-size: 4rem;
+                color: rgba($colorOffWhite, 0.75);
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__master-flex-container {
+      &__child-flex-container {
+        &__heading {
+          &--subtext-start,
+          &--subtext-end {
+            font-size: 2.6rem;
+            color: $secondaryColor;
+          }
+          &--main-text {
+            font-size: 6rem;
+            color: $primaryColor;
+            letter-spacing: 0.3rem;
+          }
+        }
+        .r__cta-button {
+          font-size: 2rem;
+          color: rgba($secondaryColor, 0.75);
+          text-decoration: none;
+          &:hover {
+            color: $colorOffWhite;
+          }
+        }
+      }
+      .r__about-me {
+        &__header {
+          &__icon {
+            font-size: 5rem;
+            color: $secondaryColor;
+          }
+          &__title {
+            font-size: 2.4rem;
+            color: $secondaryColor;
+          }
+        }
+        &__introductory-paragraph {
+          font-size: 1.4rem;
+          color: $secondaryColor;
+          text-align: center;
+          line-height: 1.5;
+        }
+        &-viewport {
+          .r__about-me-statement-slider {
+            &-viewport {
+              .r__about-me-statement {
+                font-size: 1.2rem;
+                line-height: 1.5;
+                color: $secondaryColor;
+                text-align: center;
+              }
+            }
+            .r__card-button {
+              &-left,
+              &-right {
+                font-size: 2rem;
+                color: rgba($secondaryColor, 0.75);
+                &:hover {
+                  color: $colorOffWhite;
+                }
+              }
+            }
+          }
+        }
+      }
+      /////////////////
+      // Portfolio Page
+      .r__project-container {
+        &__project {
+          &__image-container {
+            img {
+            }
+          }
+          .r__work-in-progress {
+            &::after {
+              font-size: 3rem;
+              color: $primaryColor;
+            }
+          }
+          &__article {
+            &__title {
+              font-size: 2.6rem;
+              color: $secondaryColor;
+            }
+            &__short-summary {
+              font-size: 2rem;
+            }
+            &__sub-article {
+              &__title {
+                font-size: 2rem;
+                color: $secondaryColor;
+              }
+              &__category {
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 1.3;
+              }
+              &__technology-used {
+                list-style: none;
+                font-size: 1.4rem;
+                text-indent: 2rem;
+              }
+            }
+            &__link {
+              &:link,
+              &:visited {
+                font-size: 1.4rem;
+                color: rgba($secondaryColor, 0.75);
+                text-decoration: none;
+              }
+              &:hover {
+                color: $colorOffWhite;
+              }
+            }
+          }
+        }
+      }
+      /////////////////
+      // Contact Page
+      .r__form-container {
+        &__requirement-reminder {
+          color: #cf352e;
+        }
+        &__form-header {
+          &__addressed {
+            font-size: 1.6rem;
+            color: $secondaryColor;
+          }
+          .r__stamp {
+            &--active {
+            }
+          }
+        }
+        &__contact-form {
+          &__name-containers {
+            &__first-name-container,
+            &__last-name-container {
+              &--first-name,
+              &--last-name {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+            }
+            &__first-name-container {
+              &--first-name-label {
+                font-size: 1.6rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__organization-info-containers {
+            &__organization-name-container,
+            &__organization-position-container {
+              &--organization-name,
+              &--organization-position {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--organization-name-label {
+                font-size: 1.6rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__email-containers {
+            &__email-container {
+              &--email {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--email-label {
+                font-size: 1.6rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__subject-containers {
+            &__subject-container {
+              &--subject {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--subject-label {
+                font-size: 1.6rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__message-containers {
+            &__message-container {
+              &--message {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--message-label {
+                font-size: 1.6rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+            &__message-counter {
+              font-size: 1.2rem;
+              color: rgba($secondaryColor, 0.75);
+            }
+          }
+          &__submit-containers {
+            &__submit-container {
+              &--submit {
+                font-size: 1.4rem;
+                color: rgba($secondaryColor, 0.75);
+                &:hover {
+                  color: $colorOffWhite;
+                }
+                &:active {
+                  color: $colorDarkGrey;
+                }
+              }
+            }
+          }
+        }
+        .r__form-message {
+          font-size: 1.4rem;
+        }
+        .r__form-response {
+          color: $secondaryColor;
+          &--error {
+            color: #cf352e;
+          }
+          &--success {
+            color: #008013;
+          }
+        }
+      }
+    }
+  }
+
+  @include combo-max-responsive(360px, 720px) {
+    .r__navigation {
+      &__links {
+        list-style: none;
+        &__link-item {
+          &__link {
+            &:link,
+            &:visited {
+              text-decoration: none;
+              font-size: 3rem;
+              color: rgba($colorOffWhite, 0.75);
+            }
+
+            &:hover {
+              color: $colorOffWhite;
+              &:not(.navigation__links__linkItem__llink:hover) {
+                color: rgba($colorOffWhite, 0.5);
+              }
+              & + &:link {
+                color: rgba($colorOffWhite, 0.5);
+              }
+            }
+          }
+        }
+      }
+      &-menu-button {
+        font-size: 4rem;
+        color: rgba($colorOffWhite, 0.75);
+      }
+      &-mobile {
+        &-close {
+          font-size: 4rem;
+          color: rgba($colorOffWhite, 0.75);
+        }
+        &__links {
+          list-style: none;
+          &__link-item {
+            &__link {
+              &:link,
+              &:visited {
+                text-decoration: none;
+                font-size: 4rem;
+                color: rgba($colorOffWhite, 0.75);
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__master-flex-container {
+      &__child-flex-container {
+        &__heading {
+          &--subtext-start,
+          &--subtext-end {
+            font-size: 1.6rem;
+            color: $secondaryColor;
+          }
+          &--main-text {
+            font-size: 3.6rem;
+            color: $primaryColor;
+            letter-spacing: 0.3rem;
+          }
+        }
+        .r__cta-button {
+          font-size: 2rem;
+          color: rgba($secondaryColor, 0.75);
+          text-decoration: none;
+          &:hover {
+            color: $colorOffWhite;
+          }
+        }
+      }
+      .r__about-me {
+        &__header {
+          &__icon {
+            font-size: 9rem;
+            color: $secondaryColor;
+          }
+          &__title {
+            font-size: 2.6rem;
+            color: $secondaryColor;
+          }
+        }
+        &__introductory-paragraph {
+          font-size: 1.4rem;
+          color: $secondaryColor;
+          text-align: center;
+          line-height: 1.5;
+        }
+        &-viewport {
+          .r__about-me-statement-slider {
+            &-viewport {
+              .r__about-me-statement {
+                font-size: 1.2rem;
+                line-height: 1.5;
+                color: $secondaryColor;
+                text-align: center;
+              }
+            }
+            .r__card-button {
+              &-left,
+              &-right {
+                font-size: 2rem;
+                color: rgba($secondaryColor, 0.75);
+                &:hover {
+                  color: $colorOffWhite;
+                }
+              }
+            }
+          }
+        }
+      }
+      /////////////////
+      // Portfolio Page
+      .r__project-container {
+        &__project {
+          &__image-container {
+            img {
+            }
+          }
+          .r__work-in-progress {
+            &::after {
+              font-size: 2rem;
+              color: $primaryColor;
+            }
+          }
+          &__article {
+            &__title {
+              font-size: 2.6rem;
+              color: $secondaryColor;
+            }
+            &__short-summary {
+              font-size: 1.8rem;
+            }
+            &__sub-article {
+              &__title {
+                font-size: 2rem;
+                color: $secondaryColor;
+              }
+              &__category {
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 1.3;
+              }
+              &__technology-used {
+                list-style: none;
+                font-size: 1.4rem;
+                text-indent: 2rem;
+              }
+            }
+            &__link {
+              &:link,
+              &:visited {
+                font-size: 1.4rem;
+                color: rgba($secondaryColor, 0.75);
+                text-decoration: none;
+              }
+              &:hover {
+                color: $colorOffWhite;
+              }
+            }
+          }
+        }
+      }
+      /////////////////
+      // Contact Page
+      .r__form-container {
+        &__requirement-reminder {
+          color: #cf352e;
+        }
+        &__form-header {
+          &__addressed {
+            font-size: 1.6rem;
+            color: $secondaryColor;
+          }
+          .r__stamp {
+            &--active {
+            }
+          }
+        }
+        &__contact-form {
+          &__name-containers {
+            &__first-name-container,
+            &__last-name-container {
+              &--first-name,
+              &--last-name {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+            }
+            &__first-name-container {
+              &--first-name-label {
+                font-size: 1rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__organization-info-containers {
+            &__organization-name-container,
+            &__organization-position-container {
+              &--organization-name,
+              &--organization-position {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--organization-name-label {
+                font-size: 1rem;
+                color: rgba($secondaryColor, 0.75);
+                text-align: center;
+              }
+            }
+          }
+          &__email-containers {
+            &__email-container {
+              &--email {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--email-label {
+                font-size: 1rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__subject-containers {
+            &__subject-container {
+              &--subject {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--subject-label {
+                font-size: 1rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+          &__message-containers {
+            &__message-container {
+              &--message {
+                font-size: 1.2rem;
+                color: $secondaryColor;
+              }
+              &--message-label {
+                font-size: 1rem;
+                color: rgba($secondaryColor, 0.75);
+              }
+            }
+            &__message-counter {
+              font-size: 1.2rem;
+              color: rgba($secondaryColor, 0.75);
+            }
+          }
+          &__submit-containers {
+            &__submit-container {
+              &--submit {
+                font-size: 1.4rem;
+                color: rgba($secondaryColor, 0.75);
+                &:hover {
+                  color: $colorOffWhite;
+                }
+                &:active {
+                  color: $colorDarkGrey;
+                }
+              }
+            }
+          }
+        }
+        .r__form-message {
+          font-size: 1rem;
+        }
+        .r__form-response {
+          color: $secondaryColor;
+          &--error {
+            color: #cf352e;
+          }
+          &--success {
+            color: #008013;
+          }
+        }
+      }
+    }
+  }
+}

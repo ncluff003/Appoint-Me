@@ -1,0 +1,177 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.app-landing-container {
+  .blue-and-white {
+    border-left: 0.3rem groove $primaryColorDark;
+    border-right: 0.3rem groove $primaryColorDark;
+    background-color: $primaryColor;
+    .appoint-me-container {
+      background-color: $primaryColorLight;
+      &__sub-container {
+        background-color: $colorOffWhite;
+        &__heading {
+          border-bottom: 0.3rem groove $primaryColorDark;
+          .select-date-button {
+            &:hover {
+              background-color: $primaryColor;
+              color: $colorOffWhite;
+            }
+          }
+        }
+        &__calendar {
+          .hour {
+            &:nth-of-type(2n) {
+              background-color: rgba($primaryColorDark, 0.25);
+            }
+            &:nth-of-type(2n + 1) {
+              .hour__time {
+                background-color: rgba($colorOffWhite, 0.5);
+              }
+            }
+            .one-hour {
+              @include SizeAndPositioning(relative, 100%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            }
+            .thirty-minutes {
+              @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+              &:not(:last-of-type) {
+                border-bottom: 0.2rem dashed rgba($primaryColorLighter, 0.25);
+              }
+            }
+            .fifteen-minutes {
+              @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+              &:not(:last-of-type) {
+                border-bottom: 0.2rem dashed rgba($primaryColorLighter, 0.25);
+              }
+            }
+            &:hover {
+              background-color: $primaryColorLight;
+              .hour__part {
+                border-color: $primaryColorLight;
+              }
+              .hour__time {
+                background-color: transparent;
+              }
+            }
+          }
+          .blacked-out {
+            background-color: $colorDarkGrey;
+            .hour__time {
+              background-color: transparent;
+            }
+
+            &:nth-of-type(2n) {
+              background-color: $colorGrey;
+            }
+
+            &:nth-of-type(2n + 1) {
+              background-color: $colorDarkGrey;
+              .hour__time {
+                background-color: transparent;
+              }
+            }
+            .hour__part.fifteen-minutes,
+            .hour__part.thirty-minutes,
+            .hour__part.one-hour {
+              border-top-color: $colorLighterGrey;
+              border-bottom-color: $colorLighterGrey;
+            }
+
+            &:hover {
+              cursor: default;
+              background-color: $colorDarkGrey;
+              .hour__time {
+                background-color: transparent;
+              }
+              .hour__part.fifteen-minutes,
+              .hour__part.thirty-minutes,
+              .hour__part.one-hour {
+                border-top-color: $colorLighterGrey;
+                border-bottom-color: $colorLighterGrey;
+              }
+            }
+          }
+        }
+        .modal {
+          &--select-date,
+          &--select-time {
+            background-color: rgba($primaryColor, 0.95);
+            &__date-picker-container {
+              input,
+              select {
+                border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+              }
+
+              select {
+                option {
+                  background-color: $primaryColorDark;
+                }
+              }
+            }
+          }
+
+          &--select-date {
+            .button {
+              &--modal {
+                border: 0.2rem solid rgba($colorOffWhite, 0.8);
+                background-color: rgba($colorOffWhite, 0.25);
+                &:hover {
+                  border-color: $colorOffWhite;
+                  background-color: $colorOffWhite;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .blue-and-white-dark {
+    border-left: 0.3rem groove $primaryColorDark;
+    border-right: 0.3rem groove $primaryColorDark;
+    background-color: $primaryColor;
+    .appoint-me-container {
+      background-color: $primaryColorLight;
+      &__sub-container {
+        background-color: $colorDarkestGrey;
+        &__heading {
+          border-bottom: 0.3rem groove $primaryColorDark;
+          .select-date-button {
+            &:hover {
+              background-color: $primaryColor;
+              color: $colorOffWhite;
+            }
+          }
+        }
+        &__calendar {
+          .hour {
+            &:nth-of-type(2n) {
+              background-color: rgba($primaryColorDark, 0.25);
+            }
+            .one-hour {
+              @include SizeAndPositioning(relative, 100%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            }
+            .thirty-minutes {
+              @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+              &:not(:last-of-type) {
+                border-bottom: 0.2rem dashed rgba($primaryColorLighter, 0.25);
+              }
+            }
+            .fifteen-minutes {
+              @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+              &:not(:last-of-type) {
+                border-bottom: 0.2rem dashed rgba($primaryColorLighter, 0.25);
+              }
+            }
+            &:hover {
+              background-color: $primaryColorLight;
+              .hour__part {
+                border-color: $primaryColorLight;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

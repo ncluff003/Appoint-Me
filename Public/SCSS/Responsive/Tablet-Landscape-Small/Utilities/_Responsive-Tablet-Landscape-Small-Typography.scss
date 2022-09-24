@@ -1,0 +1,159 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+.r__master-grid-container {
+  .r__application-flex-container {
+    .r__navigation {
+      @include responsiveBreakPoint('smallTabLand') {
+        &--side-screen {
+          &__section {
+            &--user-information {
+              font-family: MADE Tommy Soft, Verdana, sans-serif;
+              &__update-picture {
+                color: rgba($colorOffWhite, 0.8);
+                &--icon {
+                  font-size: 1.6rem;
+                }
+                &--text {
+                  font-size: 1.6rem;
+                }
+                &:hover {
+                  .navigation--side-screen__section--user-information__update-picture--icon,
+                  .navigation--side-screen__section--user-information__update-picture--text {
+                    color: $colorOffWhite;
+                  }
+                }
+              }
+              &__username {
+                font-size: 3rem;
+                color: $colorOffWhite;
+              }
+            }
+            &--account-links {
+              font-family: MADE Tommy Soft, Verdana, sans-serif;
+              &__link-container {
+                &__link {
+                  &--link {
+                    font-size: 1.6rem;
+                    color: rgba($colorOffWhite, 0.8);
+                    &:link,
+                    &:visited {
+                      text-decoration: none;
+                      color: rgba($colorOffWhite, 0.8);
+                    }
+                    &:hover {
+                      color: $colorOffWhite;
+                    }
+                    &:active {
+                      color: $colorDarkGrey;
+                    }
+                  }
+                }
+              }
+            }
+            &--application-logo {
+              &__text {
+                font-size: 2rem;
+                color: $colorOffWhite;
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__application-viewport {
+      .r__application-display {
+        .r__budget-card-container {
+          @include responsiveBreakPoint('smallTabLand') {
+            &__card {
+              &__header {
+                &__text {
+                  font-size: 2rem;
+                }
+                &__icon {
+                  @include SizeAndPositioning(absolute, 3rem, auto, flex, row, nowrap, center, center, 0, -50%, 0);
+                  top: 50%;
+                  right: 2rem;
+                  &:hover {
+                    cursor: pointer;
+                    transition: color 0.5s;
+                  }
+                }
+              }
+              &__footer {
+                &--top {
+                  &__first,
+                  &__last {
+                    font-size: 1.6rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .r__budget-container {
+          .r__container--budget-management {
+            .r__container--extra-small {
+              &__margin-left-and-right {
+                &__header {
+                  &__text {
+                    font-size: 2rem;
+                  }
+                  &__icon {
+                    font-size: 2rem;
+                  }
+                }
+                .r__form {
+                  &--extra-small {
+                    label {
+                      font-size: 1.4rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__modal {
+            &--receipt {
+              &__closure-icon {
+                font-size: 5rem;
+              }
+              &__digital-receipt {
+                &__container {
+                  &__header {
+                    &__title {
+                      font-size: 4rem;
+                    }
+                  }
+                  &__footer {
+                    .r__footer-title {
+                      font-size: 3.4rem;
+                      &:first-of-type {
+                        font-size: 2.6rem;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .r__user-profile-section {
+          &__header {
+            &__text {
+              font-size: 5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

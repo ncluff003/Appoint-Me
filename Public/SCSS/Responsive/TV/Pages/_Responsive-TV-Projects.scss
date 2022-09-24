@@ -1,0 +1,11 @@
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    .r__projects-container {
+      grid-column: 2 / span 44;
+      grid-row: 3 / span 21;
+    }
+  }
+}

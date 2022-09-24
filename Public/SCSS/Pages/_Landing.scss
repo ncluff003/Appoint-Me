@@ -1,0 +1,26 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.app-landing-container {
+  @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+  .logo-container {
+    @include SizeAndPositioning(relative, 75%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+    z-index: 0;
+    .logo-image {
+      @include SizingItem(relative, 85%, auto);
+      margin-bottom: 3rem;
+    }
+    .logo-text {
+      transform: translateX(6.25%);
+    }
+  }
+  .button-container {
+    @include SizeAndPositioning(relative, 17.5%, 100%, flex, row, nowrap, space-evenly, center, 0, 2rem, 0);
+    -moz-transform: translateY(0);
+    z-index: 0;
+  }
+  .slogan {
+    @include SizeAndPositioning(relative, 7.5%, 100%, flex, row, nowrap, center, center, 5%, 0, 0);
+    z-index: 0;
+  }
+}

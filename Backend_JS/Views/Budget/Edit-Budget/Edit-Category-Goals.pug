@@ -1,0 +1,119 @@
+extends ./../budgetLanding
+
+block Budget-Content 
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Edit Category Goals
+  section.container--large.r__container--large
+    header.container--large__header.r__container--large__header
+      i.fas.fa-file-invoice-dollar.container--large__header__icon.r__container--large__header__icon 
+      p.container--large__header__title.r__container--large__header__title= `${data.calendar.getMonth().toUpperCase()}`
+    section.budget-goal-summary-container.r__budget-goal-summary-container
+      - let initialTotal = 0;
+      - let subCategoryGoals = [];
+      - data.budget.mainCategories.forEach(mc => mc.subCategories.forEach(sc => subCategoryGoals.push(sc.goalAmount)))
+      - const overallBudget = subCategoryGoals.reduce((previous, current) => previous + current, initialTotal)
+      - let initialSpent = 0;
+      - let subCategorySpent = [];
+      - data.budget.mainCategories.forEach(mc => mc.subCategories.forEach(sc => subCategorySpent.push(sc.amountSpent)))
+      - const overallSpent = subCategorySpent.reduce((previous, current) => previous + current, initialTotal)
+      - let overallPercentageSpent = overallSpent / overallBudget
+      - if (isNaN(overallPercentageSpent)) overallPercentageSpent = 0
+      section.budget-single-goal-summary.r__budget-single-goal-summary
+        p.budget-single-goal-summary__title.r__budget-single-goal-summary__title Overall Budget
+        p.budget-single-goal-summary__amount.r__budget-single-goal-summary__amount= `$${overallBudget.toFixed(2)}`
+      section.budget-single-goal-summary.r__budget-single-goal-summary
+        p.budget-single-goal-summary__title.r__budget-single-goal-summary__title Overall Spent
+        p.budget-single-goal-summary__amount.r__budget-single-goal-summary__amount= `$${overallSpent.toFixed(2)}`
+      section.budget-single-goal-summary.r__budget-single-goal-summary
+        p.budget-single-goal-summary__title.r__budget-single-goal-summary__title Overall Remaining
+        p.budget-single-goal-summary__amount.r__budget-single-goal-summary__amount= `$${(overallBudget - overallSpent).toFixed(2)}`
+      section.budget-single-goal-summary.r__budget-single-goal-summary
+        p.budget-single-goal-summary__title.r__budget-single-goal-summary__title Percentage Spent
+        p.budget-single-goal-summary__amount.r__budget-single-goal-summary__amount= `${(overallPercentageSpent).toFixed(2)}%`
+      section.budget-single-goal-summary.r__budget-single-goal-summary
+        p.budget-single-goal-summary__title.r__budget-single-goal-summary__title Percentage of Month Remaining
+        p.budget-single-goal-summary__amount.r__budget-single-goal-summary__amount= `${data.calendar.monthRemaining()}`
+    section.container--large__category-container.r__container--large__category-container
+
+      section.main-category-display.r__main-category-display
+        section.main-category-display__button-container.r__main-category-display__button-container
+          i.fas.fa-arrow-alt-circle-left.main-category-display__button-container__icon.r__main-category-display__button-container__icon.left.r__left
+        section.main-category-display__category-display.r__main-category-display__category-display
+            i.fas.main-category-display__category-display__icon.r__main-category-display__category-display__icon(class=`${data.budget.mainCategories[0].icon}` data-category=`${0}`)
+            p.main-category-display__category-display__title.r__main-category-display__category-display__title(data-category=`${0}`)= `${data.budget.mainCategories[0].title}`
+
+        section.main-category-display__button-container.r__main-category-display__button-container
+          i.fas.fa-arrow-alt-circle-right.main-category-display__button-container__icon.r__main-category-display__button-container__icon.right.r__right
+          
+      section.sub-category-display.r__sub-category-display
+        section.sub-category-display__headers.r__sub-category-display__headers
+          - const subCategoryHeaders = [`Category`, `Monthly Total`, `Spent`, `Remaining`, `Percentage Spent`] 
+          each header in subCategoryHeaders
+            section.sub-category-display__headers__title-container.r__sub-category-display__headers__title-container= `${header}`
+        each category, mainIndex in data.budget.mainCategories 
+          each subCategory, subIndex in category.subCategories 
+            - let subOverallPercentageSpent = subCategory.amountSpent / subCategory.goalAmount
+            - if (isNaN(subOverallPercentageSpent)) subOverallPercentageSpent = 0
+              section.sub-category-display__sub-category.r__sub-category-display__sub-category(data-subCategory=`${mainIndex}`) 
+                section.sub-category-display__sub-category__section.r__sub-category-display__sub-category__section
+                  p.sub-category-display__sub-category__section__content.r__sub-category-display__sub-category__section__content= `${subCategory.title}`
+                    //- Check If Timing Is In Timing Options On Load.  
+                  button.button--borderless-set-timing-button.r__button--borderless-set-timing-button(type="button") + Timing
+                section.sub-category-display__sub-category__section.r__sub-category-display__sub-category__section
+                  input.form__input--medium.r__form__input--medium.individual-payment.r__individual-payment(type="number" min="0" placeholder="Insert Individual Payment Amount" value=`${subCategory.goalAmount.toFixed(2)}` step=".01")
+                section.sub-category-display__sub-category__section.r__sub-category-display__sub-category__section
+                  p.sub-category-display__sub-category__section__content.r__sub-category-display__sub-category__section__content= `$${subCategory.amountSpent.toFixed(2)}`
+                section.sub-category-display__sub-category__section.r__sub-category-display__sub-category__section
+                  p.sub-category-display__sub-category__section__content.r__sub-category-display__sub-category__section__content= `$${(subCategory.goalAmount - subCategory.amountSpent).toFixed(2)}`
+                section.sub-category-display__sub-category__section.r__sub-category-display__sub-category__section
+                  p.sub-category-display__sub-category__section__content.r__sub-category-display__sub-category__section__content= `${(subOverallPercentageSpent).toFixed(2)}%`
+
+        section.timing-container.r__timing-container.closed
+          i.fas.fa-times.timing-container__closure-icon.r__timing-container__closure-icon
+          section.timing-container__section.r__timing-container__section
+            button.button--timing-button.r__button--timing-button
+              span.icon-calendar-month.button--timing-button__icon.r__button--timing-button__icon
+                span.path1
+                span.path2
+              p.button--timing-button__text.r__button--timing-button__text Monthly
+            label.timing-container__section__label.r__timing-container__section__label Due Date
+              input.timing-container__section__label__input.r__timing-container__section__label__input(type="date")
+            button.button--timing-button-submit.r__button--timing-button-submit.timing-submit-button Submit
+
+          section.timing-container__section.r__timing-container__section
+            button.button--timing-button.r__button--timing-button
+              span.icon-calendar-bi-month.button--timing-button__icon.r__button--timing-button__icon
+                span.path1
+                span.path2
+                span.path3
+              p.button--timing-button__text.r__button--timing-button__text Bi-Monthly
+            label.timing-container__section__label.r__timing-container__section__label First Due Date
+              input.timing-container__section__label__input.r__timing-container__section__label__input(type="date") 
+            label.timing-container__section__label.r__timing-container__section__label Second Due Date
+              input.timing-container__section__label__input.r__timing-container__section__label__input(type="date") 
+            button.button--timing-button-submit.r__button--timing-button-submit.timing-submit-button Submit
+
+          section.timing-container__section.r__timing-container__section
+            button.button--timing-button.r__button--timing-button
+              span.icon-calendar-bi-weekly.button--timing-button__icon.r__button--timing-button__icon
+                span.path1
+                span.path2
+              p.button--timing-button__text.r__button--timing-button__text Bi-Weekly
+            label.timing-container__section__label.r__timing-container__section__label Start Date
+              input.timing-container__section__label__input.r__timing-container__section__label__input(type="date") 
+            button.button--timing-button-submit.r__button--timing-button-submit.timing-submit-button Submit
+
+          section.timing-container__section.r__timing-container__section
+            button.button--timing-button.r__button--timing-button
+              span.icon-calendar-week.button--timing-button__icon.r__button--timing-button__icon
+                span.path1
+                span.path2
+              p.button--timing-button__text.r__button--timing-button__text Weekly
+            label.timing-container__section__label.r__timing-container__section__label Weekday
+              - const weekdays = [`Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`]
+              select.timing-container__section__label__select.r__timing-container__section__label__select
+                each day, index in weekdays
+                  option.timing-container__section__label__select__option.timing-container__section__label__select__option(value=`${index}`)= `${day}`
+            button.button--timing-button-submit.r__button--timing-button-submit.timing-submit-button Submit
+  section.form__section--update-budget.r__form__section--update-budget
+    button.button--large__thin.r__button--large__thin(type="submit") Update Budget Goals

@@ -1,0 +1,27 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+@include responsiveBreakPoint('largeTabPort') {
+  .r__grid {
+    .r__contact-me-section {
+      grid-column: 2 / span 10;
+      grid-row: 2 / span 16;
+      flex-direction: column;
+      .r__personal-photo-container {
+        height: 50%;
+        width: 100%;
+        .r__personal-photo {
+          justify-content: flex-end;
+        }
+        .r__contact-greeting {
+          justify-content: center;
+        }
+      }
+      .r__form {
+        height: 50%;
+        width: 100%;
+        padding-top: 0;
+      }
+    }
+  }
+}

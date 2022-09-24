@@ -1,0 +1,136 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid-container {
+  @include responsiveBreakPoint('smallTabPort') {
+    .r__application-flex-container {
+      .r__application-viewport {
+        .r__application-display {
+          .r__budget-container {
+            .r__container--budget-management {
+              .r__container {
+                &--extra-small {
+                  &__margin-left-and-right {
+                    .r__form {
+                      &--extra-small {
+                      }
+
+                      &__label {
+                        &--outer-checkbox {
+                          width: 90%;
+                        }
+                      }
+                      &--update-photo {
+                        width: 100%;
+                        .r__form__row--update-photo {
+                          .r__form__path-preview {
+                            width: 40%;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__user-profile-section {
+            .r__form {
+              &--full-width {
+                .r__form__section {
+                  &--switch {
+                    .r__form__label {
+                      &--latter-day-saint {
+                        &-white {
+                          width: 25%;
+                        }
+                      }
+
+                      &--comms {
+                        width: 35%;
+                      }
+                    }
+                    .r__form__input {
+                      &-container--latter-day-saint {
+                        width: 23%;
+                      }
+
+                      &--comms,
+                      &--comms--text-preferred {
+                        width: 28%;
+                      }
+
+                      &--dark {
+                        &-small {
+                          width: 40%;
+                          &:not(:placeholder-shown) + label {
+                            transform: translate(-9rem, -7.25rem) scale(0.75);
+                          }
+                        }
+                        &-extra-small {
+                          width: 35.5%;
+                        }
+                      }
+                    }
+                  }
+
+                  .r__form__input {
+                    &-small {
+                      width: 31%;
+                    }
+                    &-extra-small {
+                      width: 35.5%;
+                    }
+                  }
+
+                  .r__form__input {
+                    &--dark {
+                      &-small {
+                        width: 40%;
+                        &:not(:placeholder-shown) + label {
+                          transform: translate(-9rem, -7.25rem) scale(0.75);
+                        }
+                      }
+                    }
+                  }
+
+                  &--sub-section {
+                    .r__form__input {
+                      &--dark {
+                        &-extra-small {
+                          width: 35.5%;
+                        }
+                      }
+                    }
+                    .r__form__label {
+                      &--extra-small {
+                        width: 30%;
+                        left: calc(38.25% + 2rem);
+                      }
+                    }
+                  }
+
+                  .r__form__label {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__modal--update-photo {
+      .r__form {
+        &--update-photo {
+          .r__form__row--update-photo {
+            .r__form__path-preview {
+              width: 40%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

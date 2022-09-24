@@ -1,0 +1,46 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    @include combo-max-responsive(800px, 375px) {
+      &__child-flex-container {
+        .r__cta-button {
+          @include SizeAndPositioning(relative, 20%, 35%, flex, center, center, -3.5rem, -6rem, 0);
+          border: 0.3rem solid rgba($secondaryColor, 0.75);
+          border-radius: 1.5rem;
+          align-self: flex-end;
+          transition: color 0.5s, background-color 0.5s, border 0.5s;
+          -moz-transform: translate(-2.75rem, -6rem);
+          &:hover {
+            background-color: $secondaryColor;
+            border: 0.3rem solid $secondaryColor;
+          }
+        }
+      }
+      .r__about-me {
+        &-statement-slider {
+          .card-button {
+            &-left,
+            &-right {
+              @include SizeAndPositioning(relative, 30%, 10%, flex, center, center, 0, 0, 0);
+              border: 0.3rem outset rgba($secondaryColor, 0.75);
+              border-radius: 5rem;
+              background-color: transparent;
+              transition: color 0.5s, background-color 0.5s;
+              &:hover {
+                cursor: pointer;
+                background-color: $secondaryColor;
+              }
+              &:active {
+                border: 0.3rem inset rgba($secondaryColor, 0.75);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

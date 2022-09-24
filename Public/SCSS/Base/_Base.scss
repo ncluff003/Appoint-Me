@@ -1,0 +1,217 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+//////////////////////////////////
+///  Foundation Settings
+
+*,
+*::before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html {
+  // This defines what 1rem should be
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  box-sizing: border-box;
+  @include SizingItem(relative, 100%, 100vw);
+  background-color: $colorOffWhite;
+  overflow-x: hidden;
+}
+
+.closed {
+  display: none !important;
+}
+.open {
+  display: flex;
+  &-navigation {
+    @extend .open;
+    opacity: 1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
+
+.disabled--transparent {
+  border-color: rgba($colorDarkerGrey, 0.2);
+  background-color: transparent;
+  color: rgba($colorDarkerGrey, 0.5);
+  &:hover {
+    cursor: default;
+    border-color: rgba($colorDarkerGrey, 0.2);
+    background-color: transparent;
+    color: rgba($colorDarkerGrey, 0.5);
+  }
+  & * {
+    border-color: inherit;
+    background-color: inherit;
+    color: inherit;
+  }
+}
+
+.top-right-category {
+  border-top-right-radius: 0.9rem;
+}
+
+.extend-transaction-plan {
+  @include Taller(9rem, 2);
+  .form__row--transaction {
+    margin-bottom: 9rem;
+  }
+}
+
+.positive-investment {
+  border-color: $secondaryColor;
+  .container--extra-small__margin-left-and-right__header {
+    background-color: $secondaryColor;
+  }
+  .container--extra-small__margin-left-and-right__content__column {
+    .investment-explanatory-information {
+      border-bottom-color: $secondaryColor;
+    }
+  }
+}
+.neutral-investment {
+  border-color: $primaryColor;
+  .container--extra-small__margin-left-and-right__header {
+    background-color: $primaryColor;
+  }
+  .container--extra-small__margin-left-and-right__content__column {
+    .investment-explanatory-information {
+      border-bottom-color: $primaryColor;
+    }
+  }
+}
+.negative-investment {
+  border-color: $colorError;
+  .container--extra-small__margin-left-and-right__header {
+    background-color: $colorError;
+  }
+  .container--extra-small__margin-left-and-right__content__column {
+    .investment-explanatory-information {
+      border-bottom-color: $colorError;
+    }
+  }
+}
+
+.raised {
+  transform: translate(0, -1.6rem);
+  & ~ label {
+    transform: translate(1rem, -1.6rem);
+  }
+}
+
+.lowered {
+  transform: translate(0, 1.5rem);
+  & + label {
+    top: 50%;
+    -moz-transform: translateY(0);
+    transform: translate(0, 0);
+  }
+}
+
+.quarters {
+  height: 35%;
+  & + .form__section--early-income-view {
+    height: 30%;
+    .form__section--early-income-view__income-view,
+    .form__section--early-income-view__income-view--purple {
+      width: 25%;
+    }
+  }
+}
+
+.loading-message-container {
+  @include SizeAndPositioning(relative, 5rem, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+  margin-bottom: 3rem;
+}
+
+.selected {
+  background-color: rgba($primaryColor, 0.8);
+  &:hover {
+    cursor: pointer;
+    background-color: $primaryColor, 0.8;
+  }
+}
+
+.deposit {
+  background-color: $secondaryColorDark;
+  & + .recent-transaction__detail-container {
+    background-color: rgba($secondaryColorLight, 0.25);
+  }
+}
+
+.withdrawal {
+  background-color: $colorError;
+  & + .recent-transaction__detail-container {
+    background-color: rgba($colorError, 0.25);
+  }
+}
+
+.container {
+  &--large {
+    @include responsiveBreakPoint('smallTabPort') {
+      .recent-transaction-display {
+        .recent-transaction {
+          .deposit {
+            background-color: $secondaryColorDark;
+            & + .recent-transaction__detail-container {
+              background-color: rgba($secondaryColorLight, 0.25);
+            }
+          }
+
+          .withdrawal {
+            background-color: $colorError;
+            & + .recent-transaction__detail-container {
+              background-color: rgba($colorError, 0.25);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.container,
+.r__container {
+  &--large {
+    @include responsiveBreakPoint('smallTabPort') {
+      .recent-transaction-display,
+      .r__recent-transaction-display {
+        .recent-transaction,
+        .r__recent-transaction {
+          .deposit {
+            background-color: $secondaryColorDark;
+            & + .recent-transaction__detail-container,
+            & + .r__recent-transaction__detail-container {
+              background-color: rgba($secondaryColorLight, 0.25);
+            }
+          }
+
+          .withdrawal {
+            background-color: $colorError;
+            & + .recent-transaction__detail-container,
+            & + .r__recent-transaction__detail-container {
+              background-color: rgba($colorError, 0.25);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.flex-to-start {
+  justify-content: flex-start !important;
+}
+
+// * ABOVE STYLES ARE ALL USED

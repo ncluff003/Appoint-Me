@@ -1,0 +1,71 @@
+form.form--transaction.r__form--transaction(method="POST" action=`/users/${data.user.id}/budgets/${data.budget.id}`)
+  - const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 })
+  - const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; 
+  section.form__row--transaction-header.r__form__row--transaction-header
+    section.form__section--transaction-header.r__form__section--transaction-header
+      input.form__input--small-thinner.r__form__input--small-thinner#transactionDate(type="date")
+      label.form__label--small-thinner.r__form__label--small-thinner(for="transactionDate") Transaction Date
+    section.form__section--transaction-header.r__form__section--transaction-header
+      input.form__input--small-thinner__wide.r__form__input--small-thinner__wide#transactionLocation(type="text" placeholder="Transaction Location")
+      label.form__label--small-thinner__wide.r__form__label--small-thinner__wide(for="transactionLocation") Transaction Location
+    section.form__section--transaction-header.r__form__section--transaction-header
+      button.button--transaction-button.r__button--transaction-button(type="button") Add item
+  section.form__section--transaction-item-creation.r__form__section--transaction-item-creation.closed
+    section.form__section--select.r__form__section--select
+      - let accounts = [`Select Account`,`Monthly Budget`,`Emergency Fund`,`Savings Fund`,`Expense Fund`,`Surplus`, `Investment Fund`,`Debt`,`Tithing`]; 
+      - if (data.user.latterDaySaint === false) accounts = accounts.filter((a, i) => { if (a !== `Tithing`) return a});
+        label.form__label--select.r__form__label--select Accounts
+        select.form__select--accounts.r__form__select--accounts
+          each account in accounts
+            option.form__select--accounts__option.r__form__select--accounts__option(value=`${account}`)= `${account}`
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Category
+      select.form__select--accounts.r__form__select--accounts#mainCategory
+        each category, index in data.budget.mainCategories 
+          option.category-selection.r__category-selection(value=`${category.title}` data-category=`${index}`)= `${category.title}`
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Sub Category
+      select.form__select--accounts.r__form__select--accounts#subCategory
+        each category, mainIndex in data.budget.mainCategories
+          each subCategory in category.subCategories
+            option.form__select--monthly-transaction__option.r__form__select--monthly-transaction__option.closed(data-category=`${mainIndex}`)= subCategory.title
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Transaction Type
+      select.form__select--accounts.r__form__select--accounts#transactionType
+    section.form__section--select.r__form__section--select
+      - const savingsTerms = [`Select Timing`, `Once`,`Weekly`, `Bi-Weekly`, `Bi-Monthly`, `Monthly`, `Quarterly`, `Bi-Annual`, `Annual`]
+      label.form__label--select.r__form__label--select Timing
+      select.form__select--accounts.r__form__select--accounts#timing
+        each term in savingsTerms 
+          option.category-selection.r__category-selection(value=`${term}`)= `${term}`
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Lender
+      select.form__select--accounts.r__form__select--accounts#lender
+        option Mountain America Credit Union
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Item | Expense | Goal
+      select.form__select--accounts.r__form__select--accounts#savingsGoals
+    section.form__section--select.r__form__section--select
+      label.form__label--select.r__form__label--select Payment Due Date?
+      select.form__select--accounts.r__form__select--accounts#dueDates
+    section.form__section--transaction-option.r__form__section--transaction-option
+      input.form__input--small-thinner.r__form__input--small-thinner#transactionName(type="text" placeholder="Name")
+      label.form__label--small-thinner__transaction.r__form__label--small-thinner__transaction(for="transactionName") Transaction Name
+    section.form__section--transaction-option.r__form__section--transaction-option
+      input.form__input--small-thinner__wider.r__form__input--small-thinner__wider.lowered#transactionDescription(type="text" placeholder="Description")
+      label.form__label--small-thinner__wider.r__form__label--small-thinner__wider(for="transactionDescription") Transaction Description
+    section.form__section--transaction-option.r__form__section--transaction-option
+      input.form__input--small-thinner.r__form__input--small-thinner#transactionAmount(type="number" min="0" placeholder="$0.00" step=".01")
+      label.form__label--small-thinner__transaction.r__form__label--small-thinner__transaction(for="transactionAmount") Amount Spent
+    section.form__section--transaction-option.r__form__section--transaction-option
+      button.button--transaction-button.r__button--transaction-button
+        p.button--transaction-button__text.r__button--transaction-button__text Save
+  section.form__section--transaction-receipt.r__form__section--transaction-receipt
+    header.receipt-header.r__receipt-header
+      p.receipt-header__text.r__receipt-header__text Receipt
+      section.receipt-header__secondary-titles.r__receipt-header__seccondary-titles
+        p.secondary-title.r__secondary-title Transaction Details
+        p.secondary-title.r__secondary-title Total
+    section.receipt-item-container.r__receipt-item-container
+
+  

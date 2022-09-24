@@ -1,0 +1,31 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    .r__introduction-container {
+      .r__introduction-container__introduction {
+        .r__cta-container {
+          @include SizeAndPositioning(relative, 40%, 100%, flex, row, nowrap, flex-end, flex-start, 0, 0, 0);
+          padding-right: 9rem;
+          .r__cta-link {
+            @include SizeAndPositioning(relative, 4rem, max-content, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            padding: 1rem 2rem;
+            border-radius: 5rem;
+            transition: background-color 0.5s;
+            &:not(:last-of-type) {
+              margin-right: 2rem;
+            }
+            &:hover {
+              cursor: pointer;
+              transition: background-color 0.5s, color 0.5s;
+            }
+            .r__cta-icon {
+              margin-right: 2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

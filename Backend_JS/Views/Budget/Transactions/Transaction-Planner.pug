@@ -1,0 +1,97 @@
+extends ./../budgetLanding
+
+mixin dashboardAccountOverview(icon, text, accountTotal, appliedTotal, unAppliedTotal) 
+  section.container--extra-small-evenly-spaced.r__container--extra-small-evenly-spaced
+    header.container--extra-small-evenly-spaced__header.r__container--extra-small-evenly-spaced__header
+      i.fas.container--extra-small-evenly-spaced__header__icon.r__container--extra-small-evenly-spaced__header__icon(class=`fa-${icon}`)
+      p.container--extra-small-evenly-spaced__header__text.r__container--extra-small-evenly-spaced__header__text=`${text}`
+    section.container--extra-small-evenly-spaced__content.r__container--extra-small-evenly-spaced__content
+      p.container--extra-small-evenly-spaced__content__account-total.r__container--extra-small-evenly-spaced__content__account-total=`${accountTotal}`
+      section.container--extra-small-evenly-spaced__content__applied-container.r__container--extra-small-evenly-spaced__content__applied-container
+        p.container--extra-small-evenly-spaced__content__applied-container__heading.r__container--extra-small-evenly-spaced__content__applied-container__heading Applied
+        p.container--extra-small-evenly-spaced__content__applied-container__applied.r__container--extra-small-evenly-spaced__content__applied-container__applied=`${appliedTotal}`
+      section.container--extra-small-evenly-spaced__content__un-applied-container.r__container--extra-small-evenly-spaced__content__un-applied-container
+        p.container--extra-small-evenly-spaced__content__un-applied-container__heading.r__container--extra-small-evenly-spaced__content__un-applied-container__heading Un-Applied
+        p.container--extra-small-evenly-spaced__content__un-applied-container__un-applied.r__container--extra-small-evenly-spaced__content__un-applied-container__un-applied=`${unAppliedTotal}`
+
+
+block Budget-Content 
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Transaction Planner
+  - const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 })
+  +dashboardAccountOverview(`receipt`, `Expense Fund`, `${money.format(data.budget.accounts.expenseFund.amount)}`, money.format(0), money.format(0))
+  +dashboardAccountOverview(`piggy-bank`, `Savings Fund`, `${money.format(data.budget.accounts.savingsFund.amount)}`, money.format(0), money.format(0))
+  +dashboardAccountOverview(`hand-holding-usd`, `Debt`, `${money.format(data.budget.accounts.debt.amount)}`, money.format(0), money.format(0))
+  +dashboardAccountOverview(`dollar-sign`, `Surplus`, `${money.format(data.budget.accounts.surplus.amount)}`, money.format(0), money.format(0))
+  section.container--large.r__container--large
+    header.container--large__header.r__container--large__header
+      i.fas.fa-file-invoice-dollar.container--large__header__icon.r__container--large__header__icon 
+      p.container--large__header__title.r__container--large__header__title= `Planned Transactions`
+    section.transaction-plan-display.r__transaction-plan-display
+      section.transaction-plan-creation.r__transaction-plan-creation.closed 
+        form.form--full-width.r__form-full-width
+          section.form__row--transaction.r__form__row--transaction
+            - let accounts = [`Select Account`,`Expense Fund`,`Savings Fund`,`Debt`,`Surplus`]
+              section.form__section--select.r__form__section--select
+                label.form__label--select.r__form__label--select Account
+                select.form__select--accounts.r__form__select--accounts
+                  each account in accounts 
+                    option.form__select__option.r__form__select__option= `${account}`
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                input.form__input--small-short.r__form__input--small-short#location(type="text" placeholder="Location" maxLength="250" minLength="3")
+                label.form__label--medium__alt-4.r__form__label--medium__alt-4(for="location") Location
+            - let expenseTransactionTypes = [`Expense`, `Bill`, `Subscription`, `Other`]
+            - let savingsTransactionTypes = [`Expense`, `Subscription`, `Vacations`, `Tuition`, `Other`]
+            - let debtTransactionTypes = [`Credit Card`, `Loan`, `Taxes`, `Debt`, `Other`]
+            - let surplusTransactionTypes = [`Expense`, `Subscription`, `Discretionary`, `Food`, `Other`]
+              section.form__section--select.r__form__section--select.closed 
+                label.form__label--select__transaction.r__form__label--select__transaction Transaction Type
+                select.form__select--accounts.r__form__select--accounts.closed
+                  each transaction in expenseTransactionTypes 
+                    option.form__select__option.r__form__select__option= `${transaction}`
+                select.form__select--accounts.r__form__select--accounts.closed
+                  each transaction in savingsTransactionTypes 
+                    option.form__select__option.r__form__select__option= `${transaction}`
+                select.form__select--accounts.r__form__select--accounts.closed
+                  each transaction in debtTransactionTypes 
+                    option.form__select__option.r__form__select__option= `${transaction}`
+                select.form__select--accounts.r__form__select--accounts.closed
+                  each transaction in surplusTransactionTypes 
+                    option.form__select__option.r__form__select__option= `${transaction}`
+              section.form__section--select.r__form__section--select.closed 
+                - const debtTimingsTwo = [`Once`,`Weekly`,`Bi-Weekly`,`Bi-Monthly`,`Monthly`,`Quarterly`,`Bi-Annual`,`Annual`]
+                  label.form__label--select__transaction.r__form__label--select__transaction Timing
+                  select.form__select--accounts.r__form__select--accounts                
+                    each timing in debtTimingsTwo 
+                      option.category-selection.r__category-selection(value=`${timing}`)= `${timing}`
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                input.form__input--small-short.r__form__input--small-short#transactionName(type="text" placeholder="Transaction Name" maxLength="250" minLength="3")
+                label.form__label--medium__alt-4.r__form__label--medium__alt-4(for="transactionName") Transaction Name
+              section.form__section--select.r__form__section--select.closed 
+                label.form__label--select__transaction.r__form__label--select__transaction Biller | Creditor
+                select.form__select--accounts.r__form__select--accounts.closed
+                  - let paid = false
+                  each debt in data.budget.debts
+                    - if (debt.status === `Paid Off`) { paid = true } else { paid = false }
+                    if !paid
+                      option.form__select__option.r__form__select__option= `${debt.lender}`
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                input.form__input--small-short.r__form__input--small-short#transactionAmount(type="number" placeholder="$0.00" step=".01")
+                label.form__label--medium__alt-4.r__form__label--medium__alt-4(for="transactionAmount") Amount
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                input.form__input--medium__alt.r__form__input--medium__alt#transactionDate(type="date")
+                label.form__label--medium__alt-3.r__form__label--medium__alt-3(for="transactionDate") Due Date One
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                input.form__input--medium__alt.r__form__input--medium__alt#transactionDate(type="date" value=`${new Date()}`)
+                label.form__label--medium__alt-3.r__form__label--medium__alt-3(for="transactionDate") Due Date Two
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed
+                section.surplus-container.r__surplus-container 
+                  p.surplus-container__text.r__surplus-container__text Surplus?
+                  section.surplus-container__switch.r__surplus-container__switch 
+                    section.surplus-container__switch__toggle.r__surplus-container__switch__toggle 
+                      i.fas.fa-times.surplus-container__switch__toggle__icon.r__surplus-container__switch__toggle__icon
+              section.form__section--transaction-plan.r__form__section--transaction-plan.closed 
+                button.button--extra-extra-small__transaction-plan.r__button--extra-extra-small__transaction-plan.button--submit-plan.r__button--submit-plan(type="button") Submit
+      button.button--borderless.r__button--borderless.open
+        i.fas.fa-plus.button--borderless__icon.r__button--borderless__icon
+        p.button--borderless__text.r__button--borderless__text Add Transaction Plan

@@ -1,0 +1,134 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.app-landing-container {
+  @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+  .calendar {
+    @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+    .appoint-me-header {
+      @include SizeAndPositioning(relative, 12.5%, 100%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+      padding: 2rem;
+      .icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        stroke-width: 0;
+        stroke: currentColor;
+        fill: currentColor;
+      }
+      .icon-appoint-me-logo {
+        width: 1.251953125em;
+        margin-right: 1rem;
+      }
+      &__title {
+        transform: translate(0, 0.5rem);
+      }
+    }
+    .appoint-me-container {
+      @include SizeAndPositioning(relative, 87.5%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+      padding: 2rem;
+      &__heading {
+        @include SizeAndPositioning(relative, 10%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+      }
+
+      &__sub-container {
+        @include SizeAndPositioning(relative, 90%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+        border-radius: 0.5rem;
+        &__heading {
+          @include SizeAndPositioning(relative, 12.5%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+          padding: 0.5rem 1rem 0.5rem;
+          &__date {
+            @include SizeAndPositioning(relative, 100%, 60%, flex, row, nowrap, center, center, 0, 0, 0);
+            min-width: 60%;
+          }
+          .select-date-button {
+            @include SizeAndPositioning(relative, 60%, 40%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            background-color: transparent;
+            border: none;
+            border-radius: 5rem;
+            &:hover {
+              cursor: pointer;
+              transition: background-color 0.5s, color 0.5s;
+            }
+          }
+        }
+        &__calendar {
+          @include SizeAndPositioning(relative, 87.5%, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+          overflow-y: auto;
+          .hour {
+            @include SizeAndPositioning(relative, 8rem, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+            min-height: 8rem;
+            &__time {
+              @include SizeAndPositioning(absolute, max-content, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+              top: 1rem;
+              left: 1rem;
+              z-index: 5;
+            }
+
+            .one-hour {
+              @include SizeAndPositioning(relative, 100%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            }
+            .thirty-minutes {
+              @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            }
+            .fifteen-minutes {
+              @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            }
+
+            &:hover {
+              cursor: pointer;
+              transition: background-color 0.25s;
+              .hour__time {
+                transition: color 0.5s, background-color 0.125s;
+              }
+
+              .hour__part {
+                transition: border 0.25s;
+              }
+            }
+          }
+          .blacked-out {
+            background-color: $colorDarkGrey;
+            .hour__time {
+              background-color: transparent;
+            }
+            &:nth-of-type(2n + 1) {
+              background-color: $colorDarkGrey;
+              .hour__time {
+                background-color: transparent;
+              }
+            }
+            .hour__part.fifteen-minutes,
+            .hour__part.thirty-minutes,
+            .hour__part.one-hour {
+              border-top-color: $colorLighterGrey;
+              border-bottom-color: $colorLighterGrey;
+            }
+
+            &:hover {
+              cursor: default;
+              background-color: $colorDarkGrey;
+              .hour__time {
+                background-color: transparent;
+              }
+              .hour__part.fifteen-minutes,
+              .hour__part.thirty-minutes,
+              .hour__part.one-hour {
+                border-top-color: $colorLighterGrey;
+                border-bottom-color: $colorLighterGrey;
+              }
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            &:hover {
+              cursor: pointer;
+              transition: color 0.5s;
+            }
+          }
+        }
+      }
+    }
+  }
+}

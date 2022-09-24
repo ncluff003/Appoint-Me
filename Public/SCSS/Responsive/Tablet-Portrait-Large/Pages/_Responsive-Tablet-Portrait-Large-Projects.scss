@@ -1,0 +1,14 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+@include responsiveBreakPoint('largeTabPort') {
+  .r__grid {
+    .r__projects-container {
+      grid-column: 2 / span 10;
+      grid-row: 3 / span 15;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+  }
+}

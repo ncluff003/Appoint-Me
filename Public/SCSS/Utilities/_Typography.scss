@@ -1,0 +1,154 @@
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.app-landing-container {
+  .calendar {
+    font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        font-size: 7rem;
+      }
+
+      &__title {
+        font-size: 4rem;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        font-size: 3rem;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            font-size: 1.6rem;
+            text-align: center;
+          }
+          .select-date-button {
+            font-size: 1.6rem;
+            &__icon {
+              font-size: 3rem;
+            }
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              font-size: 1.8rem;
+            }
+
+            &:hover {
+              color: $colorOffWhite;
+              .hour__time {
+                color: $colorOffWhite;
+              }
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            font-size: 4rem;
+          }
+
+          &--select-date {
+            &__header {
+              font-size: 5rem;
+            }
+            &__sub-header {
+              font-size: 1.6rem;
+            }
+
+            &__header,
+            &__sub-header {
+              font-weight: bold;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                font-size: 3rem;
+              }
+            }
+
+            .button {
+              &--modal {
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.app-landing-container {
+  .blue-and-white {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorOffWhite;
+      }
+      &__title {
+        color: $colorOffWhite;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorOffWhite;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $primaryColor;
+          }
+          .select-date-button {
+            color: rgba($primaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($primaryColorDark, 0.8);
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorOffWhite;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorOffWhite, 0.8);
+            &:hover {
+              color: $colorOffWhite;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorOffWhite;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorOffWhite, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorOffWhite;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorOffWhite, 0.8);
+                &:hover {
+                  color: $primaryColor;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,197 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  @include responsiveBreakPoint('smallMobilePort') {
+    .r__application-flex-container {
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            .r__form {
+              &--full-width {
+                justify-content: flex-start;
+                &:nth-of-type(3),
+                &:nth-of-type(4) {
+                  justify-content: center;
+                }
+                .r__form__section {
+                  .r__form {
+                    &__input {
+                      width: 80%;
+
+                      &--dark {
+                        &-small {
+                          width: 80%;
+                          &:not(:placeholder-shown) + label {
+                            transform: translate(-13rem, -7.25rem) scale(0.75);
+                          }
+                        }
+                      }
+                    }
+
+                    &__label {
+                      width: 80%;
+                      left: calc(10% + 2rem);
+                      &--small {
+                        width: 50%;
+                      }
+                    }
+                  }
+                  &--switch {
+                    flex-direction: column;
+                    justify-content: center;
+                    .r__form {
+                      &__input {
+                        &-container--latter-day-saint {
+                          width: 50%;
+                        }
+                        &--latter-day-saint {
+                          margin-left: 3rem;
+                          content: 'Latter Day Saint?';
+                        }
+
+                        &--comms,
+                        &--comms--text-preferred {
+                          width: 70%;
+                        }
+                      }
+                      &__label {
+                        &--latter-day-saint {
+                          &-white {
+                            width: 50%;
+                            transform: translate(0, 1rem);
+                          }
+                        }
+
+                        &--comms {
+                          width: 80%;
+                        }
+                      }
+                    }
+                  }
+                  &--sub-section {
+                    .r__form {
+                      &__input {
+                        &--dark {
+                          &-extra-small {
+                            width: 80%;
+                            transform: translate(0, 0);
+                            &:not(:placeholder-shown) + label {
+                              transform: translate(-5rem, -7rem) scale(0.75);
+                            }
+                          }
+                        }
+                      }
+
+                      &__label {
+                        &--extra-small {
+                          width: 80%;
+                          left: calc(11.25% + 2rem);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__budget-container {
+            .r__budget-dashboard {
+              .r__container {
+                &--small {
+                  &__content {
+                    .r__form {
+                      &--transaction {
+                        .r__form__row {
+                        }
+                        .r__form__section {
+                          &--early-income-view {
+                            flex-direction: column;
+                            &__income-view,
+                            &__income-view--purple {
+                              height: 33%;
+                              width: 100%;
+                            }
+
+                            &__income-view {
+                              &:first-of-type {
+                                border-bottom-left-radius: 0;
+                              }
+                            }
+
+                            &__income-view--purple {
+                              border-bottom-left-radius: 0.4rem;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__form-container {
+      .r__form {
+        &__header {
+          &__title--medium {
+            font-size: 4rem;
+          }
+        }
+        &__input {
+          width: 90%;
+          &:focus + label,
+          &:not(:placeholder-shown) + label {
+            transform: translate(-4rem, -7rem) scale(0.75);
+          }
+        }
+        &__label {
+          left: calc(4% + 2rem);
+        }
+      }
+    }
+  }
+}
+.r__form {
+  @include responsiveBreakPoint('smallMobilePort') {
+    &--full-width {
+      .r__form__section {
+        &__input {
+          width: 80%;
+
+          &--dark {
+            &-small {
+              width: 60%;
+            }
+          }
+        }
+
+        &__label {
+          width: 80%;
+          left: calc(10% + 2rem);
+        }
+      }
+    }
+    &__input {
+      width: 80%;
+
+      &--dark {
+        &-small {
+          width: 60%;
+        }
+      }
+    }
+
+    &__label {
+      width: 80%;
+      left: calc(10% + 2rem);
+    }
+
+    &__page-number {
+      margin-right: 3rem;
+    }
+  }
+}

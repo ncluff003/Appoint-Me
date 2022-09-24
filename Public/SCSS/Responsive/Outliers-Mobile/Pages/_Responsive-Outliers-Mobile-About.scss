@@ -1,0 +1,120 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // About Page
+    @include combo-max-responsive(720px, 360px) {
+      .r__about-me {
+        @include SizeAndPositioning(relative, 100%, 100%, flex, center, center, 0, 0, 0);
+        flex-direction: column;
+        overflow-y: auto;
+        &__header {
+          @include SizeAndPositioning(relative, 40%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          padding: 2rem;
+        }
+        &__introductory-paragraph {
+          @include SizeAndPositioning(relative, 15%, 100%, flex, center, center, 0, 0, 0);
+          padding: 0 1.5rem;
+        }
+        &-viewport {
+          @include SizeAndPositioning(relative, 45%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          .r__about-me-statement-slider {
+            @include SizeAndPositioning(relative, 75%, 100%, flex, space-evenly, center, 0, 0, 0);
+            &-viewport {
+              @include SizeAndPositioning(relative, 100%, 60%, flex, center, center, 0, 0, 0);
+              overflow: hidden;
+              .r__about-me-statement {
+                @include SizeAndPositioning(absolute, 80%, 100%, flex, center, center, 0, 0, 0);
+                margin: 0 1rem;
+                padding: 0 1rem;
+                transition: transform 1s;
+                &:first-of-type {
+                  margin: 0 1rem 0 0;
+                }
+                &:last-of-type {
+                  margin: 0 0 0 1rem;
+                }
+              }
+            }
+          }
+          .r__about-me-statement-slider-navigation {
+            @include SizeAndPositioning(relative, 25%, 100%, flex, center, center, 0, 0, 0);
+            &__dot {
+              @include SizingItem(relative, 1.4rem, 1.4rem);
+              background-color: rgba($colorGrey, 0.5);
+              border: none;
+              border-radius: 50%;
+              margin: 0 1rem;
+              transform: translate(0, -1rem);
+              -moz-transform: translate(0, 0);
+              &--active {
+                background-color: $colorDarkerGrey;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include combo-max-responsive(360px, 720px) {
+      .r__about-me {
+        @include SizeAndPositioning(relative, 100%, 100%, flex, center, center, 0, 0, 0);
+        flex-direction: column;
+        overflow-y: auto;
+        &__header {
+          @include SizeAndPositioning(relative, 40%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          padding: 2rem;
+        }
+        &__introductory-paragraph {
+          @include SizeAndPositioning(relative, 15%, 100%, flex, center, center, 0, 0, 0);
+          padding: 0 1.5rem;
+        }
+        &-viewport {
+          @include SizeAndPositioning(relative, 45%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          .r__about-me-statement-slider {
+            @include SizeAndPositioning(relative, 75%, 100%, flex, space-evenly, center, 0, 0, 0);
+            &-viewport {
+              @include SizeAndPositioning(relative, 100%, 60%, flex, center, center, 0, 0, 0);
+              overflow: hidden;
+              .r__about-me-statement {
+                @include SizeAndPositioning(absolute, 80%, 100%, flex, center, center, 0, 0, 0);
+                margin: 0 1rem;
+                padding: 0 1rem;
+                transition: transform 1s;
+                &:first-of-type {
+                  margin: 0 1rem 0 0;
+                }
+                &:last-of-type {
+                  margin: 0 0 0 1rem;
+                }
+              }
+            }
+          }
+          .r__about-me-statement-slider-navigation {
+            @include SizeAndPositioning(relative, 25%, 100%, flex, center, center, 0, 0, 0);
+            &__dot {
+              @include SizingItem(relative, 1.6rem, 1.6rem);
+              background-color: rgba($colorGrey, 0.5);
+              border: none;
+              border-radius: 50%;
+              margin: 0 1rem;
+              transform: translate(0, -3rem);
+              -moz-transform: translate(0, 0);
+              &--active {
+                background-color: $colorDarkerGrey;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

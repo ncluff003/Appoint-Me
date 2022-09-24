@@ -1,0 +1,302 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid-container {
+  @include responsiveBreakPoint('largeMobilePort') {
+    .r__app-landing-container {
+      .r__logo-container {
+        .r__logo-text {
+          font-size: 5rem;
+        }
+      }
+    }
+
+    .r__application-flex-container {
+      .r__navigation {
+        &--side-screen {
+          &__section {
+            &--user-information {
+              &__username {
+                font-size: 2rem;
+              }
+            }
+            &--application-logo {
+              &__text {
+                font-size: 1.6rem;
+              }
+            }
+          }
+        }
+      }
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            .r__user-profile-closure-icon {
+              font-size: 3rem;
+            }
+            &__header {
+              &__text {
+                font-size: 3rem;
+              }
+            }
+          }
+          .r__budget-container {
+            &__header {
+              &__text {
+                font-size: 3.4rem;
+              }
+            }
+            .r__budget-dashboard {
+              .r__container {
+                &--small {
+                  &-wide {
+                    .r__container-divide {
+                      &--two-thirds {
+                        .r__upcoming-bills-container {
+                          .r__upcoming-bills {
+                            &__bill {
+                              &__header {
+                                color: $colorOffWhite;
+                                font-size: 1.6rem;
+                                &__bill-type {
+                                  text-align: center;
+                                }
+                                &__bill-date {
+                                  text-align: center;
+                                }
+                                &__bill-paid-or-not {
+                                  text-align: center;
+                                  input[type='checkbox'] {
+                                    &::after {
+                                      @include SizeAndPositioning(absolute, 100%, 100%, none, row, nowrap, center, center, 0, 0, 0);
+                                      font-family: 'Font Awesome 6 Free';
+                                      font-weight: 900;
+                                      content: '\f00c';
+                                      transition: color 0.5s;
+                                      color: $colorOffWhite;
+                                    }
+                                    &:checked {
+                                      &:after {
+                                        display: flex;
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                              &__footer {
+                                font-size: 1.6rem;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                &--large {
+                  &__category-container {
+                    .r__main-category-display {
+                      &__category-display {
+                        &__icon {
+                          font-size: 15rem;
+                        }
+                      }
+                    }
+                    .r__sub-category-display {
+                      &__headers {
+                        &__title-container {
+                          font-size: 2rem;
+                          color: $colorOffWhite;
+                        }
+                      }
+                      &__sub-category {
+                        &__header {
+                          font-size: 2rem;
+                          color: $colorOffWhite;
+                        }
+                        &__content {
+                          font-size: 2rem;
+                          color: $primaryColor;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .r__container {
+              &--large {
+                &__header {
+                  &__title {
+                    font-size: 2.6rem;
+                  }
+                }
+                &__category-container {
+                  .r__main-category-display {
+                    &__category-display {
+                      &__icon {
+                        font-size: 15rem;
+                      }
+                    }
+                  }
+                  .r__sub-category-display {
+                    &__headers {
+                      &__title-container {
+                        font-size: 1.6rem;
+                        color: $colorOffWhite;
+                      }
+                    }
+                    &__sub-category {
+                      &__header {
+                        font-size: 1.6rem;
+                        color: $colorOffWhite;
+                        .r__button {
+                          &--borderless {
+                            &-set-timing-button {
+                              font-size: 1.6rem;
+                              color: $colorOffWhite;
+                            }
+                          }
+                        }
+                      }
+                      &__content {
+                        font-size: 1.6rem;
+                        color: $primaryColor;
+                      }
+                    }
+                  }
+                }
+                .r__debt-display,
+                .r__debt-display--paid {
+                  .r__debt {
+                    &__header {
+                      font-size: 1.6rem;
+                      color: $colorOffWhite;
+                      & p {
+                        text-align: center;
+                      }
+                    }
+                    &__details {
+                      font-size: 1.6rem;
+                      color: $primaryColor;
+                    }
+                    &--paid {
+                      &__header {
+                        font-size: 1.6rem;
+                        color: $colorOffWhite;
+                        & p {
+                          text-align: center;
+                        }
+                      }
+                      &__details {
+                        font-size: 1.6rem;
+                        color: $primaryColor;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__form-container {
+            &--full-width {
+              .r__form-closure-icon--budget-creation {
+                font-size: 3rem;
+              }
+              .r__form {
+                &--full-width {
+                  .r__form {
+                    &__header {
+                      &__title {
+                        font-size: 4rem;
+                      }
+                    }
+                  }
+                  .r__form__page {
+                    &--centered {
+                      .r__form {
+                        &__section {
+                          .r__month-container {
+                            &__category-container {
+                              .r__main-category-display {
+                                &__category-display {
+                                  &__icon {
+                                    font-size: 15rem;
+                                  }
+                                }
+                              }
+                              .r__sub-category-display {
+                                &__headers {
+                                  &__title-container {
+                                    color: $colorOffWhite;
+                                  }
+                                }
+                                .r__sub-category--month-view {
+                                  &__header {
+                                    color: $colorOffWhite;
+                                    &__category-name {
+                                      text-align: center;
+                                    }
+                                    &__input {
+                                      color: $primaryColor;
+                                    }
+                                    .r__button--borderless-set-timing-button {
+                                      font-size: 1.6rem;
+                                      color: $colorOffWhite;
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          &--page-number-display {
+                            &__number {
+                              font-size: 2.4rem;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .r__modal {
+      &--update-photo {
+        .r__form {
+          &--update-photo {
+            .r__form {
+              &__row {
+                &--update-photo {
+                  .r__form {
+                    &__label {
+                      &--photo-upload {
+                        &__text {
+                          text-align: center;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

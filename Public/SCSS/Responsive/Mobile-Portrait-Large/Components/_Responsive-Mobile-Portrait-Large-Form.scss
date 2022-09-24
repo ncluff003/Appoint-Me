@@ -1,0 +1,375 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  @include responsiveBreakPoint('largeMobilePort') {
+    .r__application-flex-container {
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            .r__form {
+              &--full-width {
+                justify-content: flex-start;
+                &:nth-of-type(3),
+                &:nth-of-type(4) {
+                  justify-content: center;
+                }
+                .r__form__section {
+                  .r__form {
+                    &__input {
+                      width: 80%;
+
+                      &--dark {
+                        &-small {
+                          width: 80%;
+                          &:not(:placeholder-shown) + label {
+                            transform: translate(-15rem, -7.25rem) scale(0.75);
+                          }
+                        }
+                      }
+                    }
+
+                    &__label {
+                      width: 80%;
+                      left: calc(10% + 2rem);
+                      &--small {
+                        width: 50%;
+                      }
+                    }
+                  }
+                  &--switch {
+                    flex-direction: column;
+                    justify-content: center;
+                    .r__form {
+                      &__input {
+                        &-container--latter-day-saint {
+                          width: 41%;
+                        }
+                        &--latter-day-saint {
+                          margin-left: 3rem;
+                          content: 'Latter Day Saint?';
+                        }
+
+                        &--comms,
+                        &--comms--text-preferred {
+                          width: 70%;
+                        }
+                      }
+                      &__label {
+                        &--latter-day-saint {
+                          &-white {
+                            width: 45%;
+                            transform: translate(0, 1rem);
+                          }
+                        }
+
+                        &--comms {
+                          width: 60%;
+                        }
+                      }
+                    }
+                  }
+                  &--sub-section {
+                    .r__form {
+                      &__input {
+                        &--dark {
+                          &-extra-small {
+                            width: 80%;
+                            transform: translate(0, 0);
+                            &:not(:placeholder-shown) + label {
+                              transform: translate(-5rem, -7rem) scale(0.75);
+                            }
+                          }
+                        }
+                      }
+
+                      &__label {
+                        &--extra-small {
+                          width: 80%;
+                          left: calc(11.25% + 2rem);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__form-container {
+            &--full-width {
+              grid-column: 1 / -1;
+              grid-row: 1 / -1;
+              .r__form-closure-icon--budget-creation {
+                top: 3rem;
+                right: 3rem;
+              }
+              .r__form {
+                &--full-width {
+                  .r__form {
+                    &__header {
+                      margin-bottom: 0rem;
+                      margin: 3rem;
+                    }
+
+                    &__page {
+                      &--centered {
+                        .r__form {
+                          &__input {
+                            &--small {
+                              width: 75%;
+                            }
+                          }
+                          &__label {
+                            &--small {
+                              &-budget {
+                                width: 75%;
+                                left: calc(12.7% + 2rem);
+                              }
+                            }
+                          }
+
+                          &__section {
+                            &--mobile {
+                              height: 100%;
+                            }
+                            .r__budget-creation-container {
+                              &--main-categories {
+                                width: 100%;
+                              }
+                              &--sub-categories {
+                                width: 100%;
+                                &__sub-category-display {
+                                  .r__sub-category {
+                                    &-controller {
+                                      min-width: 17rem;
+                                    }
+                                  }
+                                }
+                              }
+                              .r__form {
+                                &__section {
+                                  &--main-category-title {
+                                    .r__button--small-create-main-category {
+                                      width: 20%;
+                                      &:first-of-type {
+                                        width: 35%;
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            &--emergency {
+                              &__header {
+                                width: 95%;
+                                left: calc(-20% + 9.5rem);
+                              }
+
+                              #totalAmount + label,
+                              #lengthOfTime + label {
+                                width: 40%;
+                              }
+                            }
+
+                            .r__form {
+                              &__input {
+                                &--small {
+                                  width: 80%;
+                                  &-investment-goal {
+                                    width: 80%;
+                                  }
+                                }
+                              }
+                              &__label {
+                                &--small {
+                                  &-timing,
+                                  &-savings-goal,
+                                  &-investment-goal {
+                                    width: 100%;
+                                    left: calc(7.7% + 2rem);
+                                  }
+                                }
+                              }
+                            }
+
+                            &--timing {
+                              .r__form {
+                                &__input {
+                                  &--small {
+                                    width: 40%;
+                                  }
+                                }
+                                &__select {
+                                  width: 40%;
+                                }
+                              }
+
+                              #timingNumber {
+                                width: 40%;
+                              }
+                            }
+                            &.emergency-input {
+                              height: min-content;
+                            }
+
+                            &:nth-of-type(3),
+                            &:nth-of-type(4) {
+                              height: min-content;
+                              background-color: blue;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .r__budget-container {
+            .r__budget-dashboard {
+              .r__container {
+                &--small {
+                  &__content {
+                    .r__form {
+                      &--transaction {
+                        .r__form__row {
+                          padding: 0 0.5rem 1rem;
+                          &--transaction-header {
+                            .r__form {
+                              &__input {
+                                &--small-thinner {
+                                  &__wide,
+                                  &__wider {
+                                    width: 13rem;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        .r__form__section {
+                          &--early-income-view {
+                            flex-direction: column;
+                            &__income-view,
+                            &__income-view--purple {
+                              height: 33%;
+                              width: 100%;
+                            }
+
+                            &__income-view {
+                              &:first-of-type {
+                                border-bottom-left-radius: 0;
+                              }
+                            }
+
+                            &__income-view--purple {
+                              border-bottom-left-radius: 0.4rem;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    &--transaction {
+                      .r__form {
+                        &--transaction {
+                          .r__form__row {
+                            padding: 0 0.5rem 1rem;
+                            &--transaction-header {
+                              justify-content: space-around;
+                              .r__form {
+                                &__input {
+                                  &--small-thinner {
+                                    width: 12rem;
+                                    &__wide,
+                                    &__wider {
+                                      width: 13rem;
+                                    }
+                                  }
+                                }
+                                &__label {
+                                  &--small-thinner {
+                                    width: 90%;
+                                    &__wide,
+                                    &__wider {
+                                      width: 100%;
+                                      left: 0.5rem;
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          .r__form__section {
+                            &--early-income-view {
+                              flex-direction: column;
+                              &__income-view,
+                              &__income-view--purple {
+                                height: 33%;
+                                width: 100%;
+                              }
+
+                              &__income-view {
+                                &:first-of-type {
+                                  border-bottom-left-radius: 0;
+                                }
+                              }
+
+                              &__income-view--purple {
+                                border-bottom-left-radius: 0.4rem;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.r__form {
+  @include responsiveBreakPoint('largeMobilePort') {
+    &--full-width {
+      .r__form__section {
+        &__input {
+          width: 80%;
+
+          &--dark {
+            &-small {
+              width: 60%;
+            }
+          }
+        }
+
+        &__label {
+          width: 80%;
+          left: calc(10% + 2rem);
+        }
+      }
+    }
+    &__input {
+      width: 80%;
+
+      &--dark {
+        &-small {
+          width: 60%;
+        }
+      }
+    }
+
+    &__label {
+      width: 80%;
+      left: calc(10% + 2rem);
+    }
+
+    &__page-number {
+      margin-right: 3rem;
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    // BASIC ABOUT
+    .r__about-link {
+      &:first-of-type {
+        grid-column: 10 / span 9;
+        grid-row: 6 / span 15;
+      }
+      &:nth-of-type(2) {
+        grid-column: 21 / span 9;
+        grid-row: 6 / span 15;
+      }
+      &:last-of-type {
+        grid-column: 33 / span 9;
+        grid-row: 6 / span 15;
+      }
+    }
+
+    // ABOUT -- FOUNDATION
+    .r__foundation-container {
+      grid-column: 7 / span 35;
+      grid-row: 6 / span 14;
+    }
+
+    // ABOUT -- INTERESTS
+
+    .r__interests-container {
+      grid-column: 17 / span 27;
+      grid-row: 4 / span 20;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-around;
+
+      &__quote-container {
+        height: 20%;
+        justify-content: space-between;
+      }
+
+      .r__interests-grid {
+        height: 56%;
+        .r__cylinder-right {
+          transform: translate(-2.6rem, 0) rotate(0);
+          border-radius: 40%;
+          border-width: 2.25rem;
+        }
+      }
+    }
+    .r__interests-contact-container {
+      &__contact-link {
+        height: 10rem;
+      }
+    }
+
+    // ABOUT -- INTERESTS AND SKILLS
+    .r__icon-container {
+      grid-column: 5 / span 12;
+      grid-row: 7 / span 12;
+    }
+
+    // ABOUT -- SKILLS
+    .r__skills-container {
+      grid-column: 18 / span 28;
+      grid-row: 5 / span 18;
+
+      .r__skills-link-container {
+        .r__portfolio-link {
+          height: 10rem;
+        }
+      }
+    }
+  }
+}

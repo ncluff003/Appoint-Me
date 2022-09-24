@@ -1,0 +1,98 @@
+extends ./../budgetLanding
+
+block Budget-Content 
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Debt Manager
+  - const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 })
+  - const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  section.container--large.r__container--large 
+    section.container--large__header.r__container--large__header 
+      i.fas.fa-file-invoice-dollar.container--large__header__icon.r__container--large__header__icon
+      p.container--large__header__title.r__container--large__header__title= `${'Unpaid Debts'.toUpperCase()}`
+    section.debt-display.r__debt-display
+      each debt, index in data.budget.debts
+        - let paidOff = false;
+        - debt.status === `Paid Off` ? paidOff = true : paidOff = false;
+          if !paidOff
+            section.debt.r__debt(data-debt=`${index}`)
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Date 
+                p.debt-text.r__debt-text= `${debt.date.getDate()} ${months[debt.date.getMonth()]} ${debt.date.getFullYear()}`
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Lender 
+                p.debt-text.r__debt-text= `${debt.lender}`
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Type 
+                p.debt-text.r__debt-text= `${debt.debtType}`
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Initial Amount 
+                p.debt-text.r__debt-text= `${money.format(debt.initialDebt)}`
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Current Amount 
+                p.debt-text.r__debt-text= `${money.format(debt.amountOwed)}`
+              section.form__section--debt.r__form__section--debt 
+                p.debt-title.r__debt-title Status 
+                p.debt-text.r__debt-text= `${debt.status}`
+              section.form__section--debt.r__form__section--debt
+                button.button--extra-extra-small__debt-transaction-plan.r__button--extra-extra-small__debt-transaction-plan 
+                  i.fas.fa-handshake.button--extra-extra-small__transaction-plan__icon.r__button--extra-extra-small__transaction-plan__icon
+                  p.button--extra-small__transaction-plan__text.r__button--extra-extra-small__transaction-plan__text Paid Off
+      
+      - let admin = false 
+      - let associate = false 
+      - if (data.budget.associatedUsers.includes(data.user._id)) associate = true 
+      - if (data.budget.budgetAdmins.includes(data.user._id)) admin = true 
+      - console.log(associate, admin)
+      if admin
+        section.add-debt-container.r__add-debt-container
+          form.form--full-width.r__form--full-width
+            section.form__row--debt-creation.r__form__row--debt-creation 
+              section.form__section--transaction-plan.r__form__section--transaction-plan 
+                input.form__input--small-short.r__form__input--small-short#debtLender(type=`text` placeholder=`Who Lent The Money? $$$` maxLength=`25`)
+                label.form__label--small-short.r__form__label--small-short(for=`debtLender`) Lender
+              section.form__section--transaction-plan.r__form__section--transaction-plan 
+                - let debtTypes = [`Credit Card`, `Loan`, `Taxes`, `Debt`, `Other`]
+                  select.form__select--accounts.r__form__select--accounts
+                    each debtType in debtTypes 
+                      option.form__select__option.r__form__select__option= `${debtType}`
+
+              section.form__section--transaction-plan.r__form__section--transaction-plan 
+                input.form__input--small-short.r__form__input--small-short#debtAmount(type=`number` placeholder=`${money.format(0)}`)
+                label.form__label--small-short.r__form__label--small-short(for=`debtAmount`) Initial Amount
+              section.form__section--transaction-plan.r__form__section--transaction-plan 
+                input.form__input--small-short.r__form__input--small-short#regularPayment(type=`number` placeholder=`${money.format(0)}` step=".01" required)
+                label.form__label--small-short.r__form__label--small-short(for=`regularPayment`) Payment Amount
+              button.button--extra-extra-small__transaction-plan.r__button--extra-extra-small__transaction-plan#addDebtButton 
+                i.fas.fa-hand-holding-dollar.button__icon.r__button__icon
+                p.button__text.r__button__text Add Debt
+        button.button--borderless.r__button--borderless.open
+          i.fas.fa-plus.button--borderless__icon.r__button--borderless__icon
+          p.button--borderless__text.r__button--borderless__text Add Debt
+
+    section.container--large__header.r__container--large__header 
+      i.fas.fa-handshake.container--large__header__icon.r__container--large__header__icon
+      p.container--large__header__title.r__container--large__header__title= `${'Debts Paid Off'.toUpperCase()}`
+    section.debt-display--paid.r__debt-display--paid
+      each debt, index in data.budget.debts 
+        - let paidOff = false;
+        - debt.status === `Paid Off` ? paidOff = true : paidOff = false;
+          if paidOff
+            section.debt--paid.r__debt--paid 
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Date 
+                p.debt--paid-text.r__debt--paid-text= `${new Date(debt.datePaid).getDate()} ${months[new Date(debt.datePaid).getMonth()]} ${new Date(debt.datePaid).getFullYear()}`
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Lender 
+                p.debt--paid-text.r__debt--paid-text= `${debt.lender}`
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Type 
+                p.debt--paid-text.r__debt--paid-text= `${debt.debtType}`
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Initial Amount 
+                p.debt--paid-text.r__debt--paid-text= `${money.format(debt.initialDebt)}`
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Current Amount 
+                p.debt--paid-text.r__debt--paid-text= `${money.format(debt.amountOwed - debt.amountOwed)}`
+              section.form__section--debt-paid.r__form__section--debt-paid 
+                p.debt--paid-title.r__debt--paid-title Status 
+                p.debt--paid-text.r__debt--paid-text= `${debt.status}`

@@ -1,0 +1,48 @@
+extends ./../budgetLanding
+
+block Budget-Content 
+  - const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 })
+  - const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Recent Transactions
+  section.modal--receipt.r__modal--receipt.closed
+    i.fas.fa-window-close.modal--receipt__closure-icon.r__modal--receipt__closure-icon
+    section.modal--receipt__digital-receipt.r__modal--receipt__digital-receipt
+      section.modal--receipt__digital-receipt__container.r__modal--receipt__digital-receipt__container
+        header.modal--receipt__digital-receipt__container__header.r__modal--receipt__digital-receipt__container__header
+          p.modal--receipt__digital-receipt__container__header__title.r__modal--receipt__digital-receipt__container__header__title Sample Location
+          section.modal--receipt__digital-receipt__container__header__secondary-title-container.r__modal--receipt__digital-receipt__container__header__secondary-title-container 
+            p.secondary-title.r__secondary-title Transaction Details
+            p.secondary-title.r__secondary-title Total
+        section.modal--receipt__digital-receipt__container__item-container.r__modal--receipt__digital-receipt__container__item-container
+
+        footer.modal--receipt__digital-receipt__container__footer.r__modal--receipt__digital-receipt__container__footer
+          p.footer-title.r__footer-title Total
+          p.footer-title.r__footer-title= `${money.format(5.99 * data.budget.transactions.recentTransactions.length)}`
+  section.container--large.r__container--large 
+    section.container--large__header.r__container--large__header 
+      i.fas.fa-file-invoice-dollar.container--large__header__icon.r__container--large__header__icon
+      p.container--large__header__title.r__container--large__header__title= `${'RECENT TRANSACTIONS'}`
+    //- section.container--large__transaction-title-container.r__container--large__transaction-title-container
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title View Full Transaction
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title Transaction Type
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title Transaction Date
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title Transaction Location
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title Account
+    //-   section.container--large__transaction-title-container__transaction-title.r__container--large__transaction-title-container__transaction-title
+    //-     p.container--large__transaction-title-container__transaction-title__title.r__container--large__transaction-title-container__transaction-title__title Account Options
+    section.recent-transaction-display.r__recent-transaction-display
+      //- each transaction, index in data.budget.transactions.recentTransactions
+      //-   section.recent-transaction.r__recent-transaction 
+      //-     header.recent-transaction__header.r__recent-transaction__header 
+      //-       section.recent-transaction__header__section.r__recent-transaction__header__section 
+      //-         p.recent-transaction__header__section__text.r__recent-transaction__header__section__text= `${transaction.transactionType}`
+      //-       section.recent-transaction__header__section.r__recent-transaction__header__section 
+      //-         p.recent-transaction__header__section__text.r__recent-transaction__header__section__text= `${transaction.location}`
+      //-       section.recent-transaction__header__section.r__recent-transaction__header__section 
+      //-         p.recent-transaction__header__section__text.r__recent-transaction__header__section__text= `${transaction.transactionDate}`

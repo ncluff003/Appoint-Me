@@ -1,0 +1,29 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+@include responsiveBreakPoint('smallTabLand') {
+  .r__grid {
+    .r__introduction-container {
+      grid-column: 3 / span 15;
+      grid-row: 4 / span 8;
+      .r__image-container {
+        .r__image-frame {
+          height: 30rem;
+          width: 30rem;
+          transform: translate(-3rem, -2rem);
+        }
+      }
+
+      .r__introduction-container__introduction {
+        .r__name-container {
+          transform: translate(-3rem, 0rem) rotate(0);
+        }
+        .r__cta-container {
+          justify-content: center;
+          align-items: flex-end;
+          transform: translate(-3rem, 8rem) rotate(0);
+        }
+      }
+    }
+  }
+}

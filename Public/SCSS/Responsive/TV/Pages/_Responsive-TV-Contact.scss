@@ -1,0 +1,26 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    .r__contact-me-section {
+      grid-column: 15 / span 20;
+      grid-row: 2 / span 23;
+
+      .r__personal-photo-container {
+        .r__personal-photo {
+          height: 50%;
+        }
+        .r__contact-greeting {
+          height: 50%;
+        }
+      }
+
+      .r__form {
+        &-section {
+          height: 7rem;
+        }
+      }
+    }
+  }
+}

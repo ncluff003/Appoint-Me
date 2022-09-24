@@ -1,0 +1,36 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  .r__app-landing-container {
+    @include responsiveBreakPoint('smallMobilePort') {
+      @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      .r__logo-container {
+        @include SizeAndPositioning(relative, 25%, 100%, flex, column, nowrap, flex-end, center, 0, 0, 0);
+        z-index: 0;
+        .r__logo-image {
+          @include SizingItem(relative, 80%, auto);
+          margin-right: 5rem;
+          margin-bottom: 3rem;
+        }
+        .r__logo-text {
+          display: flex;
+          height: 50%;
+          align-self: center;
+          transform: translateX(0);
+        }
+      }
+      .r__button-container {
+        @include SizeAndPositioning(relative, 10%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+        -moz-transform: translateY(0);
+        z-index: 0;
+      }
+      .r__slogan {
+        @include SizeAndPositioning(relative, 7.5%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+        z-index: 0;
+      }
+    }
+  }
+}

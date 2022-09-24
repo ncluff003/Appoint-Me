@@ -1,0 +1,32 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  .r__app-landing-container {
+    @include responsiveBreakPoint('smallTabPort') {
+      @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+      grid-column: 2 / span 9;
+      grid-row: 4 / span 12;
+      .r__logo-container {
+        @include SizeAndPositioning(relative, 75%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+        z-index: 0;
+        .r__logo-image {
+          @include SizingItem(relative, 85%, auto);
+          margin-bottom: 3rem;
+        }
+        .r__logo-text {
+          transform: translateX(6.25%);
+        }
+      }
+      .r__button-container {
+        @include SizeAndPositioning(relative, 17.5%, 100%, flex, row, nowrap, space-evenly, center, 0, 2rem, 0);
+        -moz-transform: translateY(0);
+        z-index: 0;
+      }
+      .r__slogan {
+        @include SizeAndPositioning(relative, 7.5%, 100%, flex, row, nowrap, center, center, 5%, 0, 0);
+        z-index: 0;
+      }
+    }
+  }
+}

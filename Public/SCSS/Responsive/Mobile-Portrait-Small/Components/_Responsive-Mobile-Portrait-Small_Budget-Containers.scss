@@ -1,0 +1,630 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  BUDGET CONTAINER
+.r__master-grid-container {
+  .r__application-flex-container {
+    .r__application-viewport {
+      .r__application-display {
+        .r__budget-container {
+          @include responsiveBreakPoint('smallMobilePort') {
+            @include SizeAndPositioning(relative, 100%, 100%, flex, row, wrap, space-evenly, center, 0, 0, 0);
+            overflow-y: auto;
+            padding: 0 2rem;
+            &__header {
+              @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+              align-self: flex-start;
+              margin-top: 7.5rem;
+            }
+
+            &__navigation-button-container {
+              width: 30%;
+              &__text {
+                width: 50%;
+              }
+            }
+          }
+          .r__budget-dashboard {
+            padding: 12rem 0 10rem;
+          }
+
+          .r__open-navigation {
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
+}
+
+.r__container {
+  @include responsiveBreakPoint('smallMobilePort') {
+    &--budget-management {
+      @include SizeAndPositioning(relative, 85%, 100%, flex, row, wrap, center, center, 0, 0, 0);
+    }
+
+    &--edit-category-goals {
+      @include SizeAndPositioning(relative, 85%, 100%, flex, row, wrap, center, center, 0, 0, 0);
+      &--large {
+        height: calc(45rem * 1.5);
+        width: calc((55.8rem * 2) + 7rem);
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        border: 0.3rem solid $primaryColor;
+        border-radius: 0.5rem;
+        padding: 0.2rem;
+        margin-bottom: 5rem;
+        background-color: rgba($colorOffWhite, 0.8);
+      }
+    }
+
+    &--allocate-income {
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    &--extra-small {
+      @include SizeAndPositioning(relative, 22.5rem, 35rem, flex, column, nowrap, space-between, center, 0, 0, 0);
+      padding: 0.2rem;
+      border: 0.3rem solid $primaryColor;
+      border-radius: 0.5rem;
+      background-color: rgba($colorOffWhite, 0.8);
+      min-width: 35rem;
+      min-height: 22.5rem;
+
+      &-invite {
+        margin-top: 30rem;
+        &__header {
+          @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+          border-top-left-radius: 0.25rem;
+          border-top-right-radius: 0.25rem;
+          padding: 0 1.5rem;
+          background-color: $primaryColor;
+          border-bottom: 0.3rem solid $tertiaryColor;
+        }
+        &__content {
+          @include SizeAndPositioning(relative, 75%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          &__applied-container {
+            @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+            bottom: 0;
+            left: 0;
+            border-top: 0.3rem solid $primaryColor;
+            border-right: 0.3rem solid $primaryColor;
+          }
+          &__un-applied-container {
+            @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+            bottom: 0;
+            right: 0;
+            border-top: 0.3rem solid $primaryColor;
+          }
+        }
+      }
+      &__header {
+        @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        padding: 0 1.5rem;
+        background-color: $primaryColor;
+        border-bottom: 0.3rem solid $tertiaryColor;
+      }
+      &__content {
+        @include SizeAndPositioning(relative, 75%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+        &__applied-container {
+          @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+          bottom: 0;
+          left: 0;
+          border-top: 0.3rem solid $primaryColor;
+          border-right: 0.3rem solid $primaryColor;
+        }
+        &__un-applied-container {
+          @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+          bottom: 0;
+          right: 0;
+          border-top: 0.3rem solid $primaryColor;
+        }
+      }
+      margin-bottom: 5rem;
+
+      &__margin-left-and-right {
+        margin: 1rem 6rem;
+
+        &__header {
+          @include SizeAndPositioning(relative, 25%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+          border-top-left-radius: 0.25rem;
+          border-top-right-radius: 0.25rem;
+          padding: 0 1.5rem;
+          background-color: $primaryColor;
+          border-bottom: 0.3rem solid $tertiaryColor;
+          &__investment-type {
+            @include SizeAndPositioning(absolute, max-content, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+            bottom: 0;
+            right: 1.5rem;
+          }
+        }
+        &__content {
+          @include SizeAndPositioning(relative, 75%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          &__column {
+            flex-flow: column nowrap;
+            justify-content: space-evenly;
+            .investment-explanatory-information {
+              @include SizeAndPositioning(relative, 65%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+              border-bottom: 0.2rem solid $primaryColor;
+              .investment-description,
+              .investment-settle-container {
+                @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+              }
+            }
+            .investment-value-information,
+            .investment-value-information--settled {
+              @include SizeAndPositioning(relative, 35%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+              &__half {
+                @include SizeAndPositioning(relative, 100%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+                &:first-of-type {
+                  border-right: 0.2rem solid $primaryColor;
+                }
+                &:nth-of-type(2) {
+                  justify-content: center;
+                }
+                .investment-input-container {
+                  @include SizeAndPositioning(relative, 40%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+                }
+                &__update-text {
+                  @include SizeAndPositioning(absolute, max-content, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+                  bottom: -0.25rem;
+                  right: 0.5rem;
+                }
+              }
+            }
+          }
+        }
+        &:nth-of-type(4) {
+          .form--extra-small {
+            justify-content: flex-start;
+          }
+        }
+      }
+      &-evenly-spaced {
+        &__content {
+          justify-content: space-evenly;
+          &__account-total,
+          &__account-total__alt {
+            transform: translate(0, -2rem);
+          }
+          &__applied-container {
+            @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+            bottom: 0;
+            left: 0;
+            border-top: 0.3rem solid $primaryColor;
+            border-right: 0.3rem solid $primaryColor;
+          }
+          &__un-applied-container {
+            @include SizeAndPositioning(absolute, 30%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+            bottom: 0;
+            right: 0;
+            border-top: 0.3rem solid $primaryColor;
+          }
+        }
+      }
+      &:hover {
+        cursor: pointer;
+        .container--extra-small__content-icon,
+        .container--extra-small__margin-left-and-right__content-icon {
+          transition: color 0.5s;
+        }
+      }
+      &__row {
+        flex-flow: row wrap;
+      }
+    }
+
+    &--small {
+      @include SizeAndPositioning(relative, 45rem, 63.8rem, flex, column, nowrap, space-between, center, 0, 0, 0);
+      padding: 0.2rem;
+      border: 0.3rem solid $primaryColor;
+      border-radius: 0.5rem;
+      background-color: rgba($colorOffWhite, 0.8);
+      &__header {
+        @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        padding: 0 1.5rem;
+        background-color: $primaryColor;
+        border-bottom: 0.3rem solid $tertiaryColor;
+        min-height: 15%;
+      }
+      &__content {
+        @include SizeAndPositioning(relative, 85%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+        &--transaction {
+          height: 70%;
+        }
+      }
+      &__transaction-total {
+        @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+        min-height: 15%;
+        background-color: $primaryColor;
+        border-bottom-left-radius: 0.4rem;
+        border-bottom-right-radius: 0.4rem;
+      }
+      margin-bottom: 5rem;
+
+      &-wide {
+        width: 63.8rem;
+        height: calc((55.8rem * 2) + 7rem);
+        flex-direction: column;
+        padding: 0.2rem;
+        border: 0.3rem solid $primaryColor;
+        border-radius: 0.5rem;
+        margin-bottom: 5rem;
+        background-color: rgba($colorOffWhite, 0.8);
+        .container-divide {
+          @include SizeAndPositioning(relative, 100%, 50%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+          width: 100%;
+          &__header {
+            @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+            padding: 0 1.5rem;
+            background-color: $primaryColor;
+            border-bottom: 0.3rem solid $tertiaryColor;
+            min-height: 15%;
+            &__icon {
+              @include SizeAndPositioning(absolute, 100%, 6rem, flex, row, nowrap, center, center, 0, -50%, 0);
+              top: 50%;
+              left: 0;
+            }
+          }
+          &--thirds {
+            border-top-left-radius: 0.25rem;
+            height: 50%;
+            width: 100%;
+          }
+          &--two-thirds {
+            border-top-right-radius: 0.25rem;
+            height: 50%;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &--medium {
+      @include SizeAndPositioning(relative, calc((55.8rem * 2)), 50.8rem, flex, column, nowrap, space-between, center, 0, 0, 0);
+      padding: 0.2rem;
+      border: 0.3rem solid $primaryColor;
+      border-radius: 0.5rem;
+      margin-bottom: 5rem;
+      background-color: rgba($colorOffWhite, 0.8);
+      &__half {
+        @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, flex-start, flex-start, 0, 0, 0);
+        flex-flow: row wrap;
+        overflow-y: auto;
+        &:first-of-type {
+          border-bottom: 0.3rem groove $primaryColor;
+          padding-bottom: 0.2rem;
+        }
+        &:nth-of-type(2) {
+          @include SizeAndPositioning(relative, 50%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+          padding-top: 0.2rem;
+          .main-category-display {
+            @include SizeAndPositioning(relative, 55%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+            &__left-button,
+            &__right-button {
+              @include SizeAndPositioning(relative, 100%, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+              &__icon {
+                &:hover {
+                  cursor: pointer;
+                  transition: color 0.5s;
+                }
+              }
+            }
+            &__category-information {
+              @include SizeAndPositioning(relative, 100%, 60%, flex, column, nowrap, center, center, 0, 0, 0);
+            }
+          }
+          .sub-category-display {
+            @include SizeAndPositioning(relative, 45%, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+            border-top: 0.3rem solid $primaryColor;
+            overflow-y: auto;
+            .sub-category {
+              @include SizeAndPositioning(relative, 6rem, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+              .sub-category-title-container {
+                @include SizeAndPositioning(relative, 100%, 70%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+                padding-left: 2rem;
+              }
+              .sub-category-controller {
+                @include SizeAndPositioning(relative, 100%, 30%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+                &__surplus-container {
+                  @include SizeAndPositioning(relative, 100%, 50%, flex, column, nowrap, center, center, 0, 0, 0);
+                  &__switch {
+                    @include SizeAndPositioning(relative, 40%, 75%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+                    border: 0.2rem solid rgba($primaryColorDark, 0.8);
+                    border-radius: 2rem;
+                    background-color: rgba($primaryColor, 0.8);
+                    transition: border 0.5s, background-color 0.5s, transform 0.5s;
+                    &__toggle {
+                      @include SizeAndPositioning(relative, 93%, 33%, flex, row, nowrap, center, center, 5%, 0, 0);
+                      border: 0.2rem solid rgba($colorOffWhite, 0.8);
+                      border-radius: 50%;
+                      background-color: rgba($primaryColorDark, 0.8);
+                      transition: border 0.5s, background-color 0.5s, transform 0.5s;
+                    }
+                    &--switched {
+                      @include SizeAndPositioning(relative, 40%, 75%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+                      border: 0.2rem solid rgba($secondaryColorDark, 0.8);
+                      border-radius: 2rem;
+                      background-color: rgba($secondaryColor, 0.8);
+                      .sub-category-controller__surplus-container__switch__toggle {
+                        @include SizeAndPositioning(relative, 93%, 33%, flex, row, nowrap, center, center, 200%, 0, 0);
+                        border-radius: 50%;
+                        background-color: rgba($secondaryColorDark, 0.8);
+                      }
+                    }
+                    &:hover {
+                      cursor: pointer;
+                    }
+                    &__alt {
+                      width: 80%;
+                      &__toggle {
+                        @include SizeAndPositioning(relative, 93%, 33%, flex, row, nowrap, center, center, 5%, 0, 0);
+                        border: 0.2rem solid rgba($colorOffWhite, 0.8);
+                        border-radius: 50%;
+                        background-color: rgba($primaryColorDark, 0.8);
+                        transition: border 0.5s, background-color 0.5s, transform 0.5s;
+                      }
+                      &--switched {
+                        @include SizeAndPositioning(relative, 40%, 80%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+                        border: 0.2rem solid rgba($secondaryColorDark, 0.8);
+                        border-radius: 2rem;
+                        background-color: rgba($secondaryColor, 0.8);
+                        .sub-category-controller__surplus-container__switch__alt__toggle {
+                          @include SizeAndPositioning(relative, 93%, 33%, flex, row, nowrap, center, center, 200%, 0, 0);
+                          border-radius: 50%;
+                          background-color: rgba($secondaryColorDark, 0.8);
+                        }
+                        &:hover {
+                          cursor: pointer;
+                        }
+                      }
+                      &:hover {
+                        cursor: pointer;
+                      }
+                    }
+                  }
+                }
+                .disabled {
+                  border-color: rgba($colorDarkerGrey, 0.2);
+                  background-color: transparent;
+                  color: rgba($colorDarkerGrey, 0.5);
+                  &:hover {
+                    cursor: default;
+                    border-color: rgba($colorDarkerGrey, 0.2);
+                    background-color: transparent;
+                    color: rgba($colorDarkerGrey, 0.5);
+                  }
+                  & * {
+                    border-color: inherit;
+                    background-color: inherit;
+                    color: inherit;
+                    & > section,
+                    .sub-category-controller__surplus-container__switch__alt,
+                    .sub-category-controller__surplus-container__switch {
+                      border-color: inherit;
+                      background-color: inherit;
+                      color: inherit;
+                      section {
+                        border-color: inherit;
+                        background-color: inherit;
+                        color: inherit;
+                      }
+                    }
+                  }
+                }
+                &__icon {
+                  &:hover {
+                    cursor: pointer;
+                    transition: color 0.5s;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &--large {
+      @include SizeAndPositioning(relative, calc(55.8rem * 2), 63.8rem, flex, column, nowrap, space-between, center, 0, 0, 0);
+      min-height: 67.5rem;
+      border: 0.3rem solid $primaryColor;
+      border-radius: 0.5rem;
+      padding: 0.2rem;
+      margin-bottom: 5rem;
+      background-color: rgba($colorOffWhite, 0.8);
+      &__header {
+        @include SizeAndPositioning(relative, 10%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+        padding: 0 1.5rem;
+        background-color: $primaryColor;
+        border-bottom: 0.3rem solid $tertiaryColor;
+        min-height: 8%;
+        &__icon {
+          @include SizeAndPositioning(absolute, 100%, 6rem, flex !important, row, nowrap, center, center, 0, -50%, 0);
+          top: 50%;
+          left: 0;
+        }
+      }
+      &__user-results {
+        @include SizeAndPositioning(relative, 90%, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+      }
+
+      .r__recent-transaction-display {
+        @include SizeAndPositioning(relative, calc(100% - 10%), 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+        overflow-y: auto;
+      }
+
+      &__category-container {
+        @include SizeAndPositioning(relative, calc(100% - 14rem), 100%, flex, column, nowrap, center, center, 0, 0, 0);
+        padding: 1.5rem;
+        .main-category-display {
+          @include SizeAndPositioning(relative, 40%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          &__button-container {
+            @include SizeAndPositioning(relative, 100%, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+          }
+          &__category-display {
+            @include SizeAndPositioning(relative, 60%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+            &__title {
+              margin-top: 2rem;
+            }
+          }
+        }
+        .main-category-display {
+          @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+          &__button-container {
+            @include SizeAndPositioning(relative, 100%, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+            .left,
+            .right {
+              &:hover {
+                cursor: pointer;
+                transition: color 0.5s;
+              }
+            }
+          }
+          &__category-display {
+            @include SizeAndPositioning(relative, 100%, 60%, flex, column, nowrap, center, center, 0, 0, 0);
+            &__title {
+              margin-top: 2rem;
+            }
+          }
+        }
+        .sub-category-display {
+          @include SizeAndPositioning(relative, 50%, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
+          margin-left: 0rem;
+          overflow-y: auto;
+          &__headers {
+            @include SizeAndPositioning(relative, 4rem, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+            min-height: 4rem;
+            &__title-container {
+              @include SizeAndPositioning(relative, 100%, 19.5%, flex, row, nowrap, center, center, 0, 0, 0);
+              background-color: $primaryColor;
+            }
+          }
+          &__sub-category {
+            @include SizeAndPositioning(relative, 6rem, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            min-height: 10rem;
+            background-color: rgba($colorLightestGrey, 0.25);
+            &:nth-of-type(2n) {
+              background-color: rgba($colorLightestGrey, 0.5);
+            }
+            &__section {
+              @include SizeAndPositioning(relative, 100%, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+              &__input {
+                border: $colorOffWhite;
+                &:focus {
+                  background-color: rgba($colorOffWhite, 0.8);
+                  outline: none;
+                }
+              }
+              .form__input--medium {
+                &:focus {
+                  background-color: $colorOffWhite;
+                  outline: none;
+                }
+              }
+              &:first-of-type {
+                flex-direction: column;
+              }
+            }
+            &:hover {
+              cursor: pointer;
+              .sub-category-display__sub-category__section {
+                background-color: $primaryColor;
+                transition: background-color 0.5s, color 0.5s;
+                .button--borderless-set-timing-button {
+                  cursor: pointer;
+                  transition: color 0.5s;
+                }
+                .form__input--medium {
+                  background-color: rgba($colorOffWhite, 0.8);
+                }
+              }
+            }
+            &--hidden {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    &--extra-large {
+      @include SizeAndPositioning(relative, 100%, 100%, flex, row, wrap, center, center, 0, 0, 0);
+      &__half {
+        @include SizeAndPositioning(relative, 50%, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+        background-color: rgba($colorOffWhite, 0.5);
+        overflow-x: auto;
+        &:first-of-type {
+          border-bottom: 0.3rem solid $primaryColor;
+        }
+        &__header {
+          @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+        }
+        .investment-container {
+          @include SizeAndPositioning(relative, 85%, 100%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+        }
+      }
+
+      &-column {
+        flex-flow: column nowrap;
+        @include responsiveBreakPoint('smallMobilePort') {
+          justify-content: center;
+          .r__container--large {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.budget-goal-summary-container {
+  @include responsiveBreakPoint('smallMobilePort') {
+    @include SizeAndPositioning(relative, 16rem, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
+    .budget-single-goal-summary {
+      @include SizeAndPositioning(relative, 100%, 19%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+      background-color: $colorLightestGrey;
+      &__title,
+      &__amount {
+        @include SizeAndPositioning(relative, 50%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+      }
+    }
+  }
+}
+
+.surplus-container {
+  @include responsiveBreakPoint('smallMobilePort') {
+    @include SizeAndPositioning(relative, 100%, 8rem, flex, column, nowrap, center, center, 0, 0, 0);
+    &__text {
+      margin-bottom: 0.25rem;
+    }
+    &__switch {
+      @include SizeAndPositioning(relative, 2.5rem, 80%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+      border: 0.2rem solid rgba($primaryColorDark, 0.8);
+      border-radius: 4rem;
+      background-color: rgba($primaryColor, 0.8);
+      padding: 0.1rem;
+      &__toggle {
+        @include SizeAndPositioning(relative, 100%, 33%, flex, row, nowrap, center, center, 0, 0, 0);
+        border: 0.2rem solid rgba($colorOffWhite, 0.8);
+        border-radius: 4rem;
+        background-color: rgba($primaryColor, 0.8);
+        transition: transform 0.5s;
+      }
+      &--switched {
+        border: 0.2rem solid rgba($secondaryColorDark, 0.8);
+        background-color: rgba($secondaryColor, 0.8);
+        .surplus-container__switch__toggle {
+          transform: translate(202%, 0);
+          background-color: rgba($secondaryColor, 0.8);
+        }
+      }
+    }
+  }
+}

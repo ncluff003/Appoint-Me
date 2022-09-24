@@ -1,0 +1,11 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid-container {
+  @include responsiveBreakPoint('smallTabPort') {
+    @include gridLayout(100vh, 100vw, repeat(12, 1fr), repeat(18, 1fr), 0, 0);
+    @include gridPlacement(12, 12, 18, 18);
+  }
+}

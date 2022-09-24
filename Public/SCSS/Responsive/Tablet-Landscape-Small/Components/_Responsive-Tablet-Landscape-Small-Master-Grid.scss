@@ -1,0 +1,9 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+@include responsiveBreakPoint('smallTabLand') {
+  .r__grid {
+    @include gridLayout(100vh, 100vw, repeat(18, 1fr), repeat(12, 1fr), 0, 0);
+    @include gridPlacement(18, 18, 12, 12);
+  }
+}

@@ -1,0 +1,26 @@
+form.form--full-width.r__form--full-width.closed
+  section.form__section.r__form__section
+    input.form__input--dark-small.r__form__input--dark-small#firstname(type="text" name="firstname" placeholder="First Name" value=`${data.user.firstname}`)
+    label.form__label--small.r__form__label--small#firstnameLabel(for="firstname") First Name
+  section.form__section.r__form__section
+    input.form__input--dark-small.r__form__input--dark-small#lastname(type="text" name="lastname" placeholder="Last Name" value=`${data.user.lastname}`)
+    label.form__label--small.r__form__label--small#lastnameLabel(for="lastname") Last Name
+  section.form__section.r__form__section
+    input.form__input--dark-small.r__form__input--dark-small#username(type="text" name="username" placeholder="Username" value=`${data.user.username}`)
+    label.form__label--small.r__form__label--small#usernameLabel(for="username") Username
+  section.form__section--switch.r__form__section--switch
+    label.form__label--latter-day-saint-white.r__form__label--latter-day-saint-white(for="latterDaySaint") Latter Day Saint
+    if !data.user.latterDaySaint
+      .form__input-container--latter-day-saint.r__form__input-container--latter-day-saint
+        .form__input--latter-day-saint.r__form__input--latter-day-saint
+          .form__input--latter-day-saint__switch.r__form__input--latter-day-saint__switch 
+          p.form__input--latter-day-saint__text.r__form__input--latter-day-saint__text NO
+          p.form__input--latter-day-saint__text.r__form__input--latter-day-saint__text.closed YES
+    else 
+      .form__input-container--latter-day-saint.r__form__input-container--latter-day-saint 
+        .form__input--latter-day-saint.r__form__input--latter-day-saint.form__input--latter-day-saint--switched.r__form__input--latter-day-saint--switched
+          .form__input--latter-day-saint__switch.r__form__input--latter-day-saint__switch 
+          p.form__input--latter-day-saint__text.r__form__input--latter-day-saint__text.closed NO
+          p.form__input--latter-day-saint__text.r__form__input--latter-day-saint__text YES
+  section.form__section.r__form__section
+    button.button--small-transparent.r__button--small-transparent(type="submit") Update

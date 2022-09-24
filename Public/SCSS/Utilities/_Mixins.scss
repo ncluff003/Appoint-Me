@@ -1,0 +1,193 @@
+//  Parametric Mixin That Needs The Height | Width | Column Template | Row Template | Column Gap | Row Gap
+@mixin gridLayout($height, $width, $columns, $rows, $columnGap, $rowGap) {
+  height: $height;
+  width: $width;
+  -ms-grid-template-columns: $columns;
+  -ms-grid-template-rows: $rows;
+  -ms-grid-column-gap: $columnGap;
+  -ms-grid-row-gap: $rowGap;
+  -o-grid-template-columns: $columns;
+  -o-grid-template-rows: $rows;
+  -o-grid-column-gap: $columnGap;
+  -o-grid-row-gap: $rowGap;
+  -webkit-grid-template-columns: $columns;
+  -webkit-grid-template-rows: $rows;
+  -webkit-grid-column-gap: $columnGap;
+  -webkit-grid-row-gap: $rowGap;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  grid-column-gap: $columnGap;
+  grid-row-gap: $rowGap;
+}
+
+// Parametric Mixin For Grid Placement.  It Needs: Number of Columns | Column Span | Number of Rows | Row Span
+@mixin gridPlacement($columns, $columnSpan, $rows, $rowSpan) {
+  .column {
+    $x: 1;
+    @while $x <= $columns {
+      @if ($columnSpan >= 1) {
+        &_#{$x}-#{$columnSpan} {
+          -ms-grid-column: $x / span $columnSpan;
+          -o-grid-column: $x / span $columnSpan;
+          -webkit-grid-column: $x / span $columnSpan;
+          grid-column: $x / span $columnSpan;
+        }
+        $columnSpan: $columnSpan - 1;
+      }
+
+      @if ($columnSpan < 1) {
+        $x: $x + 1;
+        $columnSpan: $columns;
+      }
+    }
+  }
+
+  .row {
+    $y: 1;
+    @while $y <= $rows {
+      @if ($rowSpan >= 1) {
+        &_#{$y}-#{$rowSpan} {
+          -ms-grid-row: $y / span $rowSpan;
+          -o-grid-row: $y / span $rowSpan;
+          -webkit-grid-row: $y / span $rowSpan;
+          grid-row: $y / span $rowSpan;
+        }
+        $rowSpan: $rowSpan - 1;
+      }
+      @if ($rowSpan < 1) {
+        $y: $y + 1;
+        $rowSpan: $rows;
+      }
+    }
+  }
+}
+
+@mixin SizingItem($position, $height, $width) {
+  position: $position;
+  height: $height;
+  width: $width;
+}
+
+@mixin SizeAndPositioning($position, $height, $width, $display, $direction, $wrap, $justify, $align, $horizontal, $vertical, $rotate) {
+  position: $position;
+  height: $height;
+  width: $width;
+  display: $display;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: $justify;
+  align-items: $align;
+  transform: rotate($rotate) translate($horizontal, $vertical);
+}
+
+@mixin Taller($height, $multiplier) {
+  height: calc($height * $multiplier);
+  min-height: calc($height * $multiplier);
+}
+
+@mixin CreateCircle($position, $circleHeight, $circleWidth, $childHeight, $childWidth) {
+  position: $position;
+  height: $circleHeight;
+  width: $circleWidth;
+  border-radius: 50%;
+
+  > * {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    margin-top: (-($childWidth / 2) + 6.25rem);
+    margin-left: -($childWidth / 2);
+    height: $childHeight;
+    width: $childWidth;
+    transition: transform 2s;
+  }
+}
+
+// MEDIA QUERY MANAGER
+@mixin max-responsive($max-width) {
+  @media (max-width: $max-width) {
+    @content;
+  }
+}
+
+@mixin min-responsive($min-width) {
+  @media (min-width: $min-width) {
+    @content;
+  }
+}
+
+@mixin combo-max-responsive($max-width, $max-height) {
+  @media (max-width: $max-width) and (max-height: $max-height) {
+    @content;
+  }
+}
+
+@mixin combo-min-responsive($min-width, $min-height) {
+  @media (min-width: $min-width) and (min-height: $min-height) {
+    @content;
+  }
+}
+
+@mixin combo-maxMin-responsive($max-width, $min-height) {
+  @media (max-width: $max-width) and (min-height: $min-height) {
+    @content;
+  }
+}
+
+@mixin combo-minMax-responsive($min-width, $max-height) {
+  @media (min-width: $min-width) and (min-height: $max-height) {
+    @content;
+  }
+}
+
+@mixin responsiveBreakPoint($breakpoint) {
+  @if ($breakpoint == 'smallMobilePort') {
+    @include combo-max-responsive(375px, 800px) {
+      @content;
+    }
+  } @else if ($breakpoint == 'smallMobileLand') {
+    @include combo-max-responsive(800px, 375px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == 'largeMobilePort') {
+    @include combo-max-responsive(425px, 930px) {
+      @content;
+    }
+  } @else if ($breakpoint == 'largeMobileLand') {
+    @include combo-max-responsive(930px, 425px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == 'smallTabPort') {
+    @include combo-max-responsive(800px, 1050px) {
+      @content;
+    }
+  } @else if ($breakpoint == 'smallTabLand') {
+    @include combo-max-responsive(1050px, 800px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == 'largeTabPort') {
+    @include combo-max-responsive(1050px, 1400px) {
+      @content;
+    }
+  } @else if ($breakpoint == 'largeTabLand') {
+    @include combo-max-responsive(1400px, 1050px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == 'desktop') {
+    @include combo-min-responsive(1401px, 1051px) {
+      @content;
+    }
+  } @else if ($breakpoint == 'tv') {
+    @include min-responsive(2500px) {
+      @content;
+    }
+  }
+}

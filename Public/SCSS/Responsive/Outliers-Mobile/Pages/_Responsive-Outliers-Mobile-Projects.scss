@@ -1,0 +1,180 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // Portfolio Page
+    @include combo-max-responsive(720px, 360px) {
+      .r__project-container {
+        @include SizeAndPositioning(relative, 100%, 100%, flex, flex-start, center, 0, 0, 0);
+        flex-direction: column;
+        margin-top: 7rem;
+        &__project {
+          @include SizeAndPositioning(relative, min-content, 90%, flex, flex-start, center, 0, 0, 0);
+          flex-direction: column;
+          &:not(:first-of-type) {
+            margin-top: 5rem;
+          }
+          &:last-of-type {
+            margin-bottom: 5rem;
+          }
+          &__image-container {
+            @include SizingItem(relative, 37%, 100%);
+            box-shadow: 0 0 1rem 0.35rem $colorDarkGrey;
+            margin: 0 0 1.5rem 0;
+            img {
+              @include SizingItem(relative, 100%, 100%);
+              object-fit: cover;
+            }
+          }
+          .r__work-in-progress {
+            &::after {
+              @include SizingItem(absolute, 25%, 100%);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              content: 'NOTICE: Work In Progress';
+              background-color: rgba($colorDarkestGrey, 0.55);
+              top: 40%;
+            }
+          }
+          &__article {
+            @include SizeAndPositioning(relative, max-content, 100%, flex, flex-start, flex-start, 0, 0, 0);
+            flex-flow: column nowrap;
+            transform: translateY(1rem);
+            overflow-y: visible;
+            &__title {
+              @include SizingItem(relative, max-content, max-content);
+              padding: 0 0 0.5rem;
+            }
+            &__sub-article {
+              &__title {
+                @include SizingItem(relative, max-content, max-content);
+                padding: 1rem 0.5rem 0;
+                border-top: 0.3rem groove $colorDarkerGrey;
+              }
+              &__category {
+                @include SizeAndPositioning(relative, max-content, 100%, flex, flex-start, center, 0, 0, 0);
+                padding: 0.5rem 0 0.5rem 2rem;
+              }
+              &__technology-used {
+                &__list-item {
+                  margin: 0.5rem 0;
+                  &:last-of-type {
+                    margin-bottom: 1rem;
+                  }
+                }
+              }
+            }
+            &__link {
+              @include SizeAndPositioning(relative, 20%, 40%, flex, center, center, 0, 0, 0);
+              margin: 1rem 0;
+              padding: 1rem;
+              &:first-of-type {
+                margin-top: 2rem;
+              }
+              align-self: flex-start;
+              &:link,
+              &:visited {
+                border: 0.3rem solid rgba($secondaryColor, 0.75);
+                border-radius: 5rem;
+              }
+              transition: border 0.5s, color 0.5s, background-color 0.5s;
+              &:hover {
+                background-color: $secondaryColor;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include combo-max-responsive(360px, 720px) {
+      .r__project-container {
+        @include SizeAndPositioning(relative, 100%, 100%, flex, flex-start, center, 0, 0, 0);
+        flex-direction: column;
+        margin-top: 7rem;
+        &__project {
+          @include SizeAndPositioning(relative, min-content, 90%, flex, flex-start, center, 0, 0, 0);
+          flex-direction: column;
+          &:not(:first-of-type) {
+            margin-top: 5rem;
+          }
+          &:last-of-type {
+            margin-bottom: 5rem;
+          }
+          &__image-container {
+            @include SizingItem(relative, 37%, 100%);
+            box-shadow: 0 0 1rem 0.35rem $colorDarkGrey;
+            margin: 0 0 1.5rem 0;
+            img {
+              @include SizingItem(relative, 100%, 100%);
+              object-fit: cover;
+            }
+          }
+          .r__work-in-progress {
+            &::after {
+              @include SizingItem(absolute, 25%, 100%);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              content: 'NOTICE: Work In Progress';
+              background-color: rgba($colorDarkestGrey, 0.55);
+              top: 40%;
+            }
+          }
+          &__article {
+            @include SizeAndPositioning(relative, max-content, 100%, flex, flex-start, flex-start, 0, 0, 0);
+            flex-flow: column nowrap;
+            transform: translateY(1rem);
+            overflow-y: visible;
+            &__title {
+              @include SizingItem(relative, max-content, max-content);
+              padding: 0 0 0.5rem;
+            }
+            &__sub-article {
+              &__title {
+                @include SizingItem(relative, max-content, max-content);
+                padding: 1rem 0.5rem 0;
+                border-top: 0.3rem groove $colorDarkerGrey;
+              }
+              &__category {
+                @include SizeAndPositioning(relative, max-content, 100%, flex, flex-start, center, 0, 0, 0);
+                padding: 0.5rem 0 0.5rem 2rem;
+              }
+              &__technology-used {
+                &__list-item {
+                  margin: 0.5rem 0;
+                  &:last-of-type {
+                    margin-bottom: 1rem;
+                  }
+                }
+              }
+            }
+            &__link {
+              @include SizeAndPositioning(relative, 20%, 40%, flex, center, center, 0, 0, 0);
+              margin: 1rem 0;
+              padding: 1rem;
+              &:first-of-type {
+                margin-top: 2rem;
+              }
+              align-self: flex-start;
+              &:link,
+              &:visited {
+                border: 0.3rem solid rgba($secondaryColor, 0.75);
+                border-radius: 5rem;
+              }
+              transition: border 0.5s, color 0.5s, background-color 0.5s;
+              &:hover {
+                background-color: $secondaryColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

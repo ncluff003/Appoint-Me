@@ -1,0 +1,26 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+////////////////////////////////////////////////
+//  User Profile Container
+.user-profile-section {
+  @include SizeAndPositioning(relative, 100%, 100%, flex, column, nowrap, center, center, 0, 0, 0);
+  background-color: rgba($primaryColorDark, 0.95);
+  z-index: 10;
+  .user-profile-closure-icon {
+    @include SizingItem(absolute, 4rem, 4rem);
+    top: 4rem;
+    right: 4rem;
+    &:hover {
+      cursor: pointer;
+      transition: color 0.5s;
+    }
+    z-index: 10;
+  }
+  &__header {
+    @include SizeAndPositioning(relative, 15%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+  }
+  &--open {
+    display: flex;
+  }
+}

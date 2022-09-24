@@ -1,0 +1,32 @@
+section.container--small-wide.r__container--small-wide 
+  section.container-divide--thirds.r__container-divide--thirds 
+    header.container-divide__header.r__container-divide__header 
+      i.fas.fa-calendar-alt.container-divide__header__icon.r__container-divide__header__icon 
+      p.container-divide__header__text.r__container-divide__header__text Transaction Calendar
+    section.bill-calendar-container.r__bill-calendar-container 
+      section.bill-calendar.r__bill-calendar 
+        header.bill-calendar__header.r__bill-calendar__header 
+          i.fas.fa-chevron-left.bill-calendar__header__icon.r__bill-calendar__header__icon.month-left.r__month-left
+          p.bill-calendar__header__title.r__bill-calendar__header__title= `${data.calendar.getMonth()}`
+          i.fas.fa-chevron-right.bill-calendar__header__icon.r__bill-calendar__header__icon.month-right.r__month-right
+        section.bill-calendar__weekdays.r__bill-calendar__weekdays 
+          - const weekdays = [ `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday` ]
+            each day in weekdays 
+              p.bill-calendar__weekdays__weekday.r__bill-calendar__weekdays__weekday= `${day[0]}`
+        section.bill-calendar__days.r__bill-calendar__days 
+          - const numberOfDaySquares = 42;
+          - let startingSquare = 1
+          while startingSquare <= numberOfDaySquares
+            p.bill-calendar__days__single-day.r__bill-calendar__days__single-day
+            - startingSquare++
+  section.container-divide--two-thirds.r__container-divide--two-thirds
+    header.container-divide__header.r__container-divide__header 
+      i.fas.fa-envelope-open-text.container-divide__header__icon.r__container-divide__header__icon 
+      p.container-divide__header__text.r__container-divide__header__text Upcoming Transactions
+    section.upcoming-bills-container.r__upcoming-bills-container
+      - const billInfo = [`Type`, `Due Date`, `Biller | Creditor`, `Amount`, `Paid?`]
+        section.upcoming-bills-container__titles.r__upcoming-bills-container__titles 
+          each title in billInfo 
+            section.upcoming-bills-container__titles__title.r__upcoming-bills-container__titles__title
+              p.upcoming-bills-container__titles__title__text.r__upcoming-bills-container__titles__title__text= `${title}`
+        section.upcoming-bills.r__upcoming-bills

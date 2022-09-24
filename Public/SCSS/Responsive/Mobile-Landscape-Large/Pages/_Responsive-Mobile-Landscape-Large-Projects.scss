@@ -1,0 +1,113 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // Portfolio Page
+    @include combo-max-responsive(930px, 425px) {
+      .r__project-container {
+        @include SizeAndPositioning(relative, 100%, 90%, flex, flex-start, flex-start, 0, 0, 0);
+        flex-direction: column;
+        margin-top: 7rem;
+        &__project {
+          @include SizeAndPositioning(relative, 85%, 90%, flex, flex-start, flex-start, 0, 0, 0);
+          &:not(:first-of-type) {
+            margin-top: 5rem;
+          }
+          &:last-of-type {
+            margin-bottom: 10rem;
+          }
+          &__image-container {
+            @include SizingItem(relative, 100%, 55%);
+            box-shadow: 0 0 1rem 0.35rem $colorDarkGrey;
+            margin: 0 1.5rem 0 0;
+            img {
+              @include SizingItem(relative, 100%, 100%);
+              object-fit: cover;
+            }
+          }
+          .r__work-in-progress {
+            &::after {
+              @include SizingItem(absolute, 25%, 100%);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              content: 'NOTICE: Work In Progress';
+              background-color: rgba($colorDarkestGrey, 0.55);
+              top: 40%;
+            }
+          }
+          &::after {
+            @include SizingItem(fixed, calc(100% + 2rem), 45%);
+            right: 0;
+            top: 0;
+            overflow-y: scroll;
+            overscroll-behavior-y: contain;
+            pointer-events: none;
+            content: '';
+            background: linear-gradient(transparent 0%, transparent 70%, rgba($colorOffWhite, 0.9) 100%);
+          }
+          &__article {
+            @include SizeAndPositioning(relative, 100%, 45%, flex, flex-start, flex-start, 0, 0, 0);
+            flex-direction: column;
+            transform: translateY(2rem);
+            overflow-y: auto;
+            padding-bottom: 3rem;
+            &__title {
+              @include SizingItem(relative, min-content, 100%);
+              padding: 0 0 1rem;
+            }
+            &__sub-article {
+              @include SizingItem(relative, min-content, 100%);
+              padding: 0 0 1.5rem;
+              overflow-y: visible;
+              &:first-of-type {
+                @include SizingItem(relative, min-content, 100%);
+              }
+              &__title {
+                @include SizingItem(relative, max-content, 100%);
+                padding: 1rem 0;
+                border-top: 0.3rem groove $colorDarkerGrey;
+              }
+              &__category {
+                @include SizingItem(relative, max-content, 100%);
+                padding: 0 0 1rem;
+              }
+              &__technology-used {
+                @include SizeAndPositioning(relative, min-content, 100%, flex, center, center, 0, 0, 0);
+                flex-flow: column;
+                &__list-item {
+                  margin: 0.5rem 0;
+                  align-self: flex-start;
+                  &:last-of-type {
+                    margin-bottom: 1rem;
+                  }
+                }
+              }
+            }
+            &__link {
+              @include SizeAndPositioning(relative, 4rem, 50%, flex, center, center, 0, 0, 0);
+              margin: 0.5rem 0;
+              padding: 2rem;
+              &:first-of-type {
+                margin-top: 1rem;
+              }
+              &:link,
+              &:visited {
+                border: 0.3rem solid rgba($secondaryColor, 0.75);
+                border-radius: 5rem;
+              }
+              transition: border 0.5s, color 0.5s, background-color 0.5s;
+              &:hover {
+                background-color: $secondaryColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

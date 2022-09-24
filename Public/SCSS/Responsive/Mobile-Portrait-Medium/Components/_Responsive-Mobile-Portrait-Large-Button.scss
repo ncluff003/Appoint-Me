@@ -1,0 +1,492 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__button {
+  @include responsiveBreakPoint('largeMobilePort') {
+    @include SizeAndPositioning(relative, 6rem, 40%, flex, row, nowrap, center, center, 0, 0, 0);
+    -moz-transform: translate(0, 0);
+    background-color: rgba($colorLightestGrey, 0.125);
+    border: 0.3rem solid rgba($primaryColor, 0.75);
+    border-radius: 1.5rem;
+    &:hover {
+      cursor: pointer;
+      background-color: $primaryColor;
+      border: 0.3rem solid $primaryColor;
+      transition: background-color 0.5s, border 0.5s, color 0.5s;
+    }
+
+    &--search {
+      height: 4rem;
+      width: 4rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      transform: translate(0, 0);
+    }
+
+    &--invite {
+      @include SizeAndPositioning(relative, 5rem, 16rem, flex, row, nowrap, center, center, 0, 0, 0);
+      padding: 1rem;
+      &:hover {
+        background-color: $secondaryColor;
+      }
+    }
+
+    &--update-photo {
+      @include SizeAndPositioning(relative, 4rem, max-content, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+      background-color: rgba($primaryColor, 0.8);
+      padding: 0.25rem 0.5rem;
+      border: 0.2rem solid rgba($colorOffWhite, 0.8);
+      border-radius: 0.5rem;
+      &:hover {
+        cursor: pointer;
+        background-color: $secondaryColor;
+        transition: background-color 0.5s, color 0.5s;
+      }
+
+      &__icon {
+        margin-right: 0.5rem;
+      }
+    }
+
+    &--submit-token {
+      height: 5rem;
+      width: 80%;
+      border: 0.2rem solid rgba($colorOffWhite, 0.8);
+      &:hover {
+        background-color: $secondaryColor;
+        border: 0.2rem solid $secondaryColorDark;
+      }
+
+      &:active {
+        background-color: $tertiaryColor;
+        border: 0.2rem solid $tertiaryColorLight;
+      }
+    }
+
+    &--two-factor-submit {
+      height: 5rem;
+      width: 20%;
+      border: 0.2rem solid rgba($colorOffWhite, 0.8);
+      transform: translate(0, 0);
+      -moz-transform: translate(0, 0);
+      &:hover {
+        background-color: $secondaryColor;
+        border: 0.2rem solid $secondaryColorDark;
+      }
+
+      &:active {
+        background-color: $tertiaryColor;
+        border: 0.2rem solid $tertiaryColorLight;
+      }
+    }
+
+    &--settle {
+      height: 3rem;
+      width: 40%;
+      border-radius: 5rem;
+      border: 0.2rem solid rgba($primaryColor, 0.75);
+      transform: translate(0, 0);
+      -moz-transform: translate(0, 0);
+      &:hover {
+        border: 0.2rem solid $primaryColor;
+      }
+    }
+
+    &--confirm-value {
+      @include SizeAndPositioning(relative, 95%, 15%, flex, row, nowrap, center, center, 0, 0, 0);
+      background-color: rgba($primaryColor, 0.8);
+      border: 0.2rem solid rgba($primaryColor, 0.8);
+      border-left: none;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      &:hover {
+        cursor: pointer;
+        background-color: $secondaryColor;
+        border: 0.2rem solid $secondaryColor;
+        border-left: none;
+        transition: border 0.5s, background-color 0.5s, color 0.5s;
+      }
+    }
+
+    &--transaction-button {
+      height: 3rem;
+      width: -moz-max-content;
+      width: max-content;
+      transform: translate(0, 0);
+      padding: 0.5rem;
+      border: 0.2rem solid rgba($primaryColor, 0.8);
+      border-radius: 0.9rem;
+      background-color: transparent;
+      &:hover {
+        border: 0.2rem solid $primaryColor;
+      }
+      &:focus {
+        border: 0.2rem solid $primaryColor;
+      }
+    }
+
+    &--timing-button {
+      height: 7rem;
+      width: 70%;
+      transform: translate(0, 0);
+      background-color: transparent;
+      border-radius: 0.9rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      &:first-of-type {
+        margin-top: 1rem;
+      }
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
+      &__icon {
+        @include SizeAndPositioning(absolute, 5rem, 5rem, flex, row, nowrap, center, center, 0, -50%, 0);
+        top: 50%;
+        left: 1rem;
+      }
+      &:hover {
+        .path1,
+        .path2,
+        .path3 {
+          transition: color 0.5s;
+        }
+      }
+      &:active {
+        background-color: $secondaryColor;
+        border: 0.3rem solid $secondaryColor;
+      }
+      &-submit {
+        height: 5rem;
+        transform: translate(4rem, 0);
+        border-radius: 0.8rem;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        background-color: rgba($primaryColor, 0.8);
+
+        &:active {
+          background-color: $secondaryColor;
+          border: 0.3rem solid $secondaryColor;
+        }
+      }
+    }
+
+    &--extra-extra-small {
+      height: 3.5rem;
+      width: 30%;
+      justify-content: space-evenly;
+      transform: translate(-5rem, 0.75rem);
+      align-self: center;
+      background-color: rgba($primaryColor, 0.5);
+      border: 0.2rem solid rgba($primaryColor, 0.8);
+      border-radius: 0.5rem;
+      min-height: 3rem;
+      &:hover {
+        cursor: pointer;
+        background-color: $primaryColor;
+        border: 0.2rem solid $primaryColor;
+        transition: background-color 0.5s, color 0.5s, border 0.5s;
+      }
+      &__alt {
+        transform: translate(4rem, 0rem);
+      }
+      &__transaction-plan,
+      &__debt-transaction-plan,
+      &__view-receipt {
+        height: 4rem;
+        width: 10rem;
+        transform: translate(0rem, 0rem);
+        align-self: center;
+        border-radius: 0.5rem;
+        min-height: 3.24rem;
+        &-small {
+          height: 3rem;
+          width: 8rem;
+          min-height: 3rem;
+        }
+      }
+
+      &__view-receipt {
+        height: 6rem;
+        width: calc(10rem * 2.5);
+        justify-content: space-evenly;
+        padding: 0 0.3rem;
+        &:hover {
+          background-color: $secondaryColor;
+          border: 0.2rem solid $colorOffWhite;
+        }
+      }
+      &__wide {
+        height: 20%;
+        width: 40%;
+        transform: translate(0rem, 0rem);
+        align-self: center;
+        border-radius: 0.5rem;
+        min-height: 3.24rem;
+        &:nth-of-type(1) {
+          margin-bottom: 0.5rem;
+        }
+      }
+      &__wider {
+        width: 10rem;
+        transform: translate(0rem, 0.25rem);
+      }
+    }
+
+    &--submit-plan {
+      transform: translate(0, 0);
+    }
+
+    &--extra-small {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 16%;
+      display: none;
+      &-mobile {
+        @include SizeAndPositioning(relative, 7.5%, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+        -moz-transform: translate(0, 0);
+        background-color: transparent;
+        border: none;
+        min-height: 3rem;
+        padding: 0.25rem;
+        &--text {
+          @include SizingItem(relative, max-content, max-content);
+        }
+        &--icon {
+          margin-right: 1rem;
+        }
+        &:hover {
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+          .button--extra-small--text__update-photo,
+          .button--extra-small--icon {
+            transition: background-color 0.5s, color 0.5s, border 0.5s;
+          }
+        }
+      }
+    }
+    &--small {
+      width: 50%;
+      transform: translate(0, 0);
+      border-radius: 0.75rem;
+
+      &-purple {
+        background-color: rgba($primaryColor, 0.5);
+      }
+
+      &-transparent {
+        background-color: transparent;
+        border: 0.3rem solid rgba($colorOffWhite, 0.75);
+        border-radius: 1.25rem;
+        background-color: transparent;
+        width: 75%;
+        &--icon {
+          margin-right: 1rem;
+        }
+        &:hover {
+          background-color: $secondaryColor;
+          border: 0.3rem solid $colorOffWhite;
+        }
+        &:active {
+          background-color: $tertiaryColor;
+          border: 0.3rem solid $colorDarkerGrey;
+        }
+      }
+      &-create-main-category {
+        width: 25%;
+        border-radius: 1.25rem;
+        margin-left: 1rem;
+      }
+
+      &-create-sub-category {
+        @include SizeAndPositioning(relative, 50%, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+        height: 50%;
+        border: 0.2rem solid rgba($primaryColor, 0.8);
+        border-radius: 0.5rem;
+        background-color: rgba($colorOffWhite, 0.25);
+        margin-left: 1rem;
+
+        &:hover {
+          border: 0.2rem solid $primaryColor;
+          transition: background-color 0.5s, color 0.5s, border 0.5s;
+        }
+        &-close {
+          width: 50%;
+          justify-content: space-evenly;
+        }
+      }
+      &-container-header {
+        transform: translate(0, 0);
+        height: 75%;
+        width: 25%;
+        background-color: transparent;
+        border: 0.3rem solid rgba($colorOffWhite, 0.8);
+        border-radius: 0.9rem;
+        &:hover {
+          background-color: $secondaryColor;
+          border: 0.3rem solid $colorOffWhite;
+          transition: color 0.5s, background-color 0.5s, border 0.5s;
+        }
+        &:active {
+          background-color: $tertiaryColor;
+        }
+      }
+    }
+    &--borderless {
+      border: none;
+      height: -moz-min-content;
+      height: min-content;
+      min-height: 3rem;
+      width: -moz-max-content;
+      width: max-content;
+      margin-top: 0.75rem;
+      transform: translate(0, 0);
+      -moz-transform: translate(0, 0);
+
+      &-set-timing-button {
+        background-color: transparent;
+        width: 100%;
+        border: none;
+        margin: 0;
+      }
+
+      &:hover {
+        border: none;
+        background-color: transparent;
+      }
+      &__icon {
+        margin-right: 1rem;
+      }
+      &-narrow {
+        position: absolute;
+        height: 3rem;
+        width: 40%;
+        transform: translate(6rem, 0.75rem);
+        bottom: 0;
+        right: 36.5%;
+        background-color: transparent;
+        &:hover {
+          transition: color 0.5s, transform 0.5s;
+        }
+        &__investment {
+          height: 2rem;
+          right: 1rem;
+          bottom: 0rem;
+          transform: translate(0, 0);
+        }
+      }
+    }
+    &--medium {
+      &-square {
+        @include SizeAndPositioning(relative, 25%, 25%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+        border: 0.3rem solid rgba($primaryColor, 0.8);
+        border-top-left-radius: 0.9rem;
+        &:hover {
+          cursor: pointer;
+          border: 0.3rem solid $primaryColor;
+          background-color: $primaryColor;
+          transition: border 0.5s, background-color 0.5s;
+          .button--medium-square__icon,
+          .button--medium-square__text {
+            transition: color 0.5s;
+          }
+        }
+      }
+      // MAIN CATEGORY DELETION SECTION | MANAGE CATEGORIES
+      &-main-category-deletion {
+        position: absolute;
+        height: 10rem;
+        width: 10rem;
+        top: 0;
+        right: 0;
+        flex-flow: column nowrap;
+        transform: translate(0, 0);
+        border: none;
+        border-radius: 0;
+        border-left: 0.3rem solid $primaryColor;
+        border-bottom: 0.3rem solid $primaryColor;
+        &:hover {
+          cursor: pointer;
+          background-color: $primaryColor;
+          border: none;
+          border-left: 0.3rem solid $primaryColor;
+          border-bottom: 0.3rem solid $primaryColor;
+          transition: background-color 0.5s, color 0.5s;
+        }
+      }
+    }
+
+    &--large {
+      &__thin {
+        height: 75%;
+        width: 30%;
+        transform: translate(0, 0);
+        background-color: transparent;
+        border: 0.3rem solid rgba($primaryColor, 0.8);
+        border-radius: 0.9rem;
+      }
+    }
+
+    &--budget-navigation {
+      height: 0.75rem;
+      width: 30%;
+      transform: translate(0, 0);
+      z-index: 10;
+      background-color: rgba($primaryColor, 0.8);
+      border-radius: 0.4rem;
+      border: none;
+      transition: background-color 0.5s, width 0.5s;
+      &:before,
+      &:after {
+        content: '';
+        z-index: 10;
+        background-color: rgba($primaryColor, 0.8);
+        border-radius: 0.4rem;
+        border: none;
+        left: 0;
+      }
+      &:before {
+        @include SizeAndPositioning(absolute, 0.75rem, 50%, flex, row, nowrap, center, center, 0, -1.5rem, 0);
+        transition: background-color 0.5s, width 0.5s, transform 0.5s;
+      }
+      &:after {
+        @include SizeAndPositioning(absolute, 0.75rem, 75%, flex, row, nowrap, center, center, 0, 1.5rem, 0);
+        transition: background-color 0.5s, width 0.5s, transform 0.5s;
+      }
+      &:hover {
+        cursor: pointer;
+        width: 30%;
+        border: none;
+        &:before {
+          width: 100%;
+          background-color: $primaryColor;
+        }
+        &:after {
+          width: 100%;
+          background-color: $primaryColor;
+        }
+      }
+      &--clicked {
+        background-color: transparent;
+        &:before {
+          transform: translate(0.5rem, 0) rotate(45deg);
+          background-color: $colorOffWhite;
+          width: 90%;
+        }
+        &:after {
+          transform: translate(0.5rem, 0) rotate(-45deg);
+          background-color: $colorOffWhite;
+          width: 90%;
+        }
+        &:hover {
+          background-color: transparent;
+          &:before,
+          &:after {
+            width: 100%;
+            background-color: $colorOffWhite;
+          }
+        }
+      }
+    }
+  }
+}

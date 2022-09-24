@@ -1,0 +1,32 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__form {
+  @include responsiveBreakPoint('smallTabLand') {
+    width: 100%;
+
+    &--update-photo {
+      width: 100%;
+    }
+
+    &__label {
+      &--outer-checkbox {
+        width: 90%;
+      }
+    }
+
+    &__section {
+      &--update-budget {
+        height: 15%;
+      }
+    }
+
+    &--full-width {
+      justify-content: flex-start;
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        justify-content: center;
+      }
+    }
+  }
+}

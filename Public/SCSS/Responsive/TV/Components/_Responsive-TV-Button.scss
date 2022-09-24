@@ -1,0 +1,40 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    // ABOUT INTERESTS
+    .r__interests-container {
+      .r__interests-grid {
+        .r__cylinder-wall {
+          .r__button {
+            &--control-flow {
+              height: 9rem;
+              width: 9rem;
+            }
+            &-flow-left {
+              transform: translate(-25rem, 0);
+            }
+            &-flow-right {
+              transform: translate(28rem, 0);
+            }
+          }
+        }
+      }
+    }
+    .r__contact-me-section {
+      .r__form {
+        &-section {
+          &--message {
+            .button {
+              &--send-message {
+                height: 4rem;
+                width: 12rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

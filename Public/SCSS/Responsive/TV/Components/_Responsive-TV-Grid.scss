@@ -1,0 +1,9 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__grid {
+  @include responsiveBreakPoint('tv') {
+    @include gridLayout(100vh, 100vw, repeat(48, 1fr), repeat(24, 1fr), 0, 0);
+    @include gridPlacement(48, 48, 24, 24);
+  }
+}

@@ -1,0 +1,8 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.two-factor-form-container {
+  @include SizeAndPositioning(absolute, 100vh, 100vw, flex, column, nowrap, center, center, 0, 0, 0);
+  background-color: rgba($primaryColor, 0.9);
+  z-index: 10;
+}

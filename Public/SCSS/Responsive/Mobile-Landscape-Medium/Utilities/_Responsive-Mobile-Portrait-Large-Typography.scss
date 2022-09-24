@@ -1,0 +1,57 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+/////////////////////////////////
+// Base
+
+html {
+  font-family: Purely Me, Century Gothic, Verdana, sans-serif;
+  font-variant-ligatures: none;
+}
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid-container {
+  @include responsiveBreakPoint('largeMobilePort') {
+    .r__app-landing-container {
+      .r__logo-container {
+        .r__logo-text {
+          font-size: 5rem;
+        }
+      }
+    }
+
+    .r__application-flex-container {
+      .r__navigation {
+        &--side-screen {
+          &__section {
+            &--user-information {
+              &__username {
+                font-size: 2rem;
+              }
+            }
+            &--application-logo {
+              &__text {
+                font-size: 1.6rem;
+              }
+            }
+          }
+        }
+      }
+      .r__application-viewport {
+        .r__application-display {
+          .r__user-profile-section {
+            .r__user-profile-closure-icon {
+              font-size: 3rem;
+            }
+            &__header {
+              &__text {
+                font-size: 3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+extends ./../budgetLanding
+
+block Budget-Content 
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Invite Users
+  section.container--extra-large-column.r__container--extra-large-column
+    section.container--extra-small-invite.r__container--extra-small-invite
+      header.container--extra-small-invite__header.r__container--extra-small-invite__header
+        i.container--extra-small-invite__header__icon.r__container--extra-small-invite__header__icon.fas.fa-user-group
+        p.container--extra-small-invite__header__text.r__container--extra-small-invite__header__text Search For User
+      section.container--extra-small-invite__content.r__container--extra-small-invite__content
+        form.form--extra-small-search.r__form--extra-small-search
+          h3.example-input.r__example-input Enter first name and last name with exactly one space between them.
+          section.form__section--search-input.r__form__section--search-input
+            input.form__input--search.r__form__input--search(type="text" placeholder="Enter Full Name" pattern="^[A-Za-z]+[ ]{1}[A-Za-z]+$")
+            button.button--search.r__button--search 
+              i.button--search-icon.r__button--search-icon.fas.fa-magnifying-glass
+    section.container--large.r__container--large
+      header.container--large__header.r__container--large__header
+        i.container--large__header__icon.r__container--large__header__icon.fas.fa-user-group
+        p.container--large__header__title.r__container--large__header__title USERS FOUND
+      section.container--large__user-results.r__container--large__user-results

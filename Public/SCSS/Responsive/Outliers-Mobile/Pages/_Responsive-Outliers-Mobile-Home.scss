@@ -1,0 +1,56 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__master-flex-container {
+    /////////////////
+    // Home Page
+    @include combo-max-responsive(720px, 360px) {
+      &__child-flex-container {
+        @include SizeAndPositioning(relative, 75%, 85%, flex, center, center, 0, 0, 0);
+        flex-direction: column;
+        &__heading {
+          @include SizeAndPositioning(relative, 80%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          &--subtext-start {
+            position: relative;
+            align-self: flex-start;
+            transform: translate(1.5rem, 3.25rem);
+            -moz-transform: translate(0.75rem, 3.75rem);
+          }
+          &--subtext-end {
+            position: relative;
+            align-self: flex-end;
+            transform: translate(-2.75rem, -4.5rem);
+            -moz-transform: translate(-2.25rem, -5rem);
+          }
+        }
+      }
+    }
+
+    @include combo-max-responsive(360px, 720px) {
+      &__child-flex-container {
+        @include SizeAndPositioning(relative, 55%, 85%, flex, center, center, 0, 0, 0);
+        flex-direction: column;
+        &__heading {
+          @include SizeAndPositioning(relative, 80%, 100%, flex, space-evenly, center, 0, 0, 0);
+          flex-direction: column;
+          &--subtext-start {
+            position: relative;
+            align-self: flex-start;
+            transform: translate(1.75rem, 5.25rem);
+            -moz-transform: translate(1.25rem, 5.25rem);
+          }
+          &--subtext-end {
+            position: relative;
+            align-self: flex-end;
+            transform: translate(-2.5rem, -6.25rem);
+            -moz-transform: translate(-2.5rem, -6.25rem);
+          }
+        }
+      }
+    }
+  }
+}

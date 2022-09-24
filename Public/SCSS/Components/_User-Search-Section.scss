@@ -1,0 +1,49 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.user-result {
+  @include SizeAndPositioning(relative, 25rem, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+  border-bottom: 0.2rem groove $primaryColor;
+  background-color: $colorLightestGrey;
+  &:hover {
+    cursor: pointer;
+    background-color: $primaryColor;
+    transition: color 0.5s, background-color 0.5s;
+    .user-section {
+      .user-name {
+        transition: color 0.5s;
+      }
+      button {
+        border-color: $colorOffWhite;
+        transition: border 0.5s, color 0.5s, background-color 0.5s;
+      }
+    }
+  }
+  .user-section {
+    @include SizeAndPositioning(relative, 100%, calc(100% / 3), flex, row, nowrap, space-evenly, center, 0, 0, 0);
+    .user-photo-frame {
+      @include SizeAndPositioning(relative, 80%, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 0.3rem solid $colorOffWhite;
+      .user-photo {
+        @include SizingItem(relative, 100%, auto);
+      }
+    }
+    &:first-of-type {
+      width: 25%;
+    }
+    &:nth-of-type(2),
+    &:last-of-type {
+      width: 37.5%;
+    }
+    &:nth-of-type(2) {
+      justify-content: flex-start;
+      p {
+        &:first-of-type {
+          margin-right: 2rem;
+        }
+      }
+    }
+  }
+}

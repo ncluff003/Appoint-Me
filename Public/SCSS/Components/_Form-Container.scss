@@ -1,0 +1,37 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+///////////////////////
+// FORM CONTAINERS
+.form-container {
+  @include SizeAndPositioning(relative, 100%, 100vw, flex, row, nowrap, center, center, 0, 0, 0);
+  background-color: rgba($colorOffWhite, 0.95);
+  z-index: 1;
+  .form-closure-icon,
+  .form-closure-icon--budget-creation {
+    @include SizeAndPositioning(absolute, 2rem, 2rem, flex, row, nowrap, center, center, 0, 0, 0);
+    top: 5rem;
+    right: 6rem;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+      transition: color 0.5s;
+    }
+  }
+  &:nth-of-type(6) {
+    display: flex;
+  }
+  &--transparent {
+    @include SizeAndPositioning(relative, 100%, 100vw, none, row, nowrap, center, center, 0, 0, 0);
+    height: 85%;
+    width: 100%;
+    flex-direction: column;
+    background-color: transparent;
+    z-index: 1;
+  }
+  &--full-width {
+    @extend .form-container;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+}

@@ -1,0 +1,25 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+///////////////////////////////////
+// RECENT TRASACTIONS
+
+.r__container {
+  &--large {
+    @include responsiveBreakPoint('smallTabPort') {
+      .r__recent-transaction-display {
+        .r__recent-transaction {
+          @include SizeAndPositioning(relative, max-content, 100%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+          &__header {
+            @include SizeAndPositioning(relative, 6rem, 100%, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+            background-color: $primaryColorDark;
+          }
+
+          &__detail-container {
+            @include SizeAndPositioning(relative, calc(6rem * 1.5), 100%, flex, row, nowrap, space-around, center, 0, 0, 0);
+          }
+        }
+      }
+    }
+  }
+}

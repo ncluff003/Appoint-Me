@@ -1,0 +1,75 @@
+extends ./../budgetLanding
+
+block Budget-Content 
+  header.budget-container__header.r__budget-container__header
+    p.budget-container__header__text.r__budget-container__header__text Budget Management
+  section.container--budget-management.r__container--budget-management
+    section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+      header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+        i.fas.fa-pencil-alt.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+        p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Edit Budget Name
+      form.form--extra-small.r__form--extra-small
+        section.form--extra-small__budget-name-display.r__form--extra-small__budget-name-display= `${data.budget.name}`
+        input.form__input--small-thin__placeholder-shown.r__form__input--small-thin__placeholder-shown(type="text" placeholder="New Budget Name")
+        button.button--extra-extra-small.r__button--extra-extra-small(type="button") Submit
+    section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+      header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+        i.fas.fa-pencil-alt.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+        p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Edit Savings Goal
+      form.form--extra-small.r__form--extra-small
+        input.form__input--small-thin.r__form__input--small-thin#savingsGoal(type="number" name="savingsGoal" placeholder="SAVINGS FUND GOAL" value= `${data.budget.accounts.savingsFund.savingsGoal}` required)
+        label.form__label--small-thin.r__form__label--small-thin(for="savingsGoal") Savings Goal Amount?
+        input.form__input--small-thin.r__form__input--small-thin#savingsPercentGoal(type="number" name="savingsPercentGoal" placeholder="SAVINGS PERCENT GOAL" min="0" max="100" value= `${data.budget.accounts.savingsFund.savingsPercentage * 100}` required) 
+        label.form__label--small-thin.r__form__label--small-thin(for="savingsPercentGoal") Percent Going To Savings
+        button.button--extra-extra-small.r__button--extra-extra-small(type="button") Submit
+    section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+      header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+        i.fas.fa-pencil-alt.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+        p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Edit Investment Goal
+      form.form--extra-small.r__form--extra-small
+        input.form__input--small-thin.r__form__input--small-thin#investmentGoal(type="number" name="investmentGoal" placeholder="INVESTMENT FUND GOAL" value= `${data.budget.accounts.investmentFund.investmentGoal}` required)
+        label.form__label--small-thin.r__form__label--small-thin(for="investmentGoal") Investment Goal Amount?
+        input.form__input--small-thin.r__form__input--small-thin#investmentPercentGoal(type="number" name="investmentPercentGoal" placeholder="INVESTMENT PERCENT GOAL" min="0" max="100" value= `${data.budget.accounts.investmentFund.investmentPercentage * 100}` required)
+        label.form__label--small-thin.r__form__label--small-thin(for="investmentPercentGoal") Percent Going To Investment
+        button.button--extra-extra-small.r__button--extra-extra-small(type="button") Submit
+    section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+      header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+        i.fas.fa-pencil-alt.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+        p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Edit Emergency Fund Goal
+      form.form--extra-small.r__form--extra-small
+        label.form__label--outer-checkbox.r__form__label--outer-checkbox What Will Be Your Emergency Fund Setting?
+        section.form__label-container.r__form__label-container
+          label.form__label--checkbox-container.r__form__label--checkbox-container Length Of Time
+            input.form__input--invisible-checkbox.r__form__input--invisible-checkbox(type="checkbox")
+          label.form__label--checkbox-container.r__form__label--checkbox-container Total Amount
+            input.form__input--invisible-checkbox.r__form__input--invisible-checkbox(type="checkbox")
+        - let emergencyFundGoal = data.budget.accounts.emergencyFund.emergencyFundGoal
+        section.form__section--small-thin.r__form__section--small-thin.closed
+          - const timingOptions= [`Months`, `Weeks`] 
+          input.form__input--half-left.r__form__input--half-left(type="number" value= `${emergencyFundGoal}`)
+          select.form__select--half-right.r__form__select--half-right
+            each timing in timingOptions 
+              option.form__select--half-right__option.r__form__select--half-right__option(value=`${timing}`)= `${timing}`
+        input.form__input--small-thin__placeholder-shown.r__form__input--small-thin__placeholder-shown.closed#investmentGoal(type="number" name="investmentGoal" placeholder="INVESTMENT FUND GOAL" value= `${emergencyFundGoal}` required)
+        button.button--extra-extra-small.r__button--extra-extra-small(type="button") Submit
+    if data.user.latterDaySaint
+      section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+        header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+          i.fas.fa-pencil-alt.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+          p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Edit Tithing Setting
+        form.form--extra-small.r__form--extra-small
+          section.form__section--small-thin__taller.r__form__section--small-thin__taller
+            label.form__label--small-thin__taller--thirds__tithing.r__form__label--small-thin__taller--thirds__tithing Gross
+              input.form__input--invisible-checkbox.r__form__input--invisible-checkbox(type="checkbox")
+            label.form__label--small-thin__taller--thirds__tithing.r__form__label--small-thin__taller--thirds__tithing Net
+              input.form__input--invisible-checkbox.r__form__input--invisible-checkbox(type="checkbox")
+            label.form__label--small-thin__taller--thirds__tithing.r__form__label--small-thin__taller--thirds__tithing Surplus
+              input.form__input--invisible-checkbox.r__form__input--invisible-checkbox(type="checkbox")
+          button.button--extra-extra-small.r__button--extra-extra-small(type="button") Submit
+    section.container--extra-small__margin-left-and-right.r__container--extra-small__margin-left-and-right
+      header.container--extra-small__margin-left-and-right__header.r__container--extra-small__margin-left-and-right__header
+        i.fas.fa-door-open.container--extra-small__margin-left-and-right__header__icon.r__container--extra-small__margin-left-and-right__header__icon
+        p.container--extra-small__margin-left-and-right__header__text.r__container--extra-small__margin-left-and-right__header__text Exit or Delete Budget
+      form.form--extra-small.r__form--extra-small
+        button.button--extra-extra-small__wide.r__button--extra-extra-small__wide(type="button") Exit Budget
+        button.button--extra-extra-small__wide.r__button--extra-extra-small__wide(type="button") Delete Budget

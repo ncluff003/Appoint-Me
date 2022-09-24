@@ -1,0 +1,58 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__navigation {
+  @include responsiveBreakPoint('largeTabLand') {
+    &--side-screen {
+      opacity: 1;
+      height: 20%;
+      width: 100%;
+      flex-flow: row nowrap;
+      justify-content: space-evenly;
+      border-right: none;
+      border-bottom: 0.5rem groove $tertiaryColor;
+
+      &__section {
+        height: 100%;
+        width: 30%;
+        flex-direction: row;
+        &--user-information {
+          height: 100%;
+          width: 35%;
+          flex-direction: row;
+          &__profile-picture-container {
+            height: 80%;
+            width: auto;
+            flex-direction: row;
+          }
+          &__update-picture-container {
+            @include SizeAndPositioning(relative, max-content, max-content, flex, row, nowrap, space-evenly, center, 0, 0, 0);
+          }
+        }
+        &--account-links {
+          height: 100%;
+          width: 35%;
+          &__link-container {
+            flex-flow: column wrap;
+            justify-content: space-evenly;
+            &__link {
+              height: 40%;
+              width: 40%;
+              &:not(:last-of-type) {
+                margin-bottom: 0rem;
+              }
+            }
+          }
+        }
+        &--application-logo {
+          height: 100%;
+          width: 30%;
+          flex-direction: column;
+          &__logo {
+            height: 65%;
+          }
+        }
+      }
+    }
+  }
+}

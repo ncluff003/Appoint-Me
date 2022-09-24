@@ -1,0 +1,104 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+////////////////////////////////////////////////
+//  Master Grid Container
+.r__master-grid {
+  .r__navigation {
+    @include combo-max-responsive(720px, 360px) {
+      grid-column: 1 / span 2;
+      grid-row: 1 / -1;
+      flex-direction: column;
+      border: none;
+      border-right: 0.4rem groove $colorDarkGrey;
+      &__my-image {
+        height: auto;
+        width: 90%;
+        padding: 0;
+      }
+      &__my-logo {
+        height: auto;
+        width: 50%;
+      }
+      &__links {
+        flex-direction: column;
+        display: none;
+      }
+      &-menu-button {
+        @include SizeAndPositioning(relative, auto, 80%, flex, center, center, 0, 0, 0);
+      }
+      &-mobile {
+        @include SizeAndPositioning(absolute, 100vh, 100vw, none, center, center, 0, 0, 0);
+        flex-flow: column nowrap;
+        top: 0;
+        left: 0;
+        background-color: rgba($secondaryColor, 0.8);
+        z-index: 10;
+        transition: height 0.5s, width 0.5s, background-color 0.5s, opacity 0.5s;
+        &-close {
+          @include SizeAndPositioning(absolute, 5rem, 5rem, flex, center, center, 0, 0, 0);
+          top: 3rem;
+          right: 3rem;
+        }
+        &__links {
+          @include SizeAndPositioning(relative, 75%, 100%, flex, center, center, 0, 0, 0);
+          flex-flow: column nowrap;
+          &__link-item {
+            &__link {
+              @include SizeAndPositioning(relative, 12.5%, 80%, flex, center, center, 0, 0, 0);
+              margin: 1.5rem 0;
+            }
+          }
+        }
+      }
+    }
+    @include combo-max-responsive(360px, 720px) {
+      grid-column: 1 / -1;
+      grid-row: 1 / span 2;
+      height: 50%;
+      flex-direction: row;
+      border: none;
+      border-bottom: 0.4rem groove $colorDarkGrey;
+      &__my-image {
+        height: 100%;
+        width: auto;
+        padding: 0;
+      }
+      &__my-logo {
+        height: 80%;
+        width: auto;
+      }
+      &__links {
+        flex-direction: row;
+        display: none;
+      }
+      &-menu-button {
+        @include SizeAndPositioning(relative, 80%, auto, flex, center, center, 0, 0, 0);
+      }
+      &-mobile {
+        @include SizeAndPositioning(absolute, 100vh, 100vw, none, center, center, 0, 0, 0);
+        flex-flow: column nowrap;
+        top: 0;
+        left: 0;
+        background-color: rgba($secondaryColor, 0.8);
+        z-index: 10;
+        transition: height 0.5s, width 0.5s, background-color 0.5s, opacity 0.5s;
+        &-close {
+          @include SizeAndPositioning(absolute, 5rem, 5rem, flex, center, center, 0, 0, 0);
+          top: 3rem;
+          right: 3rem;
+        }
+        &__links {
+          @include SizeAndPositioning(relative, 75%, 100%, flex, center, center, 0, 0, 0);
+          flex-flow: column nowrap;
+          &__link-item {
+            &__link {
+              @include SizeAndPositioning(relative, 12.5%, 80%, flex, center, center, 0, 0, 0);
+              margin: 1.5rem 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

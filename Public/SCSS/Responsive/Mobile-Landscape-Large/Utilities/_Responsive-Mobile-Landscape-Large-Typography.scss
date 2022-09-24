@@ -1,0 +1,31 @@
+@use '../../../../../Public/SCSS/Utilities/Variables' as *;
+@use '../../../../../Public/SCSS/Utilities/Mixins' as *;
+
+.r__master-grid-container {
+  @include responsiveBreakPoint('largeMobilePort') {
+    .r__application-flex-container {
+      .r__application-viewport {
+        .r__application-display {
+        }
+      }
+
+      .r__navigation {
+        &--side-screen {
+          &__section {
+            &--user-information {
+              &__username {
+                font-size: 1.6rem;
+              }
+            }
+
+            &--application-logo {
+              &__text {
+                font-size: 1.6rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
