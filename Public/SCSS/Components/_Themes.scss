@@ -75,6 +75,7 @@
             .hour__part.one-hour {
               border-top-color: $colorLighterGrey;
               border-bottom-color: $colorLighterGrey;
+              border: none;
             }
 
             &:hover {
@@ -88,6 +89,7 @@
               .hour__part.one-hour {
                 border-top-color: $colorLighterGrey;
                 border-bottom-color: $colorLighterGrey;
+                border: none;
               }
             }
           }

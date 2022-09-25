@@ -5151,8 +5151,8 @@ var fillDateModal = function fillDateModal(modal, dateText) {
   var date = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
   dayInput.min = 1;
   dayInput.max = date.daysInMonth;
-  yearInput.min = 1900;
-  yearInput.max = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.now().year + 3;
+  yearInput.min = 2022;
+  yearInput.max = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.now().year + 10;
   monthInput.addEventListener("change", function (e) {
     e.preventDefault();
     dayInput.value === '' ? dayInput.value = Number(dayInput.placeholder) : dayInput.value = Number(dayInput.value);

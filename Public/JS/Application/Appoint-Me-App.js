@@ -57,8 +57,8 @@ const fillDateModal = (modal, dateText) => {
   let date = DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
   dayInput.min = 1;
   dayInput.max = date.daysInMonth;
-  yearInput.min = 1900;
-  yearInput.max = DateTime.now().year + 3;
+  yearInput.min = 2022;
+  yearInput.max = DateTime.now().year + 10;
 
   monthInput.addEventListener(`change`, (e) => {
     e.preventDefault();

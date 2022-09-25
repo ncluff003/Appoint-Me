@@ -61,7 +61,7 @@ const createAndSendToken = (user, statusCode, method, request, response, templat
 
 exports.renderApp = catchAsync(async (request, response) => {
   response.status(200).render(`base`, {
-    title: `King Richard`,
+    title: `Appoint Me`,
     errorMessage: '',
     successMessage: '',
   });

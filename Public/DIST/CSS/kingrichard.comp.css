@@ -37027,7 +37027,7 @@
   justify-content: space-between;
   align-items: center;
   transform: rotate(0) translate(0, 0);
-  padding: 0.5rem 1rem 0.5rem;
+  padding: 0.5rem;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container__heading__date {
   position: relative;
@@ -37157,6 +37157,7 @@
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
+  border: none;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover {
   cursor: default;
@@ -37170,6 +37171,7 @@
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
+  border: none;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container .modal-close-icon:hover {
   cursor: pointer;
@@ -41236,6 +41238,7 @@
 .app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
+  border: none;
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover {
   cursor: default;
@@ -41249,6 +41252,7 @@
 .app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
+  border: none;
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time {
   background-color: rgba(42, 127, 255, 0.95);

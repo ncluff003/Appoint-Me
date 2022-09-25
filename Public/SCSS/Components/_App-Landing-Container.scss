@@ -36,7 +36,7 @@
         border-radius: 0.5rem;
         &__heading {
           @include SizeAndPositioning(relative, 12.5%, 100%, flex, row, nowrap, space-between, center, 0, 0, 0);
-          padding: 0.5rem 1rem 0.5rem;
+          padding: 0.5rem;
           &__date {
             @include SizeAndPositioning(relative, 100%, 60%, flex, row, nowrap, center, center, 0, 0, 0);
             min-width: 60%;
@@ -103,6 +103,7 @@
             .hour__part.one-hour {
               border-top-color: $colorLighterGrey;
               border-bottom-color: $colorLighterGrey;
+              border: none;
             }
 
             &:hover {
@@ -116,6 +117,7 @@
               .hour__part.one-hour {
                 border-top-color: $colorLighterGrey;
                 border-bottom-color: $colorLighterGrey;
+                border: none;
               }
             }
           }
