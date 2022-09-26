@@ -95,10 +95,21 @@
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-date .button--modal {
   font-size: 2rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute {
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time__header {
+  font-size: 2.6rem;
+  font-weight: bold;
+  text-align: center;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time__sub-header {
   font-size: 2rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__label {
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone {
+  font-size: 2rem;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__select--minute {
+  font-size: 2rem;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__label, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__label--email, .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__label--phone {
   font-size: 2rem;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__section__to-header {
@@ -109,6 +120,17 @@
   font-size: 2rem;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__section .colon {
+  font-size: 2rem;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form__section--commPreference {
+  font-size: 2rem;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form--appointment .communication-preference-header {
+  font-size: 2.6rem;
+  font-weight: bold;
+  text-align: center;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
   font-size: 2rem;
 }
 
@@ -160,16 +182,34 @@
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date .button--modal:hover {
   color: #2a7fff;
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time__header {
+  color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time__sub-header {
+  color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone {
   color: rgba(250, 250, 250, 0.8);
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus {
   color: #fafafa;
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone {
   color: #fafafa;
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__label {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute:focus {
+  color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour option, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute option {
+  color: #2a7fff;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select .blacked-out, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour .blacked-out, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute .blacked-out {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__label, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__label--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__label--phone {
   color: rgba(250, 250, 250, 0.8);
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section__to-header {
@@ -180,6 +220,123 @@
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section__tod {
   color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference {
+  color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
+  color: #2a7fff;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .communication-preference-header {
+  color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
+  color: #2a7fff;
+}
+.app-landing-container .green-and-white .appoint-me-header .icon-appoint-me-logo {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-header__title {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__heading {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__heading__date {
+  color: #38d927;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__heading .select-date-button {
+  color: rgba(56, 217, 39, 0.5);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour__time {
+  color: rgba(44, 174, 31, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out {
+  color: #dddddd;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__time {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal-close-icon {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal-close-icon:hover {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__header, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__sub-header {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select {
+  color: rgba(250, 250, 250, 0.8);
+  text-align: center;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container input:focus,
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select:focus {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date .button--modal {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date .button--modal:hover {
+  color: #38d927;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__header {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__sub-header {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--email, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .calendar .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .calendar .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .calendar .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .calendar .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus .form__label--phone, .app-landing-container .green-and-white .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone, .app-landing-container .blue-and-white .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus .form__label--phone {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute:focus {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour option, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute option {
+  color: #38d927;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select .blacked-out, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour .blacked-out, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute .blacked-out {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__label, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__label--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__label--phone {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section__to-header {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section .colon {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section__tod {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
+  color: #38d927;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .communication-preference-header {
+  color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
+  color: rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
+  color: #38d927;
 }
 
 .gridTV {
@@ -41310,34 +41467,65 @@
   border-color: #fafafa;
   background-color: #fafafa;
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone {
   border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
 }
-.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus {
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus {
   border-bottom-color: #fafafa;
 }
-.app-landing-container .blue-and-white-dark {
-  border-left: 0.3rem groove #0062f6;
-  border-right: 0.3rem groove #0062f6;
-  background-color: #2a7fff;
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute {
+  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container {
-  background-color: #5d9eff;
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour:focus, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute:focus {
+  border-bottom-color: #fafafa;
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container {
-  background-color: #111111;
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label {
+  border: 0.2rem groove rgba(250, 250, 250, 0.8);
+  transition: color 0.5s, background-color 0.5s;
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__heading {
-  border-bottom: 0.3rem groove #0062f6;
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label:first-of-type {
+  border-right-width: 0.1rem;
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__heading .select-date-button:hover {
-  background-color: #2a7fff;
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label:last-of-type {
+  border-left-width: 0.1rem;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
+  border: 0.2rem solid rgba(250, 250, 250, 0.8);
+  background-color: rgba(250, 250, 250, 0.25);
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+.app-landing-container .green-and-white {
+  border-left: 0.3rem groove #2cae1f;
+  border-right: 0.3rem groove #2cae1f;
+  background-color: #38d927;
+}
+.app-landing-container .green-and-white .appoint-me-container {
+  background-color: #60e152;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container {
+  background-color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__heading {
+  border-bottom: 0.3rem groove #2cae1f;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__heading .select-date-button:hover {
+  background-color: #38d927;
   color: #fafafa;
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour:nth-of-type(2n) {
-  background-color: rgba(0, 98, 246, 0.25);
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour:nth-of-type(2n) {
+  background-color: rgba(44, 174, 31, 0.25);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour .one-hour {
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour:nth-of-type(2n + 1) .hour__time {
+  background-color: rgba(250, 250, 250, 0.5);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour .one-hour {
   position: relative;
   height: 100%;
   width: 100%;
@@ -41348,7 +41536,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour .thirty-minutes {
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour .thirty-minutes {
   position: relative;
   height: 50%;
   width: 100%;
@@ -41359,10 +41547,10 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour .thirty-minutes:not(:last-of-type) {
-  border-bottom: 0.2rem dashed rgba(144, 188, 255, 0.25);
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour .thirty-minutes:not(:last-of-type) {
+  border-bottom: 0.2rem dashed rgba(136, 232, 126, 0.25);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour .fifteen-minutes {
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour .fifteen-minutes {
   position: relative;
   height: 25%;
   width: 100%;
@@ -41373,14 +41561,106 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour .fifteen-minutes:not(:last-of-type) {
-  border-bottom: 0.2rem dashed rgba(144, 188, 255, 0.25);
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour .fifteen-minutes:not(:last-of-type) {
+  border-bottom: 0.2rem dashed rgba(136, 232, 126, 0.25);
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour:hover {
-  background-color: #5d9eff;
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour:hover {
+  background-color: #60e152;
 }
-.app-landing-container .blue-and-white-dark .appoint-me-container__sub-container__calendar .hour:hover .hour__part {
-  border-color: #5d9eff;
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour:hover .hour__part {
+  border-color: #60e152;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .hour:hover .hour__time {
+  background-color: transparent;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out {
+  background-color: #555555;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__time {
+  background-color: transparent;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n) {
+  background-color: #777777;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) {
+  background-color: #555555;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) .hour__time {
+  background-color: transparent;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__part.fifteen-minutes,
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__part.thirty-minutes,
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour {
+  border-top-color: #bbbbbb;
+  border-bottom-color: #bbbbbb;
+  border: none;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover {
+  cursor: default;
+  background-color: #555555;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__time {
+  background-color: transparent;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.fifteen-minutes,
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.thirty-minutes,
+.app-landing-container .green-and-white .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour {
+  border-top-color: #bbbbbb;
+  border-bottom-color: #bbbbbb;
+  border: none;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time {
+  background-color: rgba(56, 217, 39, 0.95);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__date-picker-container input,
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__date-picker-container select {
+  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select option, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__date-picker-container select option {
+  background-color: #2cae1f;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date .button--modal {
+  border: 0.2rem solid rgba(250, 250, 250, 0.8);
+  background-color: rgba(250, 250, 250, 0.25);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date .button--modal:hover {
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone {
+  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--email:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus {
+  border-bottom-color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute {
+  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--hour:focus, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__select--minute:focus {
+  border-bottom-color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label {
+  border: 0.2rem groove rgba(250, 250, 250, 0.8);
+  transition: color 0.5s, background-color 0.5s;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label:first-of-type {
+  border-right-width: 0.1rem;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label:last-of-type {
+  border-left-width: 0.1rem;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
+  border: 0.2rem solid rgba(250, 250, 250, 0.8);
+  background-color: rgba(250, 250, 250, 0.25);
+}
+.app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
+  border-color: #fafafa;
+  background-color: #fafafa;
 }
 
 .two-factor-form-container {
@@ -41574,7 +41854,10 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.form__section, .form__section--names {
+.form--appointment {
+  overflow-y: auto;
+}
+.form__section, .form__section--phone, .form__section--email, .form__section--names {
   position: relative;
   height: 7rem;
   width: 100%;
@@ -41584,6 +41867,7 @@
   justify-content: center;
   align-items: center;
   transform: rotate(0) translate(0, 0);
+  min-height: 7rem;
 }
 .form__section--names__half {
   position: relative;
@@ -41596,13 +41880,56 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.form__section .colon, .form__section--names .colon {
+.form__section--phone, .form__section--email {
+  flex-direction: column-reverse;
+}
+.form__section .colon, .form__section--names .colon, .form__section--phone .colon, .form__section--email .colon {
   margin: 0 0.5rem;
 }
 .form__section__tod {
   margin: 0 0.5rem;
 }
-.form__input, .form__input--hour, .form__input--minute {
+.form__section--commPreference {
+  position: relative;
+  height: 8rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  margin-bottom: 3rem;
+}
+.form__section--commPreference input {
+  appearance: none;
+  -webkit-appearance: none;
+  display: none;
+}
+.form__section--commPreference label {
+  position: relative;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  padding: 2rem;
+}
+.form__section--commPreference label:first-of-type {
+  border-top-left-radius: 0.9rem;
+  border-bottom-left-radius: 0.9rem;
+}
+.form__section--commPreference label:last-of-type {
+  border-top-right-radius: 0.9rem;
+  border-bottom-right-radius: 0.9rem;
+}
+.form__section--commPreference label:hover {
+  cursor: pointer;
+}
+.form__input, .form__input--email, .form__input--phone, .form__input--hour, .form__input--minute {
   position: relative;
   height: 50%;
   width: 70%;
@@ -41616,35 +41943,38 @@
   background-color: transparent;
   border: none;
 }
-.form__input:focus, .form__input--hour:focus, .form__input--minute:focus {
+.form__input:focus, .form__input--email:focus, .form__input--phone:focus, .form__input--hour:focus, .form__input--minute:focus {
   outline: none;
 }
-.form__input::-webkit-input-placeholder, .form__input--hour::-webkit-input-placeholder, .form__input--minute::-webkit-input-placeholder, .form__input::-moz-placeholder, .form__input--hour::-moz-placeholder, .form__input--minute::-moz-placeholder, .form__input::placeholder, .form__input--hour::placeholder, .form__input--minute::placeholder {
+.form__input::-webkit-input-placeholder, .form__input--email::-webkit-input-placeholder, .form__input--phone::-webkit-input-placeholder, .form__input--hour::-webkit-input-placeholder, .form__input--minute::-webkit-input-placeholder, .form__input::-moz-placeholder, .form__input--email::-moz-placeholder, .form__input--phone::-moz-placeholder, .form__input--hour::-moz-placeholder, .form__input--minute::-moz-placeholder, .form__input::placeholder, .form__input--email::placeholder, .form__input--phone::placeholder, .form__input--hour::placeholder, .form__input--minute::placeholder {
   opacity: 0;
 }
-.form__input:focus::-webkit-input-placeholder, .form__input--hour:focus::-webkit-input-placeholder, .form__input--minute:focus::-webkit-input-placeholder {
+.form__input:focus::-webkit-input-placeholder, .form__input--email:focus::-webkit-input-placeholder, .form__input--phone:focus::-webkit-input-placeholder, .form__input--hour:focus::-webkit-input-placeholder, .form__input--minute:focus::-webkit-input-placeholder {
   opacity: 1;
 }
-.form__input:focus, .form__input--hour:focus, .form__input--minute:focus {
+.form__input:focus, .form__input--email:focus, .form__input--phone:focus, .form__input--hour:focus, .form__input--minute:focus {
   outline: none;
 }
-.form__input:focus::-webkit-input-placeholder, .form__input--hour:focus::-webkit-input-placeholder, .form__input--minute:focus::-webkit-input-placeholder, .form__input:focus::-moz-placeholder, .form__input--hour:focus::-moz-placeholder, .form__input--minute:focus::-moz-placeholder, .form__input:focus::placeholder, .form__input--hour:focus::placeholder, .form__input--minute:focus::placeholder {
+.form__input:focus::-webkit-input-placeholder, .form__input--email:focus::-webkit-input-placeholder, .form__input--phone:focus::-webkit-input-placeholder, .form__input--hour:focus::-webkit-input-placeholder, .form__input--minute:focus::-webkit-input-placeholder, .form__input:focus::-moz-placeholder, .form__input--email:focus::-moz-placeholder, .form__input--phone:focus::-moz-placeholder, .form__input--hour:focus::-moz-placeholder, .form__input--minute:focus::-moz-placeholder, .form__input:focus::placeholder, .form__input--email:focus::placeholder, .form__input--phone:focus::placeholder, .form__input--hour:focus::placeholder, .form__input--minute:focus::placeholder {
   opacity: 1;
 }
-.form__input:focus:valid, .form__input--hour:focus:valid, .form__input--minute:focus:valid {
+.form__input:focus:valid, .form__input--email:focus:valid, .form__input--phone:focus:valid, .form__input--hour:focus:valid, .form__input--minute:focus:valid {
   border-bottom-color: #38d927;
 }
-.form__input:focus:invalid, .form__input--hour:focus:invalid, .form__input--minute:focus:invalid {
+.form__input:focus:invalid, .form__input--email:focus:invalid, .form__input--phone:focus:invalid, .form__input--hour:focus:invalid, .form__input--minute:focus:invalid {
   border-bottom-color: #cf352e;
 }
-.form__input:not(:placeholder-shown) + label, .form__input--hour:not(:placeholder-shown) + label, .form__input--minute:not(:placeholder-shown) + label, .form__input:focus + label, .form__input--hour:focus + label, .form__input--minute:focus + label {
+.form__input:not(:placeholder-shown) + label, .form__input--email:not(:placeholder-shown) + label, .form__input--phone:not(:placeholder-shown) + label, .form__input--hour:not(:placeholder-shown) + label, .form__input--minute:not(:placeholder-shown) + label, .form__input:focus + label, .form__input--email:focus + label, .form__input--phone:focus + label, .form__input--hour:focus + label, .form__input--minute:focus + label {
   transform: translate(-2rem, -4rem) scale(0.75);
 }
 .form__input--hour, .form__input--minute {
   width: 25%;
   padding: 0.5rem;
 }
-.form__label {
+.form__input--email:not(:placeholder-shown) + label, .form__input--email:focus + label, .form__input--phone:not(:placeholder-shown) + label, .form__input--phone:focus + label {
+  transform: translate(-4rem, -4rem) scale(0.75);
+}
+.form__label, .form__label--email, .form__label--phone {
   position: absolute;
   height: 50%;
   width: 70%;
@@ -41657,6 +41987,20 @@
   padding: 0 0 0 0.5rem;
   top: 50%;
   transition: transform 0.5s, border 0.5s, color 0.5s;
+}
+.form__select, .form__select--hour, .form__select--minute {
+  border: none;
+  background-color: transparent;
+}
+.form__select--hour, .form__select--minute {
+  padding: 0.5rem;
+}
+.form__select option.blacked-out, .form__select--hour option.blacked-out, .form__select--minute option.blacked-out {
+  background-color: #555555;
+}
+.form--appointment .communication-preference-header {
+  padding: 0 3rem;
+  margin: 2rem 0 3rem;
 }
 
 .switch {
@@ -44802,6 +45146,10 @@
 .modal--select-date__date-picker-container input:focus,
 .modal--select-date__date-picker-container select:focus {
   outline: none;
+}
+.modal--select-time__header {
+  margin-top: 10rem;
+  margin-bottom: 1rem;
 }
 
 .user-result {

@@ -4751,106 +4751,273 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createIntervals": () => (/* binding */ createIntervals),
 /* harmony export */   "fillDay": () => (/* binding */ fillDay)
 /* harmony export */ });
-/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
+/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../Classes/Cache */ "./Public/JS/Classes/Cache.js");
+/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Classes_Cache__WEBPACK_IMPORTED_MODULE_3__);
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
 
 
+
+
 var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText, hour) {
-  var months = luxon__WEBPACK_IMPORTED_MODULE_1__.Info.months('long');
-  var header = document.createElement('header');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(header, ["modal--select-time__header", "r__modal--select-time__header"]);
-  header.textContent = luxon__WEBPACK_IMPORTED_MODULE_1__.DateTime.fromISO(dateText.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_1__.DateTime.DATE_HUGE);
+  // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
   var splitHour = hour.dataset.time.split(':');
   var splitMinutes = splitHour[1].split(' ');
-  var subHeader = document.createElement('h3');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(subHeader, ["modal--select-time__sub-header", "r__modal--select-time__sub-header"]);
-  subHeader.textContent = "Make Appointment";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, header);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, subHeader);
-  var form = document.createElement('form');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(form, ["form--appointment", "r__form--appointment"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', modal, form);
-  var nameSection = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSection, ["form__section--names", "r__form__section--names"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", form, nameSection);
-  var nameSectionHalfOne = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSectionHalfOne, ["form__section--names__half", "r__form__section--names__half"]);
-  var nameSectionHalfTwo = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSectionHalfTwo, ["form__section--names__half", "r__form__section--names__half"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSection, [nameSectionHalfOne, nameSectionHalfTwo]);
-  var firstnameInput = document.createElement('input');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(firstnameInput, ["form__input", "r__form__input"]);
-  var lastnameInput = document.createElement('input');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(lastnameInput, ["form__input", "r__form__input"]);
-  firstnameInput.placeholder = "John";
-  lastnameInput.placeholder = "Doe";
-  firstnameInput.id = "firstname";
-  firstnameInput.name = "firstname";
-  lastnameInput.id = "lastname";
-  lastnameInput.name = "lastname";
-  var firstnameLabel = document.createElement('label');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(firstnameLabel, ["form__label", "r__form__label"]);
-  firstnameLabel.textContent = "First Name";
-  firstnameLabel.setAttribute("for", "firstname");
-  var lastnameLabel = document.createElement('label');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(lastnameLabel, ["form__label", "r__form__label"]);
-  lastnameLabel.textContent = "Last Name";
-  lastnameLabel.setAttribute("for", "lastname");
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSectionHalfOne, [firstnameInput, firstnameLabel]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSectionHalfTwo, [lastnameInput, lastnameLabel]);
-  var timeSectionOne = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeSectionOne, ["form__section", "r__form-section"]);
-  var toHeader = document.createElement('h3');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(toHeader, ["form__section__to-header", "r__form__section__to-header"]);
-  toHeader.textContent = "To";
-  var timeSectionTwo = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeSectionTwo, ["form__section", "r__form-section"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', modal, [timeSectionOne, toHeader, timeSectionTwo]);
-  var hourInputOne = document.createElement('input');
-  hourInputOne.type = "number";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourInputOne, ["form__input--hour", "r__form__input--hour"]);
-  hourInputOne.placeholder = splitHour[0];
-  hourInputOne.value = splitHour[0];
-  hourInputOne.readOnly = "true";
-  var colonOne = document.createElement('p');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(colonOne, ["colon", "r__colon"]);
-  colonOne.textContent = " : ";
-  var minuteInputOne = document.createElement('input');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(minuteInputOne, ["form__input--minute", "r__form__input--minute"]);
-  minuteInputOne.placeholder = "00";
-  minuteInputOne.value = splitMinutes[0];
-  minuteInputOne.type = "number";
-  minuteInputOne.min = 0;
-  minuteInputOne.max = 59;
-  var timeOfDayOne = document.createElement('p');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeOfDayOne, ["form__section__tod", "r__form__section__tod"]);
-  timeOfDayOne.textContent = "".concat(splitMinutes[1]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements("beforeend", timeSectionOne, [hourInputOne, colonOne, minuteInputOne, timeOfDayOne]);
-  var hourInputTwo = document.createElement('input');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourInputTwo, ["form__input--hour", "r__form__input--hour"]);
-  hourInputTwo.placeholder = splitHour[0];
-  hourInputTwo.type = "number";
-  hourInputTwo.min = Number(splitHour[0]);
-  hourInputTwo.max = Number(splitHour[0]) + 2;
 
-  if (Number(splitHour[0]) + 2 > 12) {
-    hourInputTwo.max = Number(splitHour[0]) + 2 - 12;
+  if (modal.childNodes.length === 1) {
+    var months = luxon__WEBPACK_IMPORTED_MODULE_2__.Info.months('long');
+    var utility = (0,_Classes_Cache__WEBPACK_IMPORTED_MODULE_3__.get)("utility");
+    var header = document.createElement('header');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(header, ["modal--select-time__header", "r__modal--select-time__header"]);
+    header.textContent = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateText.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.DATE_HUGE);
+    var subHeader = document.createElement('h3');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(subHeader, ["modal--select-time__sub-header", "r__modal--select-time__sub-header"]);
+    subHeader.textContent = "Make Appointment";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", modal, header);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", modal, subHeader);
+    var form = document.createElement('form');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(form, ["form--appointment", "r__form--appointment"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', modal, form);
+    var nameSection = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(nameSection, ["form__section--names", "r__form__section--names"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", form, nameSection);
+    var nameSectionHalfOne = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(nameSectionHalfOne, ["form__section--names__half", "r__form__section--names__half"]);
+    var nameSectionHalfTwo = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(nameSectionHalfTwo, ["form__section--names__half", "r__form__section--names__half"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements('beforeend', nameSection, [nameSectionHalfOne, nameSectionHalfTwo]);
+    var firstnameInput = document.createElement('input');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(firstnameInput, ["form__input", "r__form__input"]);
+    var lastnameInput = document.createElement('input');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(lastnameInput, ["form__input", "r__form__input"]);
+    firstnameInput.placeholder = "John";
+    lastnameInput.placeholder = "Doe";
+    firstnameInput.id = "firstname";
+    firstnameInput.name = "firstname";
+    lastnameInput.id = "lastname";
+    lastnameInput.name = "lastname";
+    var firstnameLabel = document.createElement('label');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(firstnameLabel, ["form__label", "r__form__label"]);
+    firstnameLabel.textContent = "First Name";
+    firstnameLabel.setAttribute("for", "firstname");
+    var lastnameLabel = document.createElement('label');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(lastnameLabel, ["form__label", "r__form__label"]);
+    lastnameLabel.textContent = "Last Name";
+    lastnameLabel.setAttribute("for", "lastname");
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements('beforeend', nameSectionHalfOne, [firstnameInput, firstnameLabel]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements('beforeend', nameSectionHalfTwo, [lastnameInput, lastnameLabel]);
+    var timeSectionOne = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(timeSectionOne, ["form__section", "r__form-section"]);
+    var toHeader = document.createElement('h3');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(toHeader, ["form__section__to-header", "r__form__section__to-header"]);
+    toHeader.textContent = "To";
+    var timeSectionTwo = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(timeSectionTwo, ["form__section", "r__form-section"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements('beforeend', form, [timeSectionOne, toHeader, timeSectionTwo]);
+
+    var _hourSelectOne = document.createElement('select');
+
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_hourSelectOne, ["form__select--hour", "r__form__select--hour"]);
+    var hourStart = 0;
+    var numberOfHours = 24;
+    var colonOne = document.createElement('p');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(colonOne, ["colon", "r__colon"]);
+    colonOne.textContent = " : ";
+    var minuteSelectOne = document.createElement('select');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(minuteSelectOne, ["form__select--minute", "r__form__select--minute"]);
+    var minuteStart = 0;
+    var minuteEnd = utility.minutes.length;
+
+    while (minuteStart < minuteEnd) {
+      var option = document.createElement('option');
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(option, ["form__select--minute__option", "r__form__select--minute__option"]);
+
+      if (minuteStart === 0) {
+        option.selected = true;
+      }
+
+      option.textContent = utility.minutes[minuteStart];
+      option.value = Number(utility.minutes[minuteStart]);
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", minuteSelectOne, option);
+      minuteStart++;
+    }
+
+    var timeOfDayOne = document.createElement('p');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(timeOfDayOne, ["form__section__tod", "r__form__section__tod"]);
+    timeOfDayOne.textContent = "".concat(splitMinutes[1]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", timeSectionOne, [_hourSelectOne, colonOne, minuteSelectOne, timeOfDayOne]);
+
+    var _hourSelectTwo = document.createElement('select');
+
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_hourSelectTwo, ["form__select--hour", "r__form__select--hour"]);
+
+    while (hourStart < numberOfHours) {
+      var optionOne = document.createElement('option');
+      var optionTwo = document.createElement('option');
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(optionOne, ["form__select--hour__option", "r__form__select--hour__option"]);
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(optionTwo, ["form__select--hour__option", "r__form__select--hour__option"]);
+
+      if (hourStart === 0) {
+        optionOne.textContent = 12;
+        optionTwo.textContent = 12;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+        optionOne.selected = true;
+        optionTwo.selected = true;
+      } else if (hourStart > 12) {
+        optionOne.textContent = hourStart - 12;
+        optionTwo.textContent = hourStart - 12;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+      } else {
+        optionOne.textContent = hourStart;
+        optionTwo.textContent = hourStart;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+      }
+
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", _hourSelectOne, optionOne);
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", _hourSelectTwo, optionTwo);
+      hourStart++;
+    }
+
+    var colonTwo = document.createElement('p');
+    colonTwo.textContent = " : ";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(colonTwo, ["colon", "r__colon"]);
+    var minuteSelectTwo = document.createElement('select');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(minuteSelectTwo, ["form__select--minute", "r__form__select--minute"]);
+    var minuteStartTwo = 0;
+    var minuteEndTwo = utility.minutes.length;
+
+    while (minuteStartTwo < minuteEndTwo) {
+      var _option = document.createElement('option');
+
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_option, ["form__select--minute__option", "r__form__select--minute__option"]);
+
+      if (minuteStartTwo === 0) {
+        _option.selected = true;
+      }
+
+      _option.textContent = utility.minutes[minuteStartTwo];
+      _option.value = Number(utility.minutes[minuteStartTwo]);
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", minuteSelectTwo, _option);
+      minuteStartTwo++;
+    }
+
+    var _timeOfDayTwo = document.createElement('p');
+
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_timeOfDayTwo, ["form__section__tod", "r__form__section__tod"]);
+    _timeOfDayTwo.textContent = "AM";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", timeSectionTwo, [_hourSelectTwo, colonTwo, minuteSelectTwo, _timeOfDayTwo]);
+    var emailSection = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(emailSection, ["form__section--email", "r__form__section--email"]);
+    var emailInput = document.createElement('input');
+    emailInput.id = "email";
+    emailInput.name = "email";
+    emailInput.type = "email";
+    emailInput.pattern = "[^@]+@[^@]+[.]+(com|net|org|io|edu|(co.uk)|me|tech|money)+$";
+    emailInput.placeholder = "Enter Email Address";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(emailInput, ["form__input--email", "r__form__input--email"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", emailSection, emailInput);
+    var emailLabel = document.createElement('label');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(emailLabel, ["form__label--email", "r__form__label--email"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", emailSection, emailLabel);
+    emailLabel.textContent = "Email Address";
+    emailLabel.setAttribute("for", "email");
+    var phoneSection = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(phoneSection, ["form__section--phone", "r__form__section--phone"]);
+
+    var _phoneInput = document.createElement('input');
+
+    _phoneInput.id = "phone";
+    _phoneInput.name = "phone";
+    _phoneInput.type = "tel";
+    _phoneInput.placeholder = "Enter Phone Number";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_phoneInput, ["form__input--phone", "r__form__input--phone"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", phoneSection, _phoneInput);
+    var phoneLabel = document.createElement('label');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(phoneLabel, ["form__label--phone", "r__form__label--phone"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", phoneSection, phoneLabel);
+    phoneLabel.textContent = "Phone Number";
+    phoneLabel.setAttribute("for", "phone");
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", form, [emailSection, phoneSection]);
+    var commPreferenceHeader = document.createElement('h3');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(commPreferenceHeader, ["communication-preference-header", "r__communication-preference-header"]);
+    commPreferenceHeader.textContent = "Select Preference For Discussing Details";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", form, commPreferenceHeader);
+    var communicationPreferenceSection = document.createElement('section');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(communicationPreferenceSection, ["form__section--commPreference", "r__form__section--commPreference"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", form, communicationPreferenceSection);
+    var phoneCallInput = document.createElement('input');
+    phoneCallInput.type = "checkbox";
+    var phoneCallLabel = document.createElement('label');
+    phoneCallLabel.textContent = "Phone Call";
+    var videoChatlInput = document.createElement('input');
+    videoChatlInput.type = "checkbox";
+    var videoChatLabel = document.createElement('label');
+    videoChatLabel.textContent = "Video Chat";
+    [phoneCallLabel, videoChatLabel].forEach(function (label) {
+      label.addEventListener("click", function (e) {
+        e.preventDefault();
+        [phoneCallLabel, videoChatLabel].forEach(function (label) {
+          return _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(label, ["clicked"]);
+        });
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(label, ["clicked"]);
+      });
+    });
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", communicationPreferenceSection, [phoneCallInput, phoneCallLabel, videoChatlInput, videoChatLabel]);
+    var submitAppointmentButton = document.createElement('button');
+    submitAppointmentButton.textContent = "Submit Appointment";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(submitAppointmentButton, ["button--modal", "button--modal"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', form, submitAppointmentButton);
   }
 
-  var colonTwo = document.createElement('p');
-  colonTwo.textContent = " : ";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(colonTwo, ["colon", "r__colon"]);
-  var minuteInputTwo = document.createElement('input');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(minuteInputTwo, ["form__input--minute", "r__form__input--minute"]);
-  minuteInputTwo.placeholder = "00";
-  minuteInputTwo.type = "number";
-  minuteInputTwo.min = 0;
-  minuteInputTwo.max = 59;
-  var timeOfDayTwo = document.createElement('p');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeOfDayTwo, ["form__section__tod", "r__form__section__tod"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements("beforeend", timeSectionTwo, [hourInputTwo, colonTwo, minuteInputTwo, timeOfDayTwo]);
+  var number;
+  var phoneInput = document.querySelectorAll('.form__input')[3];
+  phoneInput.addEventListener("keyup", function (e) {
+    e.preventDefault();
+    var phoneNumber = _Utility__WEBPACK_IMPORTED_MODULE_1__.formatPhoneNumber(phoneInput.value);
+    phoneInput.value = phoneNumber;
+    var numberSplit = phoneNumber.split(' ');
+    var areacodeSplit = numberSplit[0].split('');
+    var areacode = [areacodeSplit[1], areacodeSplit[2], areacodeSplit[3]].join('');
+    number = [areacode, numberSplit[1], numberSplit[3]].join('');
+  });
+  var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+
+  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
+  });
+
+  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+    if (child.value !== 0 && hour.dataset.time === "12:00 AM") {
+      child.disabled = true;
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+    } else if (hour.dataset.time !== "12:00 AM") {
+      if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+        child.disabled = true;
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+      } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
+        child.disabled = true;
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+      }
+    }
+  });
+
+  var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+  var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+  hourSelectTwo.addEventListener("change", function (e) {
+    e.preventDefault();
+
+    if (hourSelectTwo.value >= 12) {
+      timeOfDayTwo.textContent = "PM";
+    } else {
+      timeOfDayTwo.textContent = "AM";
+    }
+  });
   /*
   
   * First Name
@@ -4872,8 +5039,8 @@ var createIntervals = function createIntervals(hours, interval, utility) {
 
       while (startingInterval < numberOfIntervals) {
         var hourPart = document.createElement('section');
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourPart, ["hour__part", "r__hour__part", "one-hour"]);
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', hour, hourPart);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hourPart, ["hour__part", "r__hour__part", "one-hour"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', hour, hourPart);
         hourPart.dataset.time = hour.dataset.time;
         startingInterval++;
       }
@@ -4887,8 +5054,8 @@ var createIntervals = function createIntervals(hours, interval, utility) {
 
       while (startingInterval < numberOfIntervals) {
         var hourPart = document.createElement('section');
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourPart, ["hour__part", "r__hour__part", "thirty-minutes"]);
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', hour, hourPart);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hourPart, ["hour__part", "r__hour__part", "thirty-minutes"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', hour, hourPart);
 
         if (startingInterval === 0) {
           if (i >= 0 && i < 12) {
@@ -4919,8 +5086,8 @@ var createIntervals = function createIntervals(hours, interval, utility) {
 
       while (startingInterval < numberOfIntervals) {
         var hourPart = document.createElement('section');
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourPart, ["hour__part", "r__hour__part", "fifteen-minutes"]);
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', hour, hourPart);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hourPart, ["hour__part", "r__hour__part", "fifteen-minutes"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', hour, hourPart);
 
         if (startingInterval === 0) {
           if (i >= 0 && i < 12) {
@@ -4962,16 +5129,16 @@ var fillDay = function fillDay(container, intervals, utility) {
 
   var _loop = function _loop() {
     var hour = document.createElement('section');
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hour, ["hour", "r__hour"]);
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', container, hour);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["hour", "r__hour"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', container, hour);
     hour.addEventListener("click", function (e) {
       e.preventDefault();
-      _Utility__WEBPACK_IMPORTED_MODULE_0__.replaceClassName(timePickerModal, "closed", "open");
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.replaceClassName(timePickerModal, "closed", "open");
       var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
       fillMakeAppointmentModal(timePickerModal, date, hour);
     });
     var time = document.createElement('p');
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(time, ["hour__time", "r__hour__time"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(time, ["hour__time", "r__hour__time"]);
 
     if (startHour === 0) {
       time.textContent = "12:00 AM";
@@ -4987,7 +5154,7 @@ var fillDay = function fillDay(container, intervals, utility) {
       hour.dataset.time = "".concat(startHour - 12, ":00 PM");
     }
 
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", hour, time);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", hour, time);
     startHour++;
   };
 
@@ -6616,6 +6783,20 @@ var getLocalStorageLocalInformation = function getLocalStorageLocalInformation()
   };
 };
 var build = function build(moment, translate) {
+  var minuteStart = 0;
+  var numberOfMinutes = 60;
+  var minutes = [];
+
+  while (minuteStart < numberOfMinutes) {
+    if (minuteStart < 10) {
+      minutes.push("0".concat(minuteStart));
+    } else {
+      minutes.push(minuteStart);
+    }
+
+    minuteStart++;
+  }
+
   var utility = {
     // number: new Intl.NumberFormat(profile.locale),
     // englishNumber: new Intl.NumberFormat(`en-us`),
@@ -6640,8 +6821,10 @@ var build = function build(moment, translate) {
       tvQuery: [window.matchMedia("(min-width: 2500px)"), ["gridTV", "r__gridTV"]]
     },
     theme: {
-      'blue-and-white': 'blue-and-white'
-    }
+      'blue-and-white': 'blue-and-white',
+      'green-and-white': 'green-and-white'
+    },
+    minutes: minutes
   };
   (0,_Classes_Cache__WEBPACK_IMPORTED_MODULE_5__.set)("utility", utility);
 };

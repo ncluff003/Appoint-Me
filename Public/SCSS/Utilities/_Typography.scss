@@ -74,16 +74,37 @@
             }
           }
           &--select-time {
+            &__header {
+              font-size: 2.6rem;
+              font-weight: bold;
+              text-align: center;
+            }
+            &__sub-header {
+              font-size: 2rem;
+            }
             .form {
               &__input {
                 font-size: 2rem;
                 &--hour,
-                &--minute {
+                &--minute,
+                &--email,
+                &--phone {
                   @extend .form__input;
+                }
+              }
+              &__select {
+                font-size: 2rem;
+                &--hour,
+                &--minute {
+                  @extend .form__select;
                 }
               }
               &__label {
                 font-size: 2rem;
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
               }
 
               &__section {
@@ -97,6 +118,23 @@
                 }
                 .colon {
                   font-size: 2rem;
+                }
+
+                &--commPreference {
+                  font-size: 2rem;
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  font-size: 2.6rem;
+                  font-weight: bold;
+                  text-align: center;
+                }
+
+                .button {
+                  &--modal {
+                    font-size: 2rem;
+                  }
                 }
               }
             }
@@ -176,6 +214,12 @@
             }
           }
           &--select-time {
+            &__header {
+              color: $colorOffWhite;
+            }
+            &__sub-header {
+              color: $colorOffWhite;
+            }
             .form {
               &__input {
                 color: rgba($colorOffWhite, 0.8);
@@ -186,12 +230,34 @@
                   }
                 }
                 &--hour,
-                &--minute {
+                &--minute,
+                &--email,
+                &--phone {
                   @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $primaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
                 }
               }
               &__label {
                 color: rgba($colorOffWhite, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
               }
 
               &__section {
@@ -203,6 +269,175 @@
                 }
                 &__tod {
                   color: $colorOffWhite;
+                }
+                &--commPreference {
+                  color: $colorOffWhite;
+                  label.clicked {
+                    color: $primaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorOffWhite;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorOffWhite, 0.8);
+                    &:hover {
+                      color: $primaryColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .green-and-white {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorOffWhite;
+      }
+      &__title {
+        color: $colorOffWhite;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorOffWhite;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $secondaryColor;
+          }
+          .select-date-button {
+            color: rgba($secondaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($secondaryColorDark, 0.8);
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorOffWhite;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorOffWhite, 0.8);
+            &:hover {
+              color: $colorOffWhite;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorOffWhite;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorOffWhite, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorOffWhite;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorOffWhite, 0.8);
+                &:hover {
+                  color: $secondaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            &__header {
+              color: $colorOffWhite;
+            }
+            &__sub-header {
+              color: $colorOffWhite;
+            }
+            .form {
+              &__input {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                  .form__label {
+                    color: $colorOffWhite;
+                  }
+                }
+                &--hour,
+                &--minute,
+                &--email,
+                &--phone {
+                  @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $secondaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
+                }
+              }
+              &__label {
+                color: rgba($colorOffWhite, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorOffWhite;
+                }
+                .colon {
+                  color: $colorOffWhite;
+                }
+                &__tod {
+                  color: $colorOffWhite;
+                }
+                &--commPreference {
+                  color: $colorOffWhite;
+                  label.clicked {
+                    color: $secondaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorOffWhite;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorOffWhite, 0.8);
+                    &:hover {
+                      color: $secondaryColor;
+                    }
+                  }
                 }
               }
             }

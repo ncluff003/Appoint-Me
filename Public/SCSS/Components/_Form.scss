@@ -5,15 +5,22 @@
   @include SizeAndPositioning(relative, max-content, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
   &--appointment {
     @extend .form;
+    overflow-y: auto;
   }
 
   &__section {
     @include SizeAndPositioning(relative, 7rem, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+    min-height: 7rem;
     &--names {
       @extend .form__section;
       &__half {
         @include SizeAndPositioning(relative, 100%, 50%, flex, column-reverse, nowrap, center, center, 0, 0, 0);
       }
+    }
+    &--phone,
+    &--email {
+      @extend .form__section;
+      flex-direction: column-reverse;
     }
 
     .colon {
@@ -22,6 +29,32 @@
 
     &__tod {
       margin: 0 0.5rem;
+    }
+
+    &--commPreference {
+      @include SizeAndPositioning(relative, 8rem, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+      margin-bottom: 3rem;
+      input {
+        appearance: none;
+        -webkit-appearance: none;
+        display: none;
+      }
+      label {
+        @include SizeAndPositioning(relative, 100%, 40%, flex, row, nowrap, center, center, 0, 0, 0);
+        padding: 2rem;
+        &:first-of-type {
+          border-top-left-radius: 0.9rem;
+          border-bottom-left-radius: 0.9rem;
+        }
+        &:last-of-type {
+          border-top-right-radius: 0.9rem;
+          border-bottom-right-radius: 0.9rem;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 
@@ -68,6 +101,15 @@
       width: 25%;
       padding: 0.5rem;
     }
+
+    &--email,
+    &--phone {
+      @extend .form__input;
+      &:not(:placeholder-shown) + label,
+      &:focus + label {
+        transform: translate(-4rem, -4rem) scale(0.75);
+      }
+    }
   }
 
   &__label {
@@ -75,5 +117,29 @@
     padding: 0 0 0 0.5rem;
     top: 50%;
     transition: transform 0.5s, border 0.5s, color 0.5s;
+    &--email,
+    &--phone {
+      @extend .form__label;
+    }
+  }
+
+  &__select {
+    border: none;
+    background-color: transparent;
+    &--hour,
+    &--minute {
+      @extend .form__select;
+      padding: 0.5rem;
+    }
+    option.blacked-out {
+      background-color: $colorDarkGrey;
+    }
+  }
+
+  &--appointment {
+    .communication-preference-header {
+      padding: 0 3rem;
+      margin: 2rem 0 3rem;
+    }
   }
 }

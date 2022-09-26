@@ -1,120 +1,288 @@
 import * as Utility from './../Utility';
 import { DateTime, Info } from 'luxon';
+import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../../Classes/Cache';
 
 const fillMakeAppointmentModal = (modal, dateText, hour) => {
-  let months = Info.months('long');
-  const header = document.createElement('header');
-  Utility.addClasses(header, [`modal--select-time__header`, `r__modal--select-time__header`]);
-  header.textContent = DateTime.fromISO(dateText.dataset.date).toLocaleString(DateTime.DATE_HUGE);
-
+  // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
   let splitHour = hour.dataset.time.split(':');
   let splitMinutes = splitHour[1].split(' ');
 
-  const subHeader = document.createElement('h3');
-  Utility.addClasses(subHeader, [`modal--select-time__sub-header`, `r__modal--select-time__sub-header`]);
-  subHeader.textContent = `Make Appointment`;
-  Utility.insertElement(`beforeend`, modal, header);
-  Utility.insertElement(`beforeend`, modal, subHeader);
+  if (modal.childNodes.length === 1) {
+    let months = Info.months('long');
+    let utility = get(`utility`);
+    const header = document.createElement('header');
+    Utility.addClasses(header, [`modal--select-time__header`, `r__modal--select-time__header`]);
+    header.textContent = DateTime.fromISO(dateText.dataset.date).toLocaleString(DateTime.DATE_HUGE);
 
-  const form = document.createElement('form');
-  Utility.addClasses(form, [`form--appointment`, `r__form--appointment`]);
-  Utility.insertElement('beforeend', modal, form);
+    const subHeader = document.createElement('h3');
+    Utility.addClasses(subHeader, [`modal--select-time__sub-header`, `r__modal--select-time__sub-header`]);
+    subHeader.textContent = `Make Appointment`;
+    Utility.insertElement(`beforeend`, modal, header);
+    Utility.insertElement(`beforeend`, modal, subHeader);
 
-  const nameSection = document.createElement('section');
-  Utility.addClasses(nameSection, [`form__section--names`, `r__form__section--names`]);
-  Utility.insertElement(`beforeend`, form, nameSection);
+    const form = document.createElement('form');
+    Utility.addClasses(form, [`form--appointment`, `r__form--appointment`]);
+    Utility.insertElement('beforeend', modal, form);
 
-  const nameSectionHalfOne = document.createElement('section');
-  Utility.addClasses(nameSectionHalfOne, [`form__section--names__half`, `r__form__section--names__half`]);
-  const nameSectionHalfTwo = document.createElement('section');
-  Utility.addClasses(nameSectionHalfTwo, [`form__section--names__half`, `r__form__section--names__half`]);
-  Utility.insertElements('beforeend', nameSection, [nameSectionHalfOne, nameSectionHalfTwo]);
+    const nameSection = document.createElement('section');
+    Utility.addClasses(nameSection, [`form__section--names`, `r__form__section--names`]);
+    Utility.insertElement(`beforeend`, form, nameSection);
 
-  const firstnameInput = document.createElement('input');
-  Utility.addClasses(firstnameInput, [`form__input`, `r__form__input`]);
-  const lastnameInput = document.createElement('input');
-  Utility.addClasses(lastnameInput, [`form__input`, `r__form__input`]);
+    const nameSectionHalfOne = document.createElement('section');
+    Utility.addClasses(nameSectionHalfOne, [`form__section--names__half`, `r__form__section--names__half`]);
+    const nameSectionHalfTwo = document.createElement('section');
+    Utility.addClasses(nameSectionHalfTwo, [`form__section--names__half`, `r__form__section--names__half`]);
+    Utility.insertElements('beforeend', nameSection, [nameSectionHalfOne, nameSectionHalfTwo]);
 
-  firstnameInput.placeholder = `John`;
-  lastnameInput.placeholder = `Doe`;
-  firstnameInput.id = `firstname`;
-  firstnameInput.name = `firstname`;
-  lastnameInput.id = `lastname`;
-  lastnameInput.name = `lastname`;
+    const firstnameInput = document.createElement('input');
+    Utility.addClasses(firstnameInput, [`form__input`, `r__form__input`]);
+    const lastnameInput = document.createElement('input');
+    Utility.addClasses(lastnameInput, [`form__input`, `r__form__input`]);
 
-  const firstnameLabel = document.createElement('label');
-  Utility.addClasses(firstnameLabel, [`form__label`, `r__form__label`]);
-  firstnameLabel.textContent = `First Name`;
-  firstnameLabel.setAttribute(`for`, `firstname`);
-  const lastnameLabel = document.createElement('label');
-  Utility.addClasses(lastnameLabel, [`form__label`, `r__form__label`]);
-  lastnameLabel.textContent = `Last Name`;
-  lastnameLabel.setAttribute(`for`, `lastname`);
+    firstnameInput.placeholder = `John`;
+    lastnameInput.placeholder = `Doe`;
+    firstnameInput.id = `firstname`;
+    firstnameInput.name = `firstname`;
+    lastnameInput.id = `lastname`;
+    lastnameInput.name = `lastname`;
 
-  Utility.insertElements('beforeend', nameSectionHalfOne, [firstnameInput, firstnameLabel]);
-  Utility.insertElements('beforeend', nameSectionHalfTwo, [lastnameInput, lastnameLabel]);
+    const firstnameLabel = document.createElement('label');
+    Utility.addClasses(firstnameLabel, [`form__label`, `r__form__label`]);
+    firstnameLabel.textContent = `First Name`;
+    firstnameLabel.setAttribute(`for`, `firstname`);
+    const lastnameLabel = document.createElement('label');
+    Utility.addClasses(lastnameLabel, [`form__label`, `r__form__label`]);
+    lastnameLabel.textContent = `Last Name`;
+    lastnameLabel.setAttribute(`for`, `lastname`);
 
-  const timeSectionOne = document.createElement('section');
-  Utility.addClasses(timeSectionOne, [`form__section`, `r__form-section`]);
+    Utility.insertElements('beforeend', nameSectionHalfOne, [firstnameInput, firstnameLabel]);
+    Utility.insertElements('beforeend', nameSectionHalfTwo, [lastnameInput, lastnameLabel]);
 
-  const toHeader = document.createElement('h3');
-  Utility.addClasses(toHeader, [`form__section__to-header`, `r__form__section__to-header`]);
-  toHeader.textContent = `To`;
+    const timeSectionOne = document.createElement('section');
+    Utility.addClasses(timeSectionOne, [`form__section`, `r__form-section`]);
 
-  const timeSectionTwo = document.createElement('section');
-  Utility.addClasses(timeSectionTwo, [`form__section`, `r__form-section`]);
-  Utility.insertElements('beforeend', modal, [timeSectionOne, toHeader, timeSectionTwo]);
+    const toHeader = document.createElement('h3');
+    Utility.addClasses(toHeader, [`form__section__to-header`, `r__form__section__to-header`]);
+    toHeader.textContent = `To`;
 
-  const hourInputOne = document.createElement('input');
-  hourInputOne.type = `number`;
-  Utility.addClasses(hourInputOne, [`form__input--hour`, `r__form__input--hour`]);
-  hourInputOne.placeholder = splitHour[0];
-  hourInputOne.value = splitHour[0];
-  hourInputOne.readOnly = `true`;
+    const timeSectionTwo = document.createElement('section');
+    Utility.addClasses(timeSectionTwo, [`form__section`, `r__form-section`]);
+    Utility.insertElements('beforeend', form, [timeSectionOne, toHeader, timeSectionTwo]);
 
-  const colonOne = document.createElement('p');
-  Utility.addClasses(colonOne, [`colon`, `r__colon`]);
-  colonOne.textContent = ` : `;
+    const hourSelectOne = document.createElement('select');
+    Utility.addClasses(hourSelectOne, [`form__select--hour`, `r__form__select--hour`]);
 
-  const minuteInputOne = document.createElement('input');
-  Utility.addClasses(minuteInputOne, [`form__input--minute`, `r__form__input--minute`]);
-  minuteInputOne.placeholder = `00`;
-  minuteInputOne.value = splitMinutes[0];
-  minuteInputOne.type = `number`;
-  minuteInputOne.min = 0;
-  minuteInputOne.max = 59;
+    let hourStart = 0;
+    let numberOfHours = 24;
 
-  const timeOfDayOne = document.createElement('p');
-  Utility.addClasses(timeOfDayOne, [`form__section__tod`, `r__form__section__tod`]);
-  timeOfDayOne.textContent = `${splitMinutes[1]}`;
+    const colonOne = document.createElement('p');
+    Utility.addClasses(colonOne, [`colon`, `r__colon`]);
+    colonOne.textContent = ` : `;
 
-  Utility.insertElements(`beforeend`, timeSectionOne, [hourInputOne, colonOne, minuteInputOne, timeOfDayOne]);
+    const minuteSelectOne = document.createElement('select');
+    Utility.addClasses(minuteSelectOne, [`form__select--minute`, `r__form__select--minute`]);
 
-  const hourInputTwo = document.createElement('input');
-  Utility.addClasses(hourInputTwo, [`form__input--hour`, `r__form__input--hour`]);
-  hourInputTwo.placeholder = splitHour[0];
-  hourInputTwo.type = `number`;
-  hourInputTwo.min = Number(splitHour[0]);
-  hourInputTwo.max = Number(splitHour[0]) + 2;
-  if (Number(splitHour[0]) + 2 > 12) {
-    hourInputTwo.max = Number(splitHour[0]) + 2 - 12;
+    let minuteStart = 0;
+    let minuteEnd = utility.minutes.length;
+
+    while (minuteStart < minuteEnd) {
+      let option = document.createElement('option');
+      Utility.addClasses(option, [`form__select--minute__option`, `r__form__select--minute__option`]);
+      if (minuteStart === 0) {
+        option.selected = true;
+      }
+      option.textContent = utility.minutes[minuteStart];
+      option.value = Number(utility.minutes[minuteStart]);
+      Utility.insertElement(`beforeend`, minuteSelectOne, option);
+      minuteStart++;
+    }
+
+    const timeOfDayOne = document.createElement('p');
+    Utility.addClasses(timeOfDayOne, [`form__section__tod`, `r__form__section__tod`]);
+    timeOfDayOne.textContent = `${splitMinutes[1]}`;
+
+    Utility.insertElements(`beforeend`, timeSectionOne, [hourSelectOne, colonOne, minuteSelectOne, timeOfDayOne]);
+
+    const hourSelectTwo = document.createElement('select');
+    Utility.addClasses(hourSelectTwo, [`form__select--hour`, `r__form__select--hour`]);
+
+    while (hourStart < numberOfHours) {
+      let optionOne = document.createElement('option');
+      let optionTwo = document.createElement('option');
+
+      Utility.addClasses(optionOne, [`form__select--hour__option`, `r__form__select--hour__option`]);
+      Utility.addClasses(optionTwo, [`form__select--hour__option`, `r__form__select--hour__option`]);
+      if (hourStart === 0) {
+        optionOne.textContent = 12;
+        optionTwo.textContent = 12;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+        optionOne.selected = true;
+        optionTwo.selected = true;
+      } else if (hourStart > 12) {
+        optionOne.textContent = hourStart - 12;
+        optionTwo.textContent = hourStart - 12;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+      } else {
+        optionOne.textContent = hourStart;
+        optionTwo.textContent = hourStart;
+        optionOne.value = hourStart;
+        optionTwo.value = hourStart;
+      }
+      Utility.insertElement(`beforeend`, hourSelectOne, optionOne);
+      Utility.insertElement(`beforeend`, hourSelectTwo, optionTwo);
+
+      hourStart++;
+    }
+
+    const colonTwo = document.createElement('p');
+    colonTwo.textContent = ` : `;
+    Utility.addClasses(colonTwo, [`colon`, `r__colon`]);
+
+    const minuteSelectTwo = document.createElement('select');
+    Utility.addClasses(minuteSelectTwo, [`form__select--minute`, `r__form__select--minute`]);
+
+    let minuteStartTwo = 0;
+    let minuteEndTwo = utility.minutes.length;
+
+    while (minuteStartTwo < minuteEndTwo) {
+      let option = document.createElement('option');
+      Utility.addClasses(option, [`form__select--minute__option`, `r__form__select--minute__option`]);
+      if (minuteStartTwo === 0) {
+        option.selected = true;
+      }
+      option.textContent = utility.minutes[minuteStartTwo];
+      option.value = Number(utility.minutes[minuteStartTwo]);
+      Utility.insertElement(`beforeend`, minuteSelectTwo, option);
+      minuteStartTwo++;
+    }
+
+    const timeOfDayTwo = document.createElement('p');
+    Utility.addClasses(timeOfDayTwo, [`form__section__tod`, `r__form__section__tod`]);
+    timeOfDayTwo.textContent = `AM`;
+
+    Utility.insertElements(`beforeend`, timeSectionTwo, [hourSelectTwo, colonTwo, minuteSelectTwo, timeOfDayTwo]);
+
+    const emailSection = document.createElement('section');
+    Utility.addClasses(emailSection, [`form__section--email`, `r__form__section--email`]);
+
+    const emailInput = document.createElement('input');
+    emailInput.id = `email`;
+    emailInput.name = `email`;
+    emailInput.type = `email`;
+    emailInput.pattern = `[^@]+@[^@]+[\.]+(com|net|org|io|edu|(co.uk)|me|tech|money)+$`;
+    emailInput.placeholder = `Enter Email Address`;
+    Utility.addClasses(emailInput, [`form__input--email`, `r__form__input--email`]);
+    Utility.insertElement(`beforeend`, emailSection, emailInput);
+
+    const emailLabel = document.createElement('label');
+    Utility.addClasses(emailLabel, [`form__label--email`, `r__form__label--email`]);
+    Utility.insertElement(`beforeend`, emailSection, emailLabel);
+    emailLabel.textContent = `Email Address`;
+    emailLabel.setAttribute(`for`, `email`);
+
+    const phoneSection = document.createElement('section');
+    Utility.addClasses(phoneSection, [`form__section--phone`, `r__form__section--phone`]);
+
+    const phoneInput = document.createElement('input');
+    phoneInput.id = `phone`;
+    phoneInput.name = `phone`;
+    phoneInput.type = `tel`;
+    phoneInput.placeholder = `Enter Phone Number`;
+    Utility.addClasses(phoneInput, [`form__input--phone`, `r__form__input--phone`]);
+    Utility.insertElement(`beforeend`, phoneSection, phoneInput);
+
+    const phoneLabel = document.createElement('label');
+    Utility.addClasses(phoneLabel, [`form__label--phone`, `r__form__label--phone`]);
+    Utility.insertElement(`beforeend`, phoneSection, phoneLabel);
+    phoneLabel.textContent = `Phone Number`;
+    phoneLabel.setAttribute(`for`, `phone`);
+
+    Utility.insertElements(`beforeend`, form, [emailSection, phoneSection]);
+
+    const commPreferenceHeader = document.createElement('h3');
+    Utility.addClasses(commPreferenceHeader, [`communication-preference-header`, `r__communication-preference-header`]);
+    commPreferenceHeader.textContent = `Select Preference For Discussing Details`;
+    Utility.insertElement(`beforeend`, form, commPreferenceHeader);
+
+    const communicationPreferenceSection = document.createElement('section');
+    Utility.addClasses(communicationPreferenceSection, [`form__section--commPreference`, `r__form__section--commPreference`]);
+    Utility.insertElement(`beforeend`, form, communicationPreferenceSection);
+
+    const phoneCallInput = document.createElement('input');
+    phoneCallInput.type = `checkbox`;
+
+    const phoneCallLabel = document.createElement('label');
+    phoneCallLabel.textContent = `Phone Call`;
+
+    const videoChatlInput = document.createElement('input');
+    videoChatlInput.type = `checkbox`;
+
+    const videoChatLabel = document.createElement('label');
+    videoChatLabel.textContent = `Video Chat`;
+
+    [phoneCallLabel, videoChatLabel].forEach((label) => {
+      label.addEventListener(`click`, (e) => {
+        e.preventDefault();
+        [phoneCallLabel, videoChatLabel].forEach((label) => Utility.removeClasses(label, [`clicked`]));
+        Utility.addClasses(label, [`clicked`]);
+      });
+    });
+
+    Utility.insertElements(`beforeend`, communicationPreferenceSection, [phoneCallInput, phoneCallLabel, videoChatlInput, videoChatLabel]);
+
+    const submitAppointmentButton = document.createElement('button');
+    submitAppointmentButton.textContent = `Submit Appointment`;
+    Utility.addClasses(submitAppointmentButton, [`button--modal`, `button--modal`]);
+    Utility.insertElement('beforeend', form, submitAppointmentButton);
   }
 
-  const colonTwo = document.createElement('p');
-  colonTwo.textContent = ` : `;
-  Utility.addClasses(colonTwo, [`colon`, `r__colon`]);
+  let number;
+  const phoneInput = document.querySelectorAll('.form__input')[3];
+  phoneInput.addEventListener(`keyup`, (e) => {
+    e.preventDefault();
+    let phoneNumber = Utility.formatPhoneNumber(phoneInput.value);
+    phoneInput.value = phoneNumber;
 
-  const minuteInputTwo = document.createElement('input');
-  Utility.addClasses(minuteInputTwo, [`form__input--minute`, `r__form__input--minute`]);
-  minuteInputTwo.placeholder = `00`;
-  minuteInputTwo.type = `number`;
-  minuteInputTwo.min = 0;
-  minuteInputTwo.max = 59;
+    let numberSplit = phoneNumber.split(' ');
+    let areacodeSplit = numberSplit[0].split('');
+    let areacode = [areacodeSplit[1], areacodeSplit[2], areacodeSplit[3]].join('');
+    number = [areacode, numberSplit[1], numberSplit[3]].join('');
+  });
 
-  const timeOfDayTwo = document.createElement('p');
-  Utility.addClasses(timeOfDayTwo, [`form__section__tod`, `r__form__section__tod`]);
+  let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
 
-  Utility.insertElements(`beforeend`, timeSectionTwo, [hourInputTwo, colonTwo, minuteInputTwo, timeOfDayTwo]);
+  [...hourSelectOne.childNodes].forEach((child) => {
+    Utility.removeClasses(child, [`blacked-out`]);
+  });
+
+  [...hourSelectOne.childNodes].forEach((child) => {
+    if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
+      child.disabled = true;
+      Utility.addClasses(child, [`blacked-out`]);
+    } else if (hour.dataset.time !== `12:00 AM`) {
+      if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+        child.disabled = true;
+        Utility.addClasses(child, [`blacked-out`]);
+      } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+        child.disabled = true;
+        Utility.addClasses(child, [`blacked-out`]);
+      }
+    }
+  });
+
+  let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+  let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+
+  hourSelectTwo.addEventListener(`change`, (e) => {
+    e.preventDefault();
+    if (hourSelectTwo.value >= 12) {
+      timeOfDayTwo.textContent = `PM`;
+    } else {
+      timeOfDayTwo.textContent = `AM`;
+    }
+  });
 
   /*
   

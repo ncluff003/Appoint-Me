@@ -206,6 +206,17 @@ export const getLocalStorageLocalInformation = () => {
 };
 
 export const build = (moment, translate) => {
+  let minuteStart = 0;
+  let numberOfMinutes = 60;
+  let minutes = [];
+  while (minuteStart < numberOfMinutes) {
+    if (minuteStart < 10) {
+      minutes.push(`0${minuteStart}`);
+    } else {
+      minutes.push(minuteStart);
+    }
+    minuteStart++;
+  }
   let utility = {
     // number: new Intl.NumberFormat(profile.locale),
     // englishNumber: new Intl.NumberFormat(`en-us`),
@@ -231,7 +242,9 @@ export const build = (moment, translate) => {
     },
     theme: {
       'blue-and-white': 'blue-and-white',
+      'green-and-white': 'green-and-white',
     },
+    minutes: minutes,
   };
   set(`utility`, utility);
 };
