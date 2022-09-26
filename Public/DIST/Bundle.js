@@ -4762,10 +4762,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var submitAppointment = function submitAppointment(details) {
+  event.preventDefault();
+  console.log(details);
+};
+
 var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText, hour) {
   // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
   var splitHour = hour.dataset.time.split(':');
   var splitMinutes = splitHour[1].split(' ');
+  console.log(splitHour);
 
   if (modal.childNodes.length === 1) {
     var months = luxon__WEBPACK_IMPORTED_MODULE_2__.Info.months('long');
@@ -4780,7 +4786,7 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", modal, subHeader);
     var form = document.createElement('form');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(form, ["form--appointment", "r__form--appointment"]);
-    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', modal, form);
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", modal, form);
     var nameSection = document.createElement('section');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(nameSection, ["form__section--names", "r__form__section--names"]);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", form, nameSection);
@@ -4849,10 +4855,8 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(timeOfDayOne, ["form__section__tod", "r__form__section__tod"]);
     timeOfDayOne.textContent = "".concat(splitMinutes[1]);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", timeSectionOne, [_hourSelectOne, colonOne, minuteSelectOne, timeOfDayOne]);
-
-    var _hourSelectTwo = document.createElement('select');
-
-    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_hourSelectTwo, ["form__select--hour", "r__form__select--hour"]);
+    var hourSelectTwo = document.createElement('select');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hourSelectTwo, ["form__select--hour", "r__form__select--hour"]);
 
     while (hourStart < numberOfHours) {
       var optionOne = document.createElement('option');
@@ -4880,7 +4884,7 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
       }
 
       _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", _hourSelectOne, optionOne);
-      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", _hourSelectTwo, optionTwo);
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", hourSelectTwo, optionTwo);
       hourStart++;
     }
 
@@ -4907,11 +4911,10 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
       minuteStartTwo++;
     }
 
-    var _timeOfDayTwo = document.createElement('p');
-
-    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(_timeOfDayTwo, ["form__section__tod", "r__form__section__tod"]);
-    _timeOfDayTwo.textContent = "AM";
-    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", timeSectionTwo, [_hourSelectTwo, colonTwo, minuteSelectTwo, _timeOfDayTwo]);
+    var timeOfDayTwo = document.createElement('p');
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(timeOfDayTwo, ["form__section__tod", "r__form__section__tod"]);
+    timeOfDayTwo.textContent = "AM";
+    _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", timeSectionTwo, [hourSelectTwo, colonTwo, minuteSelectTwo, timeOfDayTwo]);
     var emailSection = document.createElement('section');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(emailSection, ["form__section--email", "r__form__section--email"]);
     var emailInput = document.createElement('input');
@@ -4976,7 +4979,7 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   }
 
   var number;
-  var phoneInput = document.querySelectorAll('.form__input')[3];
+  var phoneInput = document.querySelector('.form__input--phone');
   phoneInput.addEventListener("keyup", function (e) {
     e.preventDefault();
     var phoneNumber = _Utility__WEBPACK_IMPORTED_MODULE_1__.formatPhoneNumber(phoneInput.value);
@@ -4993,30 +4996,29 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   });
 
   (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
-    if (child.value !== 0 && hour.dataset.time === "12:00 AM") {
-      child.disabled = true;
-      _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-    } else if (hour.dataset.time !== "12:00 AM") {
-      if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
-        child.disabled = true;
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-      } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
-        child.disabled = true;
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-      }
-    }
-  });
-
-  var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-  var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-  hourSelectTwo.addEventListener("change", function (e) {
-    e.preventDefault();
-
-    if (hourSelectTwo.value >= 12) {
-      timeOfDayTwo.textContent = "PM";
-    } else {
-      timeOfDayTwo.textContent = "AM";
-    }
+    // if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
+    //   child.disabled = true;
+    //   Utility.addClasses(child, [`blacked-out`]);
+    // } else if (hour.dataset.time !== `12:00 AM`) {
+    //   if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+    //     child.disabled = true;
+    //     Utility.addClasses(child, [`blacked-out`]);
+    //   } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+    //     child.disabled = true;
+    //     Utility.addClasses(child, [`blacked-out`]);
+    //   }
+    // }
+    var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+    var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+    var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1]; // let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+    // hourSelectTwo.addEventListener(`change`, (e) => {
+    //   e.preventDefault();
+    //   if (hourSelectTwo.value >= 12) {
+    //     timeOfDayTwo.textContent = `PM`;
+    //   } else {
+    //     timeOfDayTwo.textContent = `AM`;
+    //   }
+    // });
   });
   /*
   
@@ -5029,9 +5031,10 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   * Phone Call or Video Chat
   
   */
+
 };
 
-var createIntervals = function createIntervals(hours, interval, utility) {
+var createIntervals = function createIntervals(hours, interval, modal, utility) {
   if (interval === "1-hour") {
     hours.forEach(function (hour, i) {
       var numberOfIntervals = 1,
@@ -5121,6 +5124,55 @@ var createIntervals = function createIntervals(hours, interval, utility) {
       }
     });
   }
+
+  var scheduleHours = document.querySelectorAll('.hour');
+  var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  scheduleHours.forEach(function (hour, i) {
+    fillMakeAppointmentModal(modal, date, hour);
+  });
+  var hoursSelections = document.querySelectorAll('.form__select--hour');
+  var minutes = document.querySelectorAll('.form__select--minute');
+  var start = hoursSelections[0];
+  var end = hoursSelections[1];
+  var startMinute = minutes[0];
+  var endMinute = minutes[1];
+  console.log(start.value, end.value, startMinute.value, endMinute.value);
+  var submitAppointmentButton = document.querySelectorAll(".button--modal")[0];
+  var appointmentForm = document.querySelectorAll('.form--appointment');
+  console.log(submitAppointmentButton, appointmentForm, modal);
+  var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+  var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+  var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+  var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+  submitAppointmentButton.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (start.value > 12) {
+      start.value -= 12;
+    } else if (end.value > 12) {
+      end.value -= 12;
+    } // * If startMinute is one digit it needs a padded zero.
+
+
+    var hourOne = start.value;
+    var hourTwo = end.value;
+    var minutesOne = startMinute.value;
+    var minutesTwo = endMinute.value;
+
+    if ("".concat(minutesOne).length === 1) {
+      minutesOne = "".concat(minutesOne).padStart(2, 0);
+    }
+
+    if ("".concat(minutesTwo).length === 1) {
+      minutesTwo = "".concat(minutesTwo).padStart(2, 0);
+    }
+
+    submitAppointment({
+      date: date.dataset.date,
+      startTime: "".concat(hourOne, ":").concat(minutesOne, " ").concat(timeOfDayOne.textContent),
+      endTime: "".concat(hourTwo, ":").concat(minutesTwo, " ").concat(timeOfDayTwo.textContent)
+    });
+  });
 };
 var fillDay = function fillDay(container, intervals, utility) {
   var timePickerModal = document.querySelector('.modal--select-time');
@@ -5134,8 +5186,42 @@ var fillDay = function fillDay(container, intervals, utility) {
     hour.addEventListener("click", function (e) {
       e.preventDefault();
       _Utility__WEBPACK_IMPORTED_MODULE_1__.replaceClassName(timePickerModal, "closed", "open");
-      var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
-      fillMakeAppointmentModal(timePickerModal, date, hour);
+      var splitHour = hour.dataset.time.split(':');
+      var splitMinutes = splitHour[1].split(' ');
+      var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+
+      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+        if (child.value !== 0 && hour.dataset.time === "12:00 AM") {
+          child.disabled = true;
+          _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+        } else if (hour.dataset.time !== "12:00 AM") {
+          if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+            child.disabled = true;
+            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+          } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
+            child.disabled = true;
+            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+          }
+        }
+      });
+
+      var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+
+      if (splitMinutes[1] === "PM") {
+        timeOfDayOne.textContent = "PM";
+      }
+
+      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+      var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      hourSelectTwo.addEventListener("change", function (e) {
+        e.preventDefault();
+
+        if (hourSelectTwo.value >= 12) {
+          timeOfDayTwo.textContent = "PM";
+        } else {
+          timeOfDayTwo.textContent = "AM";
+        }
+      });
     });
     var time = document.createElement('p');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(time, ["hour__time", "r__hour__time"]);
@@ -5179,14 +5265,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
-var buildSchedule = function buildSchedule(container, schedule, utility) {
-  // 9am-to-5pm -- How to break this into usable chunks?
-  // 11pm-to-7am -- How about this?
-  // 5am-to-10am -- This?
-  // 12pm-to-6pm -- And this?
+var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   var hours = document.querySelectorAll('.hour');
   var startOfDay, endOfDay, start, end;
-  console.log(schedule.split('-')[0].length, schedule.split('-')[1].length);
 
   if (schedule.split('-')[0].length === 3) {
     startOfDay = schedule.split('-')[0].split('').slice(1, 3).join('');
@@ -5604,9 +5685,9 @@ var buildApp = /*#__PURE__*/function () {
               });
             });
             (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.fillDay)(calendar, app.dataset.intervals, utility);
-            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, utility);
+            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
             fillDateModal(dateModal, date);
-            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, utility);
+            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, data, utility);
 
           case 66:
           case "end":

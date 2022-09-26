@@ -1,14 +1,9 @@
 import * as Utility from './../Utility';
 
-export const buildSchedule = (container, schedule, utility) => {
-  // 9am-to-5pm -- How to break this into usable chunks?
-  // 11pm-to-7am -- How about this?
-  // 5am-to-10am -- This?
-  // 12pm-to-6pm -- And this?
-
+export const buildSchedule = (container, schedule, data, utility) => {
   const hours = document.querySelectorAll('.hour');
   let startOfDay, endOfDay, start, end;
-  console.log(schedule.split('-')[0].length, schedule.split('-')[1].length);
+
   if (schedule.split('-')[0].length === 3) {
     startOfDay = schedule.split('-')[0].split('').slice(1, 3).join('');
     start = schedule.split('-')[0].split('')[0];

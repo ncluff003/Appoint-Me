@@ -41449,7 +41449,7 @@
   border: none;
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time {
-  background-color: rgba(42, 127, 255, 0.95);
+  background-color: rgba(42, 127, 255, 0.975);
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time__date-picker-container input,
@@ -41610,7 +41610,7 @@
   border: none;
 }
 .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time {
-  background-color: rgba(56, 217, 39, 0.95);
+  background-color: rgba(56, 217, 39, 0.975);
 }
 .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
 .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-date__date-picker-container select, .app-landing-container .green-and-white .appoint-me-container__sub-container .modal--select-time__date-picker-container input,
@@ -41822,6 +41822,7 @@
   padding: 1rem 2rem;
   background-color: transparent;
   border-radius: 5rem;
+  margin-bottom: 3rem;
 }
 .button--modal:hover {
   transition: background-color 0.5s, border 0.5s, color 0.5s;

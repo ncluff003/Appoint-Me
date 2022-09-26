@@ -212,8 +212,8 @@ export const buildApp = async (app) => {
   });
 
   fillDay(calendar, app.dataset.intervals, utility);
-  createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, utility);
+  createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
 
   fillDateModal(dateModal, date);
-  buildSchedule(calendar, app.dataset.schedule, utility);
+  buildSchedule(calendar, app.dataset.schedule, data, utility);
 };

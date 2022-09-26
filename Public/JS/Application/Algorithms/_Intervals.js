@@ -2,10 +2,17 @@ import * as Utility from './../Utility';
 import { DateTime, Info } from 'luxon';
 import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../../Classes/Cache';
 
+const submitAppointment = (details) => {
+  event.preventDefault();
+  console.log(details);
+};
+
 const fillMakeAppointmentModal = (modal, dateText, hour) => {
   // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
   let splitHour = hour.dataset.time.split(':');
   let splitMinutes = splitHour[1].split(' ');
+
+  console.log(splitHour);
 
   if (modal.childNodes.length === 1) {
     let months = Info.months('long');
@@ -22,7 +29,7 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
 
     const form = document.createElement('form');
     Utility.addClasses(form, [`form--appointment`, `r__form--appointment`]);
-    Utility.insertElement('beforeend', modal, form);
+    Utility.insertElement(`beforeend`, modal, form);
 
     const nameSection = document.createElement('section');
     Utility.addClasses(nameSection, [`form__section--names`, `r__form__section--names`]);
@@ -239,7 +246,7 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   }
 
   let number;
-  const phoneInput = document.querySelectorAll('.form__input')[3];
+  const phoneInput = document.querySelector('.form__input--phone');
   phoneInput.addEventListener(`keyup`, (e) => {
     e.preventDefault();
     let phoneNumber = Utility.formatPhoneNumber(phoneInput.value);
@@ -258,30 +265,32 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   });
 
   [...hourSelectOne.childNodes].forEach((child) => {
-    if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
-      child.disabled = true;
-      Utility.addClasses(child, [`blacked-out`]);
-    } else if (hour.dataset.time !== `12:00 AM`) {
-      if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
-        child.disabled = true;
-        Utility.addClasses(child, [`blacked-out`]);
-      } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-        child.disabled = true;
-        Utility.addClasses(child, [`blacked-out`]);
-      }
-    }
-  });
+    // if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
+    //   child.disabled = true;
+    //   Utility.addClasses(child, [`blacked-out`]);
+    // } else if (hour.dataset.time !== `12:00 AM`) {
+    //   if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+    //     child.disabled = true;
+    //     Utility.addClasses(child, [`blacked-out`]);
+    //   } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+    //     child.disabled = true;
+    //     Utility.addClasses(child, [`blacked-out`]);
+    //   }
+    // }
 
-  let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-  let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+    let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+    let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+    let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+    // let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
 
-  hourSelectTwo.addEventListener(`change`, (e) => {
-    e.preventDefault();
-    if (hourSelectTwo.value >= 12) {
-      timeOfDayTwo.textContent = `PM`;
-    } else {
-      timeOfDayTwo.textContent = `AM`;
-    }
+    // hourSelectTwo.addEventListener(`change`, (e) => {
+    //   e.preventDefault();
+    //   if (hourSelectTwo.value >= 12) {
+    //     timeOfDayTwo.textContent = `PM`;
+    //   } else {
+    //     timeOfDayTwo.textContent = `AM`;
+    //   }
+    // });
   });
 
   /*
@@ -297,7 +306,7 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   */
 };
 
-export const createIntervals = (hours, interval, utility) => {
+export const createIntervals = (hours, interval, modal, utility) => {
   if (interval === `1-hour`) {
     hours.forEach((hour, i) => {
       let numberOfIntervals = 1,
@@ -378,6 +387,57 @@ export const createIntervals = (hours, interval, utility) => {
       }
     });
   }
+
+  const scheduleHours = document.querySelectorAll('.hour');
+  const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  scheduleHours.forEach((hour, i) => {
+    fillMakeAppointmentModal(modal, date, hour);
+  });
+
+  const hoursSelections = document.querySelectorAll('.form__select--hour');
+  const minutes = document.querySelectorAll('.form__select--minute');
+  const start = hoursSelections[0];
+  const end = hoursSelections[1];
+  const startMinute = minutes[0];
+  const endMinute = minutes[1];
+  console.log(start.value, end.value, startMinute.value, endMinute.value);
+
+  const submitAppointmentButton = document.querySelectorAll(`.button--modal`)[0];
+  const appointmentForm = document.querySelectorAll('.form--appointment');
+  console.log(submitAppointmentButton, appointmentForm, modal);
+
+  let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+  let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+  let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+  let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+
+  submitAppointmentButton.addEventListener(`click`, (e) => {
+    e.preventDefault();
+    if (start.value > 12) {
+      start.value -= 12;
+    } else if (end.value > 12) {
+      end.value -= 12;
+    }
+
+    // * If startMinute is one digit it needs a padded zero.
+    let hourOne = start.value;
+    let hourTwo = end.value;
+    let minutesOne = startMinute.value;
+    let minutesTwo = endMinute.value;
+
+    if (`${minutesOne}`.length === 1) {
+      minutesOne = `${minutesOne}`.padStart(2, 0);
+    }
+    if (`${minutesTwo}`.length === 1) {
+      minutesTwo = `${minutesTwo}`.padStart(2, 0);
+    }
+
+    submitAppointment({
+      date: date.dataset.date,
+      startTime: `${hourOne}:${minutesOne} ${timeOfDayOne.textContent}`,
+      endTime: `${hourTwo}:${minutesTwo} ${timeOfDayTwo.textContent}`,
+    });
+  });
 };
 
 export const fillDay = (container, intervals, utility) => {
@@ -392,8 +452,40 @@ export const fillDay = (container, intervals, utility) => {
     hour.addEventListener(`click`, (e) => {
       e.preventDefault();
       Utility.replaceClassName(timePickerModal, `closed`, `open`);
-      const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
-      fillMakeAppointmentModal(timePickerModal, date, hour);
+      let splitHour = hour.dataset.time.split(':');
+      let splitMinutes = splitHour[1].split(' ');
+      let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+      let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      [...hourSelectOne.childNodes].forEach((child) => {
+        if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
+          child.disabled = true;
+          Utility.addClasses(child, [`blacked-out`]);
+        } else if (hour.dataset.time !== `12:00 AM`) {
+          if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+            child.disabled = true;
+            Utility.addClasses(child, [`blacked-out`]);
+          } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+            child.disabled = true;
+            Utility.addClasses(child, [`blacked-out`]);
+          }
+        }
+      });
+      [...hourSelectTwo.childNodes].forEach((child) => {});
+
+      let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+      if (splitMinutes[1] === `PM`) {
+        timeOfDayOne.textContent = `PM`;
+      }
+      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+
+      hourSelectTwo.addEventListener(`change`, (e) => {
+        e.preventDefault();
+        if (hourSelectTwo.value >= 12) {
+          timeOfDayTwo.textContent = `PM`;
+        } else {
+          timeOfDayTwo.textContent = `AM`;
+        }
+      });
     });
 
     const time = document.createElement('p');
