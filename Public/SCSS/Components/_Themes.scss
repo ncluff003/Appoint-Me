@@ -124,6 +124,20 @@
               }
             }
           }
+          &--select-time {
+            .form {
+              &__input {
+                border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+                &:focus {
+                  border-bottom-color: $colorOffWhite;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__input;
+                }
+              }
+            }
+          }
         }
       }
     }

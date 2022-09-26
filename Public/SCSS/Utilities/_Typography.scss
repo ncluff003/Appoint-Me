@@ -73,6 +73,34 @@
               }
             }
           }
+          &--select-time {
+            .form {
+              &__input {
+                font-size: 2rem;
+                &--hour,
+                &--minute {
+                  @extend .form__input;
+                }
+              }
+              &__label {
+                font-size: 2rem;
+              }
+
+              &__section {
+                &__to-header {
+                  font-size: 2rem;
+                  font-variant: small-caps;
+                }
+
+                &__tod {
+                  font-size: 2rem;
+                }
+                .colon {
+                  font-size: 2rem;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -143,6 +171,38 @@
                 color: rgba($colorOffWhite, 0.8);
                 &:hover {
                   color: $primaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            .form {
+              &__input {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                  .form__label {
+                    color: $colorOffWhite;
+                  }
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__input;
+                }
+              }
+              &__label {
+                color: rgba($colorOffWhite, 0.8);
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorOffWhite;
+                }
+                .colon {
+                  color: $colorOffWhite;
+                }
+                &__tod {
+                  color: $colorOffWhite;
                 }
               }
             }

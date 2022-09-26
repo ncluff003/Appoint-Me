@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as Utility from './Utility';
 import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../Classes/Cache';
 import { fillDay, createIntervals } from './Algorithms/_Intervals';
@@ -97,17 +98,37 @@ const fillDateModal = (modal, dateText) => {
     yearInput.value === '' ? (yearInput.value = Number(yearInput.placeholder)) : (yearInput.value = Number(yearInput.value));
     let selectedDate = DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
     if (selectedDate < DateTime.now()) return;
+    dateText.dataset.date = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toISO();
     dateText.textContent = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(DateTime.DATE_HUGE);
     Utility.replaceClassName(modal, `open`, `closed`);
   });
 };
 
-export const buildApp = (app) => {
+const retrieveInfo = async () => {
+  try {
+    const response = await axios({
+      method: `GET`,
+      url: `/App/Info`,
+    });
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const buildApp = async (app) => {
   console.log(`Building...`);
 
   // * INITIALIZE UTILITY OBJECT
   Utility.build();
   let utility = get(`utility`);
+
+  const data = await retrieveInfo();
+  app.dataset.schedule = data.schedule;
+  app.dataset.email = data.email;
+  app.dataset.theme = data.theme;
+  app.dataset.intervals = data.preferredCalendarIncrements;
 
   console.log(app.dataset);
   Utility.addClasses(app, [utility.theme[app.dataset.theme]]);
@@ -144,6 +165,7 @@ export const buildApp = (app) => {
 
   const date = document.createElement(`h2`);
   Utility.addClasses(date, [`appoint-me-container__sub-container__heading__date`, `r__appoint-me-container__sub-container__heading__date`]);
+  date.dataset.date = DateTime.now().toISO();
   date.textContent = DateTime.now().toLocaleString(DateTime.DATE_HUGE);
   Utility.insertElement('beforeend', subContainerHeading, date);
 

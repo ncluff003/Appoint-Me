@@ -1,5 +1,6 @@
 ////////////////////////////////////////////
 //  Core Modules
+const fs = require('fs');
 
 ////////////////////////////////////////////
 //  Third Party Modules
@@ -56,14 +57,25 @@ const createAndSendToken = (user, statusCode, method, request, response, templat
   }
 };
 
+// MAKE REQUEST FOR AND STORE DATA FROM JSON FILE.
+let freeLancerInfo = JSON.parse(fs.readFileSync(`${__dirname}/../Data/appointments.json`, 'utf-8'));
+
 ////////////////////////////////////////////
 //  Exported Controllers
 
 exports.renderApp = catchAsync(async (request, response) => {
+  console.log(freeLancerInfo);
   response.status(200).render(`base`, {
     title: `Appoint Me`,
     errorMessage: '',
     successMessage: '',
+    data: freeLancerInfo,
+  });
+});
+exports.getInfo = catchAsync(async (request, response) => {
+  response.status(200).json({
+    status: `Success`,
+    data: freeLancerInfo,
   });
 });
 

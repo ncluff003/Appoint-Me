@@ -4752,7 +4752,117 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fillDay": () => (/* binding */ fillDay)
 /* harmony export */ });
 /* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
+
+
+
+var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText, hour) {
+  var months = luxon__WEBPACK_IMPORTED_MODULE_1__.Info.months('long');
+  var header = document.createElement('header');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(header, ["modal--select-time__header", "r__modal--select-time__header"]);
+  header.textContent = luxon__WEBPACK_IMPORTED_MODULE_1__.DateTime.fromISO(dateText.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_1__.DateTime.DATE_HUGE);
+  var splitHour = hour.dataset.time.split(':');
+  var splitMinutes = splitHour[1].split(' ');
+  var subHeader = document.createElement('h3');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(subHeader, ["modal--select-time__sub-header", "r__modal--select-time__sub-header"]);
+  subHeader.textContent = "Make Appointment";
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, header);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, subHeader);
+  var form = document.createElement('form');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(form, ["form--appointment", "r__form--appointment"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', modal, form);
+  var nameSection = document.createElement('section');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSection, ["form__section--names", "r__form__section--names"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", form, nameSection);
+  var nameSectionHalfOne = document.createElement('section');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSectionHalfOne, ["form__section--names__half", "r__form__section--names__half"]);
+  var nameSectionHalfTwo = document.createElement('section');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(nameSectionHalfTwo, ["form__section--names__half", "r__form__section--names__half"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSection, [nameSectionHalfOne, nameSectionHalfTwo]);
+  var firstnameInput = document.createElement('input');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(firstnameInput, ["form__input", "r__form__input"]);
+  var lastnameInput = document.createElement('input');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(lastnameInput, ["form__input", "r__form__input"]);
+  firstnameInput.placeholder = "John";
+  lastnameInput.placeholder = "Doe";
+  firstnameInput.id = "firstname";
+  firstnameInput.name = "firstname";
+  lastnameInput.id = "lastname";
+  lastnameInput.name = "lastname";
+  var firstnameLabel = document.createElement('label');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(firstnameLabel, ["form__label", "r__form__label"]);
+  firstnameLabel.textContent = "First Name";
+  firstnameLabel.setAttribute("for", "firstname");
+  var lastnameLabel = document.createElement('label');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(lastnameLabel, ["form__label", "r__form__label"]);
+  lastnameLabel.textContent = "Last Name";
+  lastnameLabel.setAttribute("for", "lastname");
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSectionHalfOne, [firstnameInput, firstnameLabel]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', nameSectionHalfTwo, [lastnameInput, lastnameLabel]);
+  var timeSectionOne = document.createElement('section');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeSectionOne, ["form__section", "r__form-section"]);
+  var toHeader = document.createElement('h3');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(toHeader, ["form__section__to-header", "r__form__section__to-header"]);
+  toHeader.textContent = "To";
+  var timeSectionTwo = document.createElement('section');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeSectionTwo, ["form__section", "r__form-section"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements('beforeend', modal, [timeSectionOne, toHeader, timeSectionTwo]);
+  var hourInputOne = document.createElement('input');
+  hourInputOne.type = "number";
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourInputOne, ["form__input--hour", "r__form__input--hour"]);
+  hourInputOne.placeholder = splitHour[0];
+  hourInputOne.value = splitHour[0];
+  hourInputOne.readOnly = "true";
+  var colonOne = document.createElement('p');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(colonOne, ["colon", "r__colon"]);
+  colonOne.textContent = " : ";
+  var minuteInputOne = document.createElement('input');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(minuteInputOne, ["form__input--minute", "r__form__input--minute"]);
+  minuteInputOne.placeholder = "00";
+  minuteInputOne.value = splitMinutes[0];
+  minuteInputOne.type = "number";
+  minuteInputOne.min = 0;
+  minuteInputOne.max = 59;
+  var timeOfDayOne = document.createElement('p');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeOfDayOne, ["form__section__tod", "r__form__section__tod"]);
+  timeOfDayOne.textContent = "".concat(splitMinutes[1]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements("beforeend", timeSectionOne, [hourInputOne, colonOne, minuteInputOne, timeOfDayOne]);
+  var hourInputTwo = document.createElement('input');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hourInputTwo, ["form__input--hour", "r__form__input--hour"]);
+  hourInputTwo.placeholder = splitHour[0];
+  hourInputTwo.type = "number";
+  hourInputTwo.min = Number(splitHour[0]);
+  hourInputTwo.max = Number(splitHour[0]) + 2;
+
+  if (Number(splitHour[0]) + 2 > 12) {
+    hourInputTwo.max = Number(splitHour[0]) + 2 - 12;
+  }
+
+  var colonTwo = document.createElement('p');
+  colonTwo.textContent = " : ";
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(colonTwo, ["colon", "r__colon"]);
+  var minuteInputTwo = document.createElement('input');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(minuteInputTwo, ["form__input--minute", "r__form__input--minute"]);
+  minuteInputTwo.placeholder = "00";
+  minuteInputTwo.type = "number";
+  minuteInputTwo.min = 0;
+  minuteInputTwo.max = 59;
+  var timeOfDayTwo = document.createElement('p');
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeOfDayTwo, ["form__section__tod", "r__form__section__tod"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElements("beforeend", timeSectionTwo, [hourInputTwo, colonTwo, minuteInputTwo, timeOfDayTwo]);
+  /*
+  
+  * First Name
+  * Last Name
+  * Start Time
+  * End Time
+  * Phone Number
+  * Email
+  * Phone Call or Video Chat
+  
+  */
+};
 
 var createIntervals = function createIntervals(hours, interval, utility) {
   if (interval === "1-hour") {
@@ -4850,13 +4960,15 @@ var fillDay = function fillDay(container, intervals, utility) {
   var hours = 24;
   var startHour = 0;
 
-  while (startHour < hours) {
+  var _loop = function _loop() {
     var hour = document.createElement('section');
     _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hour, ["hour", "r__hour"]);
     _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', container, hour);
     hour.addEventListener("click", function (e) {
       e.preventDefault();
       _Utility__WEBPACK_IMPORTED_MODULE_0__.replaceClassName(timePickerModal, "closed", "open");
+      var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+      fillMakeAppointmentModal(timePickerModal, date, hour);
     });
     var time = document.createElement('p');
     _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(time, ["hour__time", "r__hour__time"]);
@@ -4877,6 +4989,10 @@ var fillDay = function fillDay(container, intervals, utility) {
 
     _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", hour, time);
     startHour++;
+  };
+
+  while (startHour < hours) {
+    _loop();
   }
 };
 
@@ -4903,7 +5019,7 @@ var buildSchedule = function buildSchedule(container, schedule, utility) {
   // 12pm-to-6pm -- And this?
   var hours = document.querySelectorAll('.hour');
   var startOfDay, endOfDay, start, end;
-  console.log(schedule.split('-')[0].length, schedule.split('-')[2].length);
+  console.log(schedule.split('-')[0].length, schedule.split('-')[1].length);
 
   if (schedule.split('-')[0].length === 3) {
     startOfDay = schedule.split('-')[0].split('').slice(1, 3).join('');
@@ -4913,12 +5029,12 @@ var buildSchedule = function buildSchedule(container, schedule, utility) {
     start = [schedule.split('-')[0].split('')[0], schedule.split('-')[0].split('')[1]].join('');
   }
 
-  if (schedule.split('-')[2].length === 3) {
-    endOfDay = schedule.split('-')[2].split('').slice(1, 3).join('');
-    end = schedule.split('-')[2].split('')[0];
-  } else if (schedule.split('-')[2].length === 4) {
-    endOfDay = schedule.split('-')[2].split('').slice(2, 4).join('');
-    end = [schedule.split('-')[2].split('')[0], schedule.split('-')[2].split('')[1]].join('');
+  if (schedule.split('-')[1].length === 3) {
+    endOfDay = schedule.split('-')[1].split('').slice(1, 3).join('');
+    end = schedule.split('-')[1].split('')[0];
+  } else if (schedule.split('-')[1].length === 4) {
+    endOfDay = schedule.split('-')[1].split('').slice(2, 4).join('');
+    end = [schedule.split('-')[1].split('')[0], schedule.split('-')[1].split('')[1]].join('');
   }
 
   start = Number(start);
@@ -5096,12 +5212,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "buildApp": () => (/* binding */ buildApp)
 /* harmony export */ });
-/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Utility */ "./Public/JS/Application/Utility.js");
-/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Classes/Cache */ "./Public/JS/Classes/Cache.js");
-/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Classes_Cache__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Algorithms/_Intervals */ "./Public/JS/Application/Algorithms/_Intervals.js");
-/* harmony import */ var _Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Algorithms/_Schedule */ "./Public/JS/Application/Algorithms/_Schedule.js");
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../Classes/Cache */ "./Public/JS/Classes/Cache.js");
+/* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_Classes_Cache__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Algorithms/_Intervals */ "./Public/JS/Application/Algorithms/_Intervals.js");
+/* harmony import */ var _Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Algorithms/_Schedule */ "./Public/JS/Application/Algorithms/_Schedule.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
 
@@ -5109,16 +5230,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var fillDateModal = function fillDateModal(modal, dateText) {
-  var months = luxon__WEBPACK_IMPORTED_MODULE_4__.Info.months('long');
+  var months = luxon__WEBPACK_IMPORTED_MODULE_7__.Info.months('long');
   var header = document.createElement('header');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(header, ["modal--select-date__header", "r__modal--select-date__header"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(header, ["modal--select-date__header", "r__modal--select-date__header"]);
   header.textContent = "Select A Date";
   var subHeader = document.createElement('h3');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(subHeader, ["modal--select-date__sub-header", "r__modal--select-date__sub-header"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(subHeader, ["modal--select-date__sub-header", "r__modal--select-date__sub-header"]);
   subHeader.textContent = "( Example: DD/MM/YYYY )";
   var datePickerContainer = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(datePickerContainer, ["modal--select-date__date-picker-container", "r__modal--select-date__date-picker-container"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(datePickerContainer, ["modal--select-date__date-picker-container", "r__modal--select-date__date-picker-container"]);
   var dayInput = document.createElement('input');
   var monthInput = document.createElement('select');
   var yearInput = document.createElement('input');
@@ -5127,39 +5251,39 @@ var fillDateModal = function fillDateModal(modal, dateText) {
   dayInput.placeholder = 4;
   monthInput.placeholder = "February";
   yearInput.placeholder = 1987;
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(dayInput, ["modal--select-date__date-picker-container__day", "r__modal--select-date__date-picker-container__day"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(monthInput, ["modal--select-date__date-picker-container__month", "r__modal--select-date__date-picker-container__month"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(yearInput, ["modal--select-date__date-picker-container__year", "r__modal--select-date__date-picker-container__year"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(dayInput, ["modal--select-date__date-picker-container__day", "r__modal--select-date__date-picker-container__day"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(monthInput, ["modal--select-date__date-picker-container__month", "r__modal--select-date__date-picker-container__month"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(yearInput, ["modal--select-date__date-picker-container__year", "r__modal--select-date__date-picker-container__year"]);
   console.log(months);
   months.forEach(function (month, i) {
     var option = document.createElement('option');
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(option, ["modal--select-date__date-picker-container__month__option", "r__modal--select-date__date-picker-container__month__option"]);
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(option, ["modal--select-date__date-picker-container__month__option", "r__modal--select-date__date-picker-container__month__option"]);
     option.textContent = month;
     option.value = i;
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", monthInput, option);
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", monthInput, option);
   });
   var submitDateButton = document.createElement('button');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(submitDateButton, ["button--modal", "r__button--modal"]);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(submitDateButton, ["button--modal", "r__button--modal"]);
   submitDateButton.textContent = "Select Date";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, header);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, subHeader);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", modal, datePickerContainer);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", datePickerContainer, dayInput);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", datePickerContainer, monthInput);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("beforeend", datePickerContainer, yearInput);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", modal, header);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", modal, subHeader);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", modal, datePickerContainer);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", datePickerContainer, dayInput);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", datePickerContainer, monthInput);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("beforeend", datePickerContainer, yearInput);
   console.log(monthInput[monthInput.options.selectedIndex].value);
-  var date = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
+  var date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
   dayInput.min = 1;
   dayInput.max = date.daysInMonth;
   yearInput.min = 2022;
-  yearInput.max = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.now().year + 10;
+  yearInput.max = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.now().year + 10;
   monthInput.addEventListener("change", function (e) {
     e.preventDefault();
     dayInput.value === '' ? dayInput.value = Number(dayInput.placeholder) : dayInput.value = Number(dayInput.value);
     yearInput.value === '' ? yearInput.value = Number(yearInput.placeholder) : yearInput.value = Number(yearInput.value);
     var currentDaySetting = dayInput.value;
     dayInput.value = 28;
-    date = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
+    date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
     dayInput.max = date.daysInMonth;
 
     if (currentDaySetting > dayInput.max) {
@@ -5172,97 +5296,163 @@ var fillDateModal = function fillDateModal(modal, dateText) {
     yearInput.value === '' ? yearInput.value = Number(yearInput.placeholder) : yearInput.value = Number(yearInput.value);
     var currentDaySetting = dayInput.value;
     dayInput.value = 28;
-    date = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
+    date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
     dayInput.max = date.daysInMonth;
 
     if (currentDaySetting > dayInput.max) {
       dayInput.value = dayInput.max;
     }
   });
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', modal, submitDateButton);
+  _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', modal, submitDateButton);
   submitDateButton.addEventListener("click", function (e) {
     e.preventDefault();
     dayInput.value === '' ? dayInput.value = Number(dayInput.placeholder) : dayInput.value = Number(dayInput.value);
     yearInput.value === '' ? yearInput.value = Number(yearInput.placeholder) : yearInput.value = Number(yearInput.value);
-    var selectedDate = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
-    if (selectedDate < luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.now()) return;
-    dateText.textContent = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.DATE_HUGE);
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.replaceClassName(modal, "open", "closed");
+    var selectedDate = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
+    if (selectedDate < luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.now()) return;
+    dateText.dataset.date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toISO();
+    dateText.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(modal, "open", "closed");
   });
 };
 
-var buildApp = function buildApp(app) {
-  console.log("Building..."); // * INITIALIZE UTILITY OBJECT
+var retrieveInfo = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default()({
+              method: "GET",
+              url: "/App/Info"
+            });
 
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.build();
-  var utility = (0,_Classes_Cache__WEBPACK_IMPORTED_MODULE_1__.get)("utility");
-  console.log(app.dataset);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(app, [utility.theme[app.dataset.theme]]);
-  var header = document.createElement('header');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(header, ["appoint-me-header", "r__appoint-me-header"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', app, header);
-  var logo = document.createElement('span');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(logo, ["icon", "icon-appoint-me-logo"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', header, logo);
-  var appTitle = document.createElement('p');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(appTitle, ["appoint-me-header__title", "r__appoint-me-header__title"]);
-  appTitle.textContent = "Appoint-Me";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', header, appTitle);
-  var container = document.createElement('div');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(container, ["appoint-me-container", "appoint-me-container"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', app, container);
-  var heading = document.createElement('h2');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(heading, ["appoint-me-container__heading", "r__appoint-me-container__heading"]);
-  heading.textContent = "Make An Appointment";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', container, heading);
-  var subContainer = document.createElement('div');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(subContainer, ["appoint-me-container__sub-container", "r__appoint-me-container__sub-container"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', container, subContainer);
-  var subContainerHeading = document.createElement('div');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(subContainerHeading, ["appoint-me-container__sub-container__heading", "r__appoint-me-container__sub-container__heading"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', subContainer, subContainerHeading);
-  var date = document.createElement("h2");
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(date, ["appoint-me-container__sub-container__heading__date", "r__appoint-me-container__sub-container__heading__date"]);
-  date.textContent = luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.now().toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_4__.DateTime.DATE_HUGE);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', subContainerHeading, date);
-  var dateModalButton = document.createElement('button');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(dateModalButton, ["select-date-button", "r__select-date-button"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', subContainerHeading, dateModalButton);
-  var dateModalButtonText = document.createElement('p');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(dateModalButtonText, ["select-date-button__text", "r__select-date-button__text"]);
-  dateModalButtonText.textContent = "Select Date";
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', dateModalButton, dateModalButtonText);
-  var dateModalButtonIcon = document.createElement('span');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(dateModalButtonIcon, ["icon", "icon-appoint-me-logo", "select-date-button__icon", "r__select-date-button__icon"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', dateModalButton, dateModalButtonIcon);
-  var calendar = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(calendar, ["appoint-me-container__sub-container__calendar", "r__appoint-me-container__sub-container__calendar"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', subContainer, calendar);
-  console.log(app.dataset.intervals, app.dataset.schedule);
-  var dateModal = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(dateModal, ["modal--select-date", "r__modal--select-date", "closed"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("afterbegin", subContainer, dateModal);
-  var timeModal = document.createElement('section');
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(timeModal, ["modal--select-time", "r__modal--select-time", "closed"]);
-  _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement("afterbegin", subContainer, timeModal);
-  dateModalButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.replaceClassName(dateModal, "closed", "open");
-  });
-  [dateModal, timeModal].forEach(function (modal, i) {
-    var modalCloseIcon = document.createElement('i');
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(modalCloseIcon, ["fas", "fa-window-close", "modal-close-icon", "r__modal-close-icon"]);
-    _Utility__WEBPACK_IMPORTED_MODULE_0__.insertElement('beforeend', modal, modalCloseIcon);
-    modalCloseIcon.addEventListener("click", function (e) {
-      e.preventDefault();
-      _Utility__WEBPACK_IMPORTED_MODULE_0__.replaceClassName(modal, "open", "closed");
-    });
-  });
-  (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_2__.fillDay)(calendar, app.dataset.intervals, utility);
-  (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_2__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, utility);
-  fillDateModal(dateModal, date);
-  (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_3__.buildSchedule)(calendar, app.dataset.schedule, utility);
-};
+          case 3:
+            response = _context.sent;
+            console.log(response);
+            return _context.abrupt("return", response.data.data);
+
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 8]]);
+  }));
+
+  return function retrieveInfo() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var buildApp = /*#__PURE__*/function () {
+  var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(app) {
+    var utility, data, header, logo, appTitle, container, heading, subContainer, subContainerHeading, date, dateModalButton, dateModalButtonText, dateModalButtonIcon, calendar, dateModal, timeModal;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            console.log("Building..."); // * INITIALIZE UTILITY OBJECT
+
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.build();
+            utility = (0,_Classes_Cache__WEBPACK_IMPORTED_MODULE_4__.get)("utility");
+            _context2.next = 5;
+            return retrieveInfo();
+
+          case 5:
+            data = _context2.sent;
+            app.dataset.schedule = data.schedule;
+            app.dataset.email = data.email;
+            app.dataset.theme = data.theme;
+            app.dataset.intervals = data.preferredCalendarIncrements;
+            console.log(app.dataset);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(app, [utility.theme[app.dataset.theme]]);
+            header = document.createElement('header');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(header, ["appoint-me-header", "r__appoint-me-header"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', app, header);
+            logo = document.createElement('span');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(logo, ["icon", "icon-appoint-me-logo"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', header, logo);
+            appTitle = document.createElement('p');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(appTitle, ["appoint-me-header__title", "r__appoint-me-header__title"]);
+            appTitle.textContent = "Appoint-Me";
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', header, appTitle);
+            container = document.createElement('div');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(container, ["appoint-me-container", "appoint-me-container"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', app, container);
+            heading = document.createElement('h2');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(heading, ["appoint-me-container__heading", "r__appoint-me-container__heading"]);
+            heading.textContent = "Make An Appointment";
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', container, heading);
+            subContainer = document.createElement('div');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(subContainer, ["appoint-me-container__sub-container", "r__appoint-me-container__sub-container"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', container, subContainer);
+            subContainerHeading = document.createElement('div');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(subContainerHeading, ["appoint-me-container__sub-container__heading", "r__appoint-me-container__sub-container__heading"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', subContainer, subContainerHeading);
+            date = document.createElement("h2");
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(date, ["appoint-me-container__sub-container__heading__date", "r__appoint-me-container__sub-container__heading__date"]);
+            date.dataset.date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.now().toISO();
+            date.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.now().toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', subContainerHeading, date);
+            dateModalButton = document.createElement('button');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(dateModalButton, ["select-date-button", "r__select-date-button"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', subContainerHeading, dateModalButton);
+            dateModalButtonText = document.createElement('p');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(dateModalButtonText, ["select-date-button__text", "r__select-date-button__text"]);
+            dateModalButtonText.textContent = "Select Date";
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', dateModalButton, dateModalButtonText);
+            dateModalButtonIcon = document.createElement('span');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(dateModalButtonIcon, ["icon", "icon-appoint-me-logo", "select-date-button__icon", "r__select-date-button__icon"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', dateModalButton, dateModalButtonIcon);
+            calendar = document.createElement('section');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(calendar, ["appoint-me-container__sub-container__calendar", "r__appoint-me-container__sub-container__calendar"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', subContainer, calendar);
+            console.log(app.dataset.intervals, app.dataset.schedule);
+            dateModal = document.createElement('section');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(dateModal, ["modal--select-date", "r__modal--select-date", "closed"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("afterbegin", subContainer, dateModal);
+            timeModal = document.createElement('section');
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(timeModal, ["modal--select-time", "r__modal--select-time", "closed"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement("afterbegin", subContainer, timeModal);
+            dateModalButton.addEventListener("click", function (e) {
+              e.preventDefault();
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(dateModal, "closed", "open");
+            });
+            [dateModal, timeModal].forEach(function (modal, i) {
+              var modalCloseIcon = document.createElement('i');
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(modalCloseIcon, ["fas", "fa-window-close", "modal-close-icon", "r__modal-close-icon"]);
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', modal, modalCloseIcon);
+              modalCloseIcon.addEventListener("click", function (e) {
+                e.preventDefault();
+                _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(modal, "open", "closed");
+              });
+            });
+            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.fillDay)(calendar, app.dataset.intervals, utility);
+            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, utility);
+            fillDateModal(dateModal, date);
+            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, utility);
+
+          case 66:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function buildApp(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 
@@ -57881,20 +58071,16 @@ __webpack_require__.r(__webpack_exports__);
 
                   _Utility__WEBPACK_IMPORTED_MODULE_10__.watchScreen();
 
-                  if (document.querySelector('.calendar') || document.querySelector('.r__calendar')) {
-                    _app = document.querySelector('.calendar');
-                    (0,_Appoint_Me_App__WEBPACK_IMPORTED_MODULE_11__.buildApp)(_app);
-                  } // * WATCHING FOR USER LOGIN
-                  // Login.watch();
-                  // * WATCHING FOR USER SIGNUP
-                  // Signup.watch();
-                  // * WATCHING FOR USER IN NEED OF RESETTING THEIR PASSWORD
-                  // Reset.watch();
-                  // * CHECK THE USER'S LOGIN STATUS
-                  // AppLoggedIn.watchLoginStatus(loginStatus);
+                  if (!(document.querySelector('.calendar') || document.querySelector('.r__calendar'))) {
+                    _context.next = 8;
+                    break;
+                  }
 
+                  _app = document.querySelector('.calendar');
+                  _context.next = 8;
+                  return (0,_Appoint_Me_App__WEBPACK_IMPORTED_MODULE_11__.buildApp)(_app);
 
-                case 5:
+                case 8:
                 case "end":
                   return _context.stop();
               }

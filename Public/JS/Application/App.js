@@ -23,7 +23,7 @@ import { buildApp } from './Appoint-Me-App';
 
       if (document.querySelector('.calendar') || document.querySelector('.r__calendar')) {
         const app = document.querySelector('.calendar');
-        buildApp(app);
+        await buildApp(app);
       }
 
       // * WATCHING FOR USER LOGIN

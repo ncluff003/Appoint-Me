@@ -8,7 +8,7 @@ export const buildSchedule = (container, schedule, utility) => {
 
   const hours = document.querySelectorAll('.hour');
   let startOfDay, endOfDay, start, end;
-  console.log(schedule.split('-')[0].length, schedule.split('-')[2].length);
+  console.log(schedule.split('-')[0].length, schedule.split('-')[1].length);
   if (schedule.split('-')[0].length === 3) {
     startOfDay = schedule.split('-')[0].split('').slice(1, 3).join('');
     start = schedule.split('-')[0].split('')[0];
@@ -17,12 +17,12 @@ export const buildSchedule = (container, schedule, utility) => {
     start = [schedule.split('-')[0].split('')[0], schedule.split('-')[0].split('')[1]].join('');
   }
 
-  if (schedule.split('-')[2].length === 3) {
-    endOfDay = schedule.split('-')[2].split('').slice(1, 3).join('');
-    end = schedule.split('-')[2].split('')[0];
-  } else if (schedule.split('-')[2].length === 4) {
-    endOfDay = schedule.split('-')[2].split('').slice(2, 4).join('');
-    end = [schedule.split('-')[2].split('')[0], schedule.split('-')[2].split('')[1]].join('');
+  if (schedule.split('-')[1].length === 3) {
+    endOfDay = schedule.split('-')[1].split('').slice(1, 3).join('');
+    end = schedule.split('-')[1].split('')[0];
+  } else if (schedule.split('-')[1].length === 4) {
+    endOfDay = schedule.split('-')[1].split('').slice(2, 4).join('');
+    end = [schedule.split('-')[1].split('')[0], schedule.split('-')[1].split('')[1]].join('');
   }
 
   start = Number(start);
