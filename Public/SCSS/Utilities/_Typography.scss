@@ -296,6 +296,161 @@
       }
     }
   }
+  .blue-and-black {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorDarkestGrey;
+      }
+      &__title {
+        color: $colorDarkestGrey;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorDarkestGrey;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $primaryColor;
+          }
+          .select-date-button {
+            color: rgba($primaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($primaryColorDark, 0.8);
+            }
+            &:hover {
+              .hour__time {
+                color: $colorDarkerGrey;
+              }
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorDarkestGrey;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorDarkerGrey, 0.8);
+            &:hover {
+              color: $colorDarkerGrey;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorDarkerGrey, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:hover {
+                  color: $primaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            &__header {
+              color: $colorDarkerGrey;
+            }
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            .form {
+              &__input {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                  .form__label {
+                    color: $colorDarkerGrey;
+                  }
+                }
+                &--hour,
+                &--minute,
+                &--email,
+                &--phone {
+                  @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $primaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
+                }
+              }
+              &__label {
+                color: rgba($colorDarkerGrey, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorDarkerGrey;
+                }
+                .colon {
+                  color: $colorDarkerGrey;
+                }
+                &__tod {
+                  color: $colorDarkerGrey;
+                }
+                &--commPreference {
+                  color: $colorDarkerGrey;
+                  label.clicked {
+                    color: $primaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorDarkerGrey;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorDarkerGrey, 0.8);
+                    &:hover {
+                      color: $primaryColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   .green-and-white {
     .appoint-me-header {
       .icon-appoint-me-logo {
@@ -436,6 +591,466 @@
                     color: rgba($colorOffWhite, 0.8);
                     &:hover {
                       color: $secondaryColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .green-and-black {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorDarkestGrey;
+      }
+      &__title {
+        color: $colorDarkestGrey;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorDarkestGrey;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $secondaryColor;
+          }
+          .select-date-button {
+            color: rgba($secondaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($secondaryColorDark, 0.8);
+            }
+            &:hover {
+              .hour__time {
+                color: $colorDarkerGrey;
+              }
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorDarkestGrey;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorDarkerGrey, 0.8);
+            &:hover {
+              color: $colorDarkerGrey;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorDarkerGrey, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:hover {
+                  color: $secondaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            &__header {
+              color: $colorDarkerGrey;
+            }
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            .form {
+              &__input {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                  .form__label {
+                    color: $colorDarkerGrey;
+                  }
+                }
+                &--hour,
+                &--minute,
+                &--email,
+                &--phone {
+                  @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $secondaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
+                }
+              }
+              &__label {
+                color: rgba($colorDarkerGrey, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorDarkerGrey;
+                }
+                .colon {
+                  color: $colorDarkerGrey;
+                }
+                &__tod {
+                  color: $colorDarkerGrey;
+                }
+                &--commPreference {
+                  color: $colorDarkerGrey;
+                  label.clicked {
+                    color: $secondaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorDarkerGrey;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorDarkerGrey, 0.8);
+                    &:hover {
+                      color: $secondaryColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .gold-and-white {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorOffWhite;
+      }
+      &__title {
+        color: $colorOffWhite;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorOffWhite;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $tertiaryColor;
+          }
+          .select-date-button {
+            color: rgba($tertiaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($tertiaryColorDark, 0.8);
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorOffWhite;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorOffWhite, 0.8);
+            &:hover {
+              color: $colorOffWhite;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorOffWhite;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorOffWhite, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorOffWhite;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorOffWhite, 0.8);
+                &:hover {
+                  color: $tertiaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            &__header {
+              color: $colorOffWhite;
+            }
+            &__sub-header {
+              color: $colorOffWhite;
+            }
+            .form {
+              &__input {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                  .form__label {
+                    color: $colorOffWhite;
+                  }
+                }
+                &--hour,
+                &--minute,
+                &--email,
+                &--phone {
+                  @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorOffWhite, 0.8);
+                &:focus {
+                  color: $colorOffWhite;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $tertiaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
+                }
+              }
+              &__label {
+                color: rgba($colorOffWhite, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorOffWhite;
+                }
+                .colon {
+                  color: $colorOffWhite;
+                }
+                &__tod {
+                  color: $colorOffWhite;
+                }
+                &--commPreference {
+                  color: $colorOffWhite;
+                  label.clicked {
+                    color: $tertiaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorOffWhite;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorOffWhite, 0.8);
+                    &:hover {
+                      color: $tertiaryColor;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .gold-and-black {
+    .appoint-me-header {
+      .icon-appoint-me-logo {
+        color: $colorDarkestGrey;
+      }
+      &__title {
+        color: $colorDarkestGrey;
+      }
+    }
+    .appoint-me-container {
+      &__heading {
+        color: $colorDarkestGrey;
+      }
+      &__sub-container {
+        &__heading {
+          &__date {
+            color: $tertiaryColor;
+          }
+          .select-date-button {
+            color: rgba($tertiaryColor, 0.5);
+          }
+        }
+        &__calendar {
+          .hour {
+            &__time {
+              color: rgba($tertiaryColorDark, 0.8);
+            }
+            &:hover {
+              .hour__time {
+                color: $colorDarkerGrey;
+              }
+            }
+          }
+          .blacked-out {
+            color: $colorLightestGrey;
+            .hour__time {
+              color: $colorDarkestGrey;
+            }
+          }
+        }
+        .modal {
+          &-close-icon {
+            color: rgba($colorDarkerGrey, 0.8);
+            &:hover {
+              color: $colorDarkerGrey;
+            }
+          }
+          &--select-date {
+            &__header,
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            &__date-picker-container {
+              input,
+              select {
+                color: rgba($colorDarkerGrey, 0.8);
+                text-align: center;
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+              }
+            }
+
+            .button {
+              &--modal {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:hover {
+                  color: $tertiaryColor;
+                }
+              }
+            }
+          }
+          &--select-time {
+            &__header {
+              color: $colorDarkerGrey;
+            }
+            &__sub-header {
+              color: $colorDarkerGrey;
+            }
+            .form {
+              &__input {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                  .form__label {
+                    color: $colorDarkerGrey;
+                  }
+                }
+                &--hour,
+                &--minute,
+                &--email,
+                &--phone {
+                  @extend .form__input;
+                }
+              }
+              &__select {
+                color: rgba($colorDarkerGrey, 0.8);
+                &:focus {
+                  color: $colorDarkerGrey;
+                }
+                &--hour,
+                &--minute {
+                  @extend .form__select;
+                  option {
+                    color: $tertiaryColor;
+                  }
+                }
+                .blacked-out {
+                  color: rgba($colorOffWhite, 0.8);
+                }
+              }
+              &__label {
+                color: rgba($colorDarkerGrey, 0.8);
+                &--email,
+                &--phone {
+                  @extend .form__label;
+                }
+              }
+
+              &__section {
+                &__to-header {
+                  color: $colorDarkerGrey;
+                }
+                .colon {
+                  color: $colorDarkerGrey;
+                }
+                &__tod {
+                  color: $colorDarkerGrey;
+                }
+                &--commPreference {
+                  color: $colorDarkerGrey;
+                  label.clicked {
+                    color: $tertiaryColor;
+                  }
+                }
+              }
+              &--appointment {
+                .communication-preference-header {
+                  color: $colorDarkerGrey;
+                }
+                .button {
+                  &--modal {
+                    color: rgba($colorDarkerGrey, 0.8);
+                    &:hover {
+                      color: $tertiaryColor;
                     }
                   }
                 }

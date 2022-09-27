@@ -242,7 +242,11 @@ export const build = (moment, translate) => {
     },
     theme: {
       'blue-and-white': 'blue-and-white',
+      'blue-and-black': 'blue-and-black',
       'green-and-white': 'green-and-white',
+      'green-and-black': 'green-and-black',
+      'gold-and-white': 'gold-and-white',
+      'gold-and-black': 'gold-and-black',
     },
     minutes: minutes,
   };

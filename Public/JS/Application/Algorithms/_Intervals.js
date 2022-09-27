@@ -440,53 +440,15 @@ export const createIntervals = (hours, interval, modal, utility) => {
   });
 };
 
-export const fillDay = (container, intervals, utility) => {
+export const fillDay = (container, intervals, data, utility) => {
   const timePickerModal = document.querySelector('.modal--select-time');
   let hours = 24;
   let startHour = 0;
   while (startHour < hours) {
     const hour = document.createElement('section');
+    console.log(hour);
     Utility.addClasses(hour, [`hour`, `r__hour`]);
     Utility.insertElement('beforeend', container, hour);
-
-    hour.addEventListener(`click`, (e) => {
-      e.preventDefault();
-      Utility.replaceClassName(timePickerModal, `closed`, `open`);
-      let splitHour = hour.dataset.time.split(':');
-      let splitMinutes = splitHour[1].split(' ');
-      let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
-      let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-      [...hourSelectOne.childNodes].forEach((child) => {
-        if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
-          child.disabled = true;
-          Utility.addClasses(child, [`blacked-out`]);
-        } else if (hour.dataset.time !== `12:00 AM`) {
-          if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
-            child.disabled = true;
-            Utility.addClasses(child, [`blacked-out`]);
-          } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-            child.disabled = true;
-            Utility.addClasses(child, [`blacked-out`]);
-          }
-        }
-      });
-      [...hourSelectTwo.childNodes].forEach((child) => {});
-
-      let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
-      if (splitMinutes[1] === `PM`) {
-        timeOfDayOne.textContent = `PM`;
-      }
-      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-
-      hourSelectTwo.addEventListener(`change`, (e) => {
-        e.preventDefault();
-        if (hourSelectTwo.value >= 12) {
-          timeOfDayTwo.textContent = `PM`;
-        } else {
-          timeOfDayTwo.textContent = `AM`;
-        }
-      });
-    });
 
     const time = document.createElement('p');
     Utility.addClasses(time, [`hour__time`, `r__hour__time`]);

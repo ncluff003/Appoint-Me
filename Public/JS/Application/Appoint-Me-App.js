@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as Utility from './Utility';
 import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../Classes/Cache';
 import { fillDay, createIntervals } from './Algorithms/_Intervals';
-import { buildSchedule } from './Algorithms/_Schedule';
+import { buildSchedule, watchForAppointments } from './Algorithms/_Schedule';
 import { DateTime, Info } from 'luxon';
 
 const fillDateModal = (modal, dateText) => {
@@ -211,8 +211,10 @@ export const buildApp = async (app) => {
     });
   });
 
-  fillDay(calendar, app.dataset.intervals, utility);
+  fillDay(calendar, app.dataset.intervals, data, utility);
   createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
+
+  watchForAppointments(calendar, data, utility);
 
   fillDateModal(dateModal, date);
   buildSchedule(calendar, app.dataset.schedule, data, utility);

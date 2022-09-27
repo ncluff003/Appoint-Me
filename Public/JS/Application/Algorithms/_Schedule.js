@@ -1,5 +1,99 @@
 import * as Utility from './../Utility';
 
+export const watchForAppointments = (app, data, utility) => {
+  const timePickerModal = document.querySelector('.modal--select-time');
+  const hours = document.querySelectorAll('.hour');
+  [...hours].forEach((hour, i) => {
+    let currentHour = hour;
+    hour.addEventListener(`click`, (e) => {
+      e.preventDefault();
+      Utility.replaceClassName(timePickerModal, `closed`, `open`);
+      let splitHour = currentHour.dataset.time.split(':');
+      let splitMinutes = splitHour[1].split(' ');
+      let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+      let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      [...hourSelectOne.childNodes].forEach((child) => {
+        if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {
+          child.disabled = true;
+          Utility.addClasses(child, [`blacked-out`]);
+        } else if (currentHour.dataset.time !== `12:00 AM`) {
+          if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+            child.disabled = true;
+            Utility.addClasses(child, [`blacked-out`]);
+          } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+            child.disabled = true;
+            Utility.addClasses(child, [`blacked-out`]);
+          } else {
+            child.disabled = false;
+            Utility.removeClasses(child, [`blacked-out`]);
+          }
+        } else {
+          child.disabled = false;
+          Utility.removeClasses(child, [`blacked-out`]);
+        }
+      });
+
+      let firstHour;
+      [...hourSelectTwo.childNodes].forEach((child) => {
+        Utility.addClasses(child, [`blacked-out`]);
+        child.disabled = true;
+        let timeOfDay = splitMinutes[1];
+        if (timeOfDay === `AM` || (timeOfDay === `PM` && Number(splitHour[0]) === 12)) {
+          firstHour = Number(splitHour[0]);
+        } else {
+          firstHour = Number(splitHour[0]) + 12;
+        }
+      });
+
+      let beginningHour = 0;
+      let endHour = 4;
+
+      // * Getting the selected schedule info.
+      console.log(data);
+      let scheduleEnd = data.schedule.split('-')[1];
+      let timeOfDay, time;
+      if (`${scheduleEnd}`.length === 3) {
+        timeOfDay = `${scheduleEnd}`.slice(1);
+        time = Number(`${scheduleEnd}`.slice(0, 1));
+      } else if (`${scheduleEnd}`.length === 4) {
+        timeOfDay = `${scheduleEnd}`.slice(2);
+        time = Number(`${scheduleEnd}`.slice(0, 2));
+      }
+
+      let hour = Number(splitHour[0]);
+      if (hour === time) {
+        endHour = 1;
+      } else if (hour === time - 1) {
+        endHour = 2;
+      } else if (hour === time - 2) {
+        endHour = 3;
+      }
+
+      while (beginningHour < endHour) {
+        Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
+        hourSelectTwo.childNodes[firstHour].disabled = false;
+        firstHour += 1;
+        beginningHour++;
+      }
+
+      let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+      if (splitMinutes[1] === `PM`) {
+        timeOfDayOne.textContent = `PM`;
+      }
+      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+
+      hourSelectTwo.addEventListener(`change`, (e) => {
+        e.preventDefault();
+        if (hourSelectTwo.value >= 12) {
+          timeOfDayTwo.textContent = `PM`;
+        } else {
+          timeOfDayTwo.textContent = `AM`;
+        }
+      });
+    });
+  });
+};
+
 export const buildSchedule = (container, schedule, data, utility) => {
   const hours = document.querySelectorAll('.hour');
   let startOfDay, endOfDay, start, end;

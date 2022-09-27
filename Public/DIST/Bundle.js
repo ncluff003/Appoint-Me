@@ -5174,55 +5174,16 @@ var createIntervals = function createIntervals(hours, interval, modal, utility) 
     });
   });
 };
-var fillDay = function fillDay(container, intervals, utility) {
+var fillDay = function fillDay(container, intervals, data, utility) {
   var timePickerModal = document.querySelector('.modal--select-time');
   var hours = 24;
   var startHour = 0;
 
-  var _loop = function _loop() {
+  while (startHour < hours) {
     var hour = document.createElement('section');
+    console.log(hour);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["hour", "r__hour"]);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', container, hour);
-    hour.addEventListener("click", function (e) {
-      e.preventDefault();
-      _Utility__WEBPACK_IMPORTED_MODULE_1__.replaceClassName(timePickerModal, "closed", "open");
-      var splitHour = hour.dataset.time.split(':');
-      var splitMinutes = splitHour[1].split(' ');
-      var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
-
-      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
-        if (child.value !== 0 && hour.dataset.time === "12:00 AM") {
-          child.disabled = true;
-          _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-        } else if (hour.dataset.time !== "12:00 AM") {
-          if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
-            child.disabled = true;
-            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-          } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
-            child.disabled = true;
-            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
-          }
-        }
-      });
-
-      var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
-
-      if (splitMinutes[1] === "PM") {
-        timeOfDayOne.textContent = "PM";
-      }
-
-      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-      var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-      hourSelectTwo.addEventListener("change", function (e) {
-        e.preventDefault();
-
-        if (hourSelectTwo.value >= 12) {
-          timeOfDayTwo.textContent = "PM";
-        } else {
-          timeOfDayTwo.textContent = "AM";
-        }
-      });
-    });
     var time = document.createElement('p');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(time, ["hour__time", "r__hour__time"]);
 
@@ -5242,10 +5203,6 @@ var fillDay = function fillDay(container, intervals, utility) {
 
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", hour, time);
     startHour++;
-  };
-
-  while (startHour < hours) {
-    _loop();
   }
 };
 
@@ -5260,11 +5217,114 @@ var fillDay = function fillDay(container, intervals, utility) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "buildSchedule": () => (/* binding */ buildSchedule)
+/* harmony export */   "buildSchedule": () => (/* binding */ buildSchedule),
+/* harmony export */   "watchForAppointments": () => (/* binding */ watchForAppointments)
 /* harmony export */ });
-/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
+
+var watchForAppointments = function watchForAppointments(app, data, utility) {
+  var timePickerModal = document.querySelector('.modal--select-time');
+  var hours = document.querySelectorAll('.hour');
+
+  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).forEach(function (hour, i) {
+    var currentHour = hour;
+    hour.addEventListener("click", function (e) {
+      e.preventDefault();
+      _Utility__WEBPACK_IMPORTED_MODULE_1__.replaceClassName(timePickerModal, "closed", "open");
+      var splitHour = currentHour.dataset.time.split(':');
+      var splitMinutes = splitHour[1].split(' ');
+      var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
+      var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+
+      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+        if (child.value !== 0 && currentHour.dataset.time === "12:00 AM") {
+          child.disabled = true;
+          _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+        } else if (currentHour.dataset.time !== "12:00 AM") {
+          if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+            child.disabled = true;
+            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+          } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
+            child.disabled = true;
+            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+          } else {
+            child.disabled = false;
+            _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
+          }
+        } else {
+          child.disabled = false;
+          _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
+        }
+      });
+
+      var firstHour;
+
+      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+        child.disabled = true;
+        var timeOfDay = splitMinutes[1];
+
+        if (timeOfDay === "AM" || timeOfDay === "PM" && Number(splitHour[0]) === 12) {
+          firstHour = Number(splitHour[0]);
+        } else {
+          firstHour = Number(splitHour[0]) + 12;
+        }
+      });
+
+      var beginningHour = 0;
+      var endHour = 4; // * Getting the selected schedule info.
+
+      console.log(data);
+      var scheduleEnd = data.schedule.split('-')[1];
+      var timeOfDay, time;
+
+      if ("".concat(scheduleEnd).length === 3) {
+        timeOfDay = "".concat(scheduleEnd).slice(1);
+        time = Number("".concat(scheduleEnd).slice(0, 1));
+      } else if ("".concat(scheduleEnd).length === 4) {
+        timeOfDay = "".concat(scheduleEnd).slice(2);
+        time = Number("".concat(scheduleEnd).slice(0, 2));
+      }
+
+      var hour = Number(splitHour[0]);
+
+      if (hour === time) {
+        endHour = 1;
+      } else if (hour === time - 1) {
+        endHour = 2;
+      } else if (hour === time - 2) {
+        endHour = 3;
+      }
+
+      while (beginningHour < endHour) {
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
+        hourSelectTwo.childNodes[firstHour].disabled = false;
+        firstHour += 1;
+        beginningHour++;
+      }
+
+      var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+
+      if (splitMinutes[1] === "PM") {
+        timeOfDayOne.textContent = "PM";
+      }
+
+      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+      hourSelectTwo.addEventListener("change", function (e) {
+        e.preventDefault();
+
+        if (hourSelectTwo.value >= 12) {
+          timeOfDayTwo.textContent = "PM";
+        } else {
+          timeOfDayTwo.textContent = "AM";
+        }
+      });
+    });
+  });
+};
 var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   var hours = document.querySelectorAll('.hour');
   var startOfDay, endOfDay, start, end;
@@ -5301,14 +5361,14 @@ var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   if (startOfDay === "am" && endOfDay === "pm" || startOfDay === "am" && endOfDay === "am" || startOfDay === "pm" && endOfDay === "pm") {
     hours.forEach(function (hour, i) {
       if (i < start || i > end) {
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hour, ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["blacked-out"]);
         hour.style.pointerEvents = 'none';
       }
     });
   } else if (startOfDay === "pm" && endOfDay === "am") {
     hours.forEach(function (hour, i) {
       if (i > end && i < start) {
-        _Utility__WEBPACK_IMPORTED_MODULE_0__.addClasses(hour, ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["blacked-out"]);
         hour.style.pointerEvents = 'none';
       }
     });
@@ -5684,12 +5744,13 @@ var buildApp = /*#__PURE__*/function () {
                 _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(modal, "open", "closed");
               });
             });
-            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.fillDay)(calendar, app.dataset.intervals, utility);
+            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.fillDay)(calendar, app.dataset.intervals, data, utility);
             (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
+            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.watchForAppointments)(calendar, data, utility);
             fillDateModal(dateModal, date);
             (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, data, utility);
 
-          case 66:
+          case 67:
           case "end":
             return _context2.stop();
         }
@@ -6903,7 +6964,11 @@ var build = function build(moment, translate) {
     },
     theme: {
       'blue-and-white': 'blue-and-white',
-      'green-and-white': 'green-and-white'
+      'blue-and-black': 'blue-and-black',
+      'green-and-white': 'green-and-white',
+      'green-and-black': 'green-and-black',
+      'gold-and-white': 'gold-and-white',
+      'gold-and-black': 'gold-and-black'
     },
     minutes: minutes
   };
