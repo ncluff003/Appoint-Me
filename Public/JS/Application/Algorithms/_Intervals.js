@@ -1,11 +1,7 @@
 import * as Utility from './../Utility';
 import { DateTime, Info } from 'luxon';
 import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../../Classes/Cache';
-
-const submitAppointment = (details) => {
-  event.preventDefault();
-  console.log(details);
-};
+import { submitAppointment } from './_Schedule';
 
 const fillMakeAppointmentModal = (modal, dateText, hour) => {
   // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
@@ -263,47 +259,6 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   [...hourSelectOne.childNodes].forEach((child) => {
     Utility.removeClasses(child, [`blacked-out`]);
   });
-
-  [...hourSelectOne.childNodes].forEach((child) => {
-    // if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
-    //   child.disabled = true;
-    //   Utility.addClasses(child, [`blacked-out`]);
-    // } else if (hour.dataset.time !== `12:00 AM`) {
-    //   if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
-    //     child.disabled = true;
-    //     Utility.addClasses(child, [`blacked-out`]);
-    //   } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-    //     child.disabled = true;
-    //     Utility.addClasses(child, [`blacked-out`]);
-    //   }
-    // }
-
-    let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
-    let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
-    let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-    // let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-
-    // hourSelectTwo.addEventListener(`change`, (e) => {
-    //   e.preventDefault();
-    //   if (hourSelectTwo.value >= 12) {
-    //     timeOfDayTwo.textContent = `PM`;
-    //   } else {
-    //     timeOfDayTwo.textContent = `AM`;
-    //   }
-    // });
-  });
-
-  /*
-  
-  * First Name
-  * Last Name
-  * Start Time
-  * End Time
-  * Phone Number
-  * Email
-  * Phone Call or Video Chat
-  
-  */
 };
 
 export const createIntervals = (hours, interval, modal, utility) => {
@@ -432,10 +387,28 @@ export const createIntervals = (hours, interval, modal, utility) => {
       minutesTwo = `${minutesTwo}`.padStart(2, 0);
     }
 
+    const firstname = document.querySelector('#firstname').value;
+    const lastname = document.querySelector('#lastname').value;
+    const email = document.querySelector('#email').value;
+    const phone = document.querySelector('#phone').value;
+    let communicationPreference;
+
+    const commPreferenceChildren = document.querySelector('.form__section--commPreference').childNodes;
+    commPreferenceChildren.forEach((child) => {
+      if (child.classList.contains('clicked')) {
+        communicationPreference = child.textContent;
+      }
+    });
+
     submitAppointment({
       date: date.dataset.date,
       startTime: `${hourOne}:${minutesOne} ${timeOfDayOne.textContent}`,
       endTime: `${hourTwo}:${minutesTwo} ${timeOfDayTwo.textContent}`,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      phoneNumber: phone,
+      communicationPreference: communicationPreference,
     });
   });
 };

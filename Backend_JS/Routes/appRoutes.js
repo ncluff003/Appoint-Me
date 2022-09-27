@@ -27,6 +27,8 @@ const userRouter = require('./userRoutes');
 //  Routing Middleware
 router.route(`/`).get(appController.renderApp).post(authController.login);
 router.route(`/Info`).get(appController.getInfo);
+router.route(`/Appointment`).post(appController.askForAppointment);
+router.route(`/Appointments`).post(appController.getInfo);
 router.route('/User').post(userController.searchForUser);
 router.use(`/Users`, userRouter);
 router.use('/API', APIRouter);

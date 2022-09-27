@@ -4756,16 +4756,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
 /* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../Classes/Cache */ "./Public/JS/Classes/Cache.js");
 /* harmony import */ var _Classes_Cache__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Classes_Cache__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Schedule__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_Schedule */ "./Public/JS/Application/Algorithms/_Schedule.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
 
 
 
 
-var submitAppointment = function submitAppointment(details) {
-  event.preventDefault();
-  console.log(details);
-};
 
 var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText, hour) {
   // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
@@ -4994,44 +4991,6 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
     _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
   });
-
-  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
-    // if (child.value !== 0 && hour.dataset.time === `12:00 AM`) {
-    //   child.disabled = true;
-    //   Utility.addClasses(child, [`blacked-out`]);
-    // } else if (hour.dataset.time !== `12:00 AM`) {
-    //   if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
-    //     child.disabled = true;
-    //     Utility.addClasses(child, [`blacked-out`]);
-    //   } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-    //     child.disabled = true;
-    //     Utility.addClasses(child, [`blacked-out`]);
-    //   }
-    // }
-    var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
-    var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
-    var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1]; // let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-    // hourSelectTwo.addEventListener(`change`, (e) => {
-    //   e.preventDefault();
-    //   if (hourSelectTwo.value >= 12) {
-    //     timeOfDayTwo.textContent = `PM`;
-    //   } else {
-    //     timeOfDayTwo.textContent = `AM`;
-    //   }
-    // });
-  });
-  /*
-  
-  * First Name
-  * Last Name
-  * Start Time
-  * End Time
-  * Phone Number
-  * Email
-  * Phone Call or Video Chat
-  
-  */
-
 };
 
 var createIntervals = function createIntervals(hours, interval, modal, utility) {
@@ -5167,10 +5126,26 @@ var createIntervals = function createIntervals(hours, interval, modal, utility) 
       minutesTwo = "".concat(minutesTwo).padStart(2, 0);
     }
 
-    submitAppointment({
+    var firstname = document.querySelector('#firstname').value;
+    var lastname = document.querySelector('#lastname').value;
+    var email = document.querySelector('#email').value;
+    var phone = document.querySelector('#phone').value;
+    var communicationPreference;
+    var commPreferenceChildren = document.querySelector('.form__section--commPreference').childNodes;
+    commPreferenceChildren.forEach(function (child) {
+      if (child.classList.contains('clicked')) {
+        communicationPreference = child.textContent;
+      }
+    });
+    (0,_Schedule__WEBPACK_IMPORTED_MODULE_4__.submitAppointment)({
       date: date.dataset.date,
       startTime: "".concat(hourOne, ":").concat(minutesOne, " ").concat(timeOfDayOne.textContent),
-      endTime: "".concat(hourTwo, ":").concat(minutesTwo, " ").concat(timeOfDayTwo.textContent)
+      endTime: "".concat(hourTwo, ":").concat(minutesTwo, " ").concat(timeOfDayTwo.textContent),
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      phoneNumber: phone,
+      communicationPreference: communicationPreference
     });
   });
 };
@@ -5218,13 +5193,67 @@ var fillDay = function fillDay(container, intervals, data, utility) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "buildSchedule": () => (/* binding */ buildSchedule),
+/* harmony export */   "submitAppointment": () => (/* binding */ submitAppointment),
 /* harmony export */   "watchForAppointments": () => (/* binding */ watchForAppointments)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
 
+
+
+
+
+
+var submitAppointment = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(details) {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            event.preventDefault();
+            console.log(details);
+            _context.prev = 2;
+            _context.next = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_4___default()({
+              method: 'POST',
+              url: '/App/Appointment',
+              data: qs__WEBPACK_IMPORTED_MODULE_5___default().stringify(details)
+            });
+
+          case 5:
+            response = _context.sent;
+            console.log(response);
+            _context.next = 12;
+            break;
+
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](2);
+            console.log(_context.t0);
+
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[2, 9]]);
+  }));
+
+  return function submitAppointment(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 var watchForAppointments = function watchForAppointments(app, data, utility) {
   var timePickerModal = document.querySelector('.modal--select-time');
   var hours = document.querySelectorAll('.hour');
@@ -5233,7 +5262,12 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
     var currentHour = hour;
     hour.addEventListener("click", function (e) {
       e.preventDefault();
-      _Utility__WEBPACK_IMPORTED_MODULE_1__.replaceClassName(timePickerModal, "closed", "open");
+      _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(timePickerModal, "closed", "open");
+      var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+      console.log(date, date.dataset.date, date.dataset);
+      var modalDateHeader = document.querySelector('.modal--select-time__header');
+      modalDateHeader.textContent = luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.DATE_HUGE);
+      modalDateHeader.dataset.date = date.dataset.date;
       var splitHour = currentHour.dataset.time.split(':');
       var splitMinutes = splitHour[1].split(' ');
       var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
@@ -5242,28 +5276,28 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
         if (child.value !== 0 && currentHour.dataset.time === "12:00 AM") {
           child.disabled = true;
-          _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
         } else if (currentHour.dataset.time !== "12:00 AM") {
           if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
             child.disabled = true;
-            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
           } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
             child.disabled = true;
-            _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
           } else {
             child.disabled = false;
-            _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
           }
         } else {
           child.disabled = false;
-          _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(child, ["blacked-out"]);
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
         }
       });
 
       var firstHour;
 
       (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(child, ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
         child.disabled = true;
         var timeOfDay = splitMinutes[1];
 
@@ -5300,7 +5334,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       }
 
       while (beginningHour < endHour) {
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
         hourSelectTwo.childNodes[firstHour].disabled = false;
         firstHour += 1;
         beginningHour++;
@@ -5361,14 +5395,14 @@ var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   if (startOfDay === "am" && endOfDay === "pm" || startOfDay === "am" && endOfDay === "am" || startOfDay === "pm" && endOfDay === "pm") {
     hours.forEach(function (hour, i) {
       if (i < start || i > end) {
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hour, ["blacked-out"]);
         hour.style.pointerEvents = 'none';
       }
     });
   } else if (startOfDay === "pm" && endOfDay === "am") {
     hours.forEach(function (hour, i) {
       if (i > end && i < start) {
-        _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["blacked-out"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hour, ["blacked-out"]);
         hour.style.pointerEvents = 'none';
       }
     });

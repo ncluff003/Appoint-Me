@@ -143,7 +143,51 @@ module.exports = class sendEmail {
     await this.makeTransport().sendMail(mailOptions);
   }
 
+  async _askForAppointment(template, subject, options) {
+    const html = pug.renderFile(`${__dirname}/../Views/Emails/${template}.pug`, {
+      // * EVENTUALLY, THE FROM EMAIL WILL BE MADE INTO A BUSINESS OR ADMIN ONE RATHER THAN MY PERSONAL ONE.
+      from: this.from,
+      to: this.to,
+      user: options.user,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      subject: subject,
+
+      greeting: Calendar.getGreeting(),
+      hour: Calendar.getHour(),
+      minutes: Calendar.getMinutes(),
+      timeOfDay: Calendar.getTimeOfDay(),
+      day: Calendar.getDay(),
+      weekday: Calendar.getWeekday(),
+      month: Calendar.getMonth(),
+      year: Calendar.getYear(),
+      friend: options.friend,
+      inviteType: options.type,
+      budgetId: options.budgetId,
+    });
+
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      subject: subject,
+      html: html,
+      text: htmlToText.fromString(html),
+      attachments: [
+        {
+          filename: 'KingRichard-Logo.jpg',
+          contentType: 'image/jpeg',
+          path: __dirname + `/../../Public/KingRichard-Logo.png`,
+          cid: 'company-logo',
+        },
+      ],
+    };
+
+    await this.makeTransport().sendMail(mailOptions);
+  }
+
   // Define The Email Options
+
+  // * SEND APPOINTMENT ASK
 
   async sendWelcome() {
     await this._send('welcome', `Welcome To Royal King Richard's Family!`);

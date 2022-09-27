@@ -41934,7 +41934,7 @@
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__heading .select-date-button:hover {
   background-color: #2a7fff;
-  color: #fafafa;
+  color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__calendar .hour:nth-of-type(2n) {
   background-color: rgba(0, 98, 246, 0.25);
@@ -42032,33 +42032,33 @@
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date__date-picker-container select, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time__date-picker-container input,
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time__date-picker-container select {
-  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+  border-bottom: 0.3rem groove rgba(51, 51, 51, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date__date-picker-container select option, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time__date-picker-container select option {
   background-color: #0062f6;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date .button--modal {
-  border: 0.2rem solid rgba(250, 250, 250, 0.8);
-  background-color: rgba(250, 250, 250, 0.25);
+  border: 0.2rem solid rgba(51, 51, 51, 0.8);
+  background-color: rgba(51, 51, 51, 0.25);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date .button--modal:hover {
-  border-color: #fafafa;
-  background-color: #fafafa;
+  border-color: #333333;
+  background-color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--hour, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--minute, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--email, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--phone {
-  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+  border-bottom: 0.3rem groove rgba(51, 51, 51, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--hour:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--minute:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--email:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__input--phone:focus {
-  border-bottom-color: #fafafa;
+  border-bottom-color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--hour, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--minute {
-  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+  border-bottom: 0.3rem groove rgba(51, 51, 51, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--hour:focus, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--minute:focus {
-  border-bottom-color: #fafafa;
+  border-bottom-color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label {
-  border: 0.2rem groove rgba(250, 250, 250, 0.8);
+  border: 0.2rem groove rgba(51, 51, 51, 0.8);
   transition: color 0.5s, background-color 0.5s;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label:first-of-type {
@@ -42068,16 +42068,16 @@
   border-left-width: 0.1rem;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
-  border-color: #fafafa;
-  background-color: #fafafa;
+  border-color: #333333;
+  background-color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal {
-  border: 0.2rem solid rgba(250, 250, 250, 0.8);
-  background-color: rgba(250, 250, 250, 0.25);
+  border: 0.2rem solid rgba(51, 51, 51, 0.8);
+  background-color: rgba(51, 51, 51, 0.25);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
-  border-color: #fafafa;
-  background-color: #fafafa;
+  border-color: #333333;
+  background-color: #333333;
 }
 .app-landing-container .green-and-white {
   border-left: 0.3rem groove #2cae1f;

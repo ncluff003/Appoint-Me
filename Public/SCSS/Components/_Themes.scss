@@ -200,7 +200,7 @@
           .select-date-button {
             &:hover {
               background-color: $primaryColor;
-              color: $colorOffWhite;
+              color: $colorDarkerGrey;
             }
           }
         }
@@ -286,7 +286,7 @@
             &__date-picker-container {
               input,
               select {
-                border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+                border-bottom: 0.3rem groove rgba($colorDarkerGrey, 0.8);
               }
 
               select {
@@ -300,11 +300,11 @@
           &--select-date {
             .button {
               &--modal {
-                border: 0.2rem solid rgba($colorOffWhite, 0.8);
-                background-color: rgba($colorOffWhite, 0.25);
+                border: 0.2rem solid rgba($colorDarkerGrey, 0.8);
+                background-color: rgba($colorDarkerGrey, 0.25);
                 &:hover {
-                  border-color: $colorOffWhite;
-                  background-color: $colorOffWhite;
+                  border-color: $colorDarkerGrey;
+                  background-color: $colorDarkerGrey;
                 }
               }
             }
@@ -312,9 +312,9 @@
           &--select-time {
             .form {
               &__input {
-                border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+                border-bottom: 0.3rem groove rgba($colorDarkerGrey, 0.8);
                 &:focus {
-                  border-bottom-color: $colorOffWhite;
+                  border-bottom-color: $colorDarkerGrey;
                 }
                 &--hour,
                 &--minute,
@@ -325,9 +325,9 @@
               }
 
               &__select {
-                border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+                border-bottom: 0.3rem groove rgba($colorDarkerGrey, 0.8);
                 &:focus {
-                  border-bottom-color: $colorOffWhite;
+                  border-bottom-color: $colorDarkerGrey;
                 }
                 &--hour,
                 &--minute {
@@ -338,7 +338,7 @@
               &__section {
                 &--commPreference {
                   label {
-                    border: 0.2rem groove rgba($colorOffWhite, 0.8);
+                    border: 0.2rem groove rgba($colorDarkerGrey, 0.8);
                     transition: color 0.5s, background-color 0.5s;
                     &:first-of-type {
                       border-right-width: 0.1rem;
@@ -348,8 +348,8 @@
                     }
 
                     &.clicked {
-                      border-color: $colorOffWhite;
-                      background-color: $colorOffWhite;
+                      border-color: $colorDarkerGrey;
+                      background-color: $colorDarkerGrey;
                     }
                   }
                 }
@@ -357,11 +357,11 @@
               &--appointment {
                 .button {
                   &--modal {
-                    border: 0.2rem solid rgba($colorOffWhite, 0.8);
-                    background-color: rgba($colorOffWhite, 0.25);
+                    border: 0.2rem solid rgba($colorDarkerGrey, 0.8);
+                    background-color: rgba($colorDarkerGrey, 0.25);
                     &:hover {
-                      border-color: $colorOffWhite;
-                      background-color: $colorOffWhite;
+                      border-color: $colorDarkerGrey;
+                      background-color: $colorDarkerGrey;
                     }
                   }
                 }

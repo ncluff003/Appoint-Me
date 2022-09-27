@@ -72,11 +72,16 @@ exports.renderApp = catchAsync(async (request, response) => {
     data: freeLancerInfo,
   });
 });
+
 exports.getInfo = catchAsync(async (request, response) => {
   response.status(200).json({
     status: `Success`,
     data: freeLancerInfo,
   });
+});
+
+exports.askForAppointment = catchAsync(async (request, response) => {
+  console.log(request.body);
 });
 
 exports.renderAppLoggedIn = catchAsync(async (request, response) => {

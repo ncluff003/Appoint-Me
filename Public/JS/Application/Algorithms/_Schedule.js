@@ -1,4 +1,23 @@
 import * as Utility from './../Utility';
+import axios from 'axios';
+import qs from 'qs';
+import { DateTime, Info } from 'luxon';
+
+export const submitAppointment = async (details) => {
+  event.preventDefault();
+  console.log(details);
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: '/App/Appointment',
+      data: qs.stringify(details),
+    });
+
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const watchForAppointments = (app, data, utility) => {
   const timePickerModal = document.querySelector('.modal--select-time');
@@ -8,6 +27,11 @@ export const watchForAppointments = (app, data, utility) => {
     hour.addEventListener(`click`, (e) => {
       e.preventDefault();
       Utility.replaceClassName(timePickerModal, `closed`, `open`);
+      const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+      console.log(date, date.dataset.date, date.dataset);
+      const modalDateHeader = document.querySelector('.modal--select-time__header');
+      modalDateHeader.textContent = DateTime.fromISO(date.dataset.date).toLocaleString(DateTime.DATE_HUGE);
+      modalDateHeader.dataset.date = date.dataset.date;
       let splitHour = currentHour.dataset.time.split(':');
       let splitMinutes = splitHour[1].split(' ');
       let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
