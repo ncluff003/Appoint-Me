@@ -42,6 +42,8 @@ module.exports = class sendEmail {
     this.email = user.email;
     this.communicationPreference = user.communicationPreference;
     this.date = user.date;
+    this.acceptURL = `http://127.0.0.1:3434/App/Appointments`;
+    this.declineURL = `http://127.0.0.1:3434/App`;
   }
   // Create Transport
   makeTransport() {
@@ -77,6 +79,7 @@ module.exports = class sendEmail {
       myFirstName: this.myFirstName,
       myLastName: this.myLastName,
       subject: subject,
+      date: this.date,
       startTime: this.startTime,
       endTime: this.endTime,
       phoneNumber: this.phoneNumber,
@@ -92,6 +95,8 @@ module.exports = class sendEmail {
       month: Calendar.getMonth(),
       year: Calendar.getYear(),
       longDate: Calendar.getLongDate(this.date),
+      urlOne: this.acceptURL,
+      urlTwo: this.declineURL,
     });
 
     const mailOptions = {
@@ -120,22 +125,4 @@ module.exports = class sendEmail {
   async sendAppointmentRequest() {
     await this._send(`appointment-request`, `Meeting Request`);
   }
-
-  async sendWelcome() {
-    await this._send('welcome', `Welcome To Royal King Richard's Family!`);
-  }
-
-  async sendResetPassword() {
-    await this._send(`resetPasswordEmail`, `Your Requested Password Reset Token (Valid For Only 15 Minutes)`);
-  }
-
-  // * Send Associate Email
-  async sendAssociateInvite(options) {
-    await this._sendInvite('inviteUser', `You have been invited!`, options);
-  }
-  // * Send Admin Email
-  async sendAdminInvite(options) {
-    await this._sendInvite('inviteUser', `You have been invited!`, options);
-  }
-  // Send Email
 };

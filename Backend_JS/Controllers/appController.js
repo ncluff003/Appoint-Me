@@ -28,6 +28,7 @@ const sendEmail = require(`./../Utilities/Email`);
 ////////////////////////////////////////////
 //  My Modules
 const Calendar = require(`./../Utilities/Calendar`);
+const response = require('http-browserify/lib/response');
 
 ////////////////////////////////////////////
 //  MY FUNCTIONS
@@ -84,6 +85,40 @@ exports.getInfo = catchAsync(async (request, response) => {
 exports.askForAppointment = catchAsync(async (request, response) => {
   console.log(request.body);
   await new sendEmail(request.body).sendAppointmentRequest();
+});
+
+exports.scheduleAppointment = catchAsync(async (request, response) => {
+  let details = request.params;
+  console.log(details);
+  let appointment = {
+    index: freeLancerInfo.appointments.length,
+    date: details.date,
+    startTime: details.startTime,
+    endTime: details.endTime,
+    attendees: [],
+    type: details.communicationPreference,
+  };
+  let myDetails = {
+    name: `${details.myFirstName} ${details.myLastName}`,
+  };
+  let theirDetails = {
+    name: `${details.firstname} ${details.lastname}`,
+    phoneNumber: details.phoneNumber,
+    email: details.email,
+  };
+
+  appointment.attendees.push(myDetails);
+  appointment.attendees.push(theirDetails);
+  freeLancerInfo.appointments.push(appointment);
+  fs.writeFileSync(`${__dirname}/../Data/appointments.json`, JSON.stringify(freeLancerInfo));
+
+  response.status(200).json({
+    status: `Success`,
+    data: {
+      appointments: freeLancerInfo.appointments,
+      details: details,
+    },
+  });
 });
 
 exports.renderAppLoggedIn = catchAsync(async (request, response) => {
