@@ -152,7 +152,7 @@ export const buildApp = async (app) => {
 
   const heading = document.createElement('h2');
   Utility.addClasses(heading, [`appoint-me-container__heading`, `r__appoint-me-container__heading`]);
-  heading.textContent = `Make An Appointment`;
+  heading.textContent = `Request An Appointment`;
   Utility.insertElement('beforeend', container, heading);
 
   const subContainer = document.createElement('div');

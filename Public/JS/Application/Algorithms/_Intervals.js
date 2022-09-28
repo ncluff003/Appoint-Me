@@ -236,7 +236,7 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
     Utility.insertElements(`beforeend`, communicationPreferenceSection, [phoneCallInput, phoneCallLabel, videoChatlInput, videoChatLabel]);
 
     const submitAppointmentButton = document.createElement('button');
-    submitAppointmentButton.textContent = `Submit Appointment`;
+    submitAppointmentButton.textContent = `Request Appointment`;
     Utility.addClasses(submitAppointmentButton, [`button--modal`, `button--modal`]);
     Utility.insertElement('beforeend', form, submitAppointmentButton);
   }

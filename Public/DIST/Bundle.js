@@ -4970,7 +4970,7 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
     });
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElements("beforeend", communicationPreferenceSection, [phoneCallInput, phoneCallLabel, videoChatlInput, videoChatLabel]);
     var submitAppointmentButton = document.createElement('button');
-    submitAppointmentButton.textContent = "Submit Appointment";
+    submitAppointmentButton.textContent = "Request Appointment";
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(submitAppointmentButton, ["button--modal", "button--modal"]);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', form, submitAppointmentButton);
   }
@@ -5732,7 +5732,7 @@ var buildApp = /*#__PURE__*/function () {
             _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', app, container);
             heading = document.createElement('h2');
             _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(heading, ["appoint-me-container__heading", "r__appoint-me-container__heading"]);
-            heading.textContent = "Make An Appointment";
+            heading.textContent = "Request An Appointment";
             _Utility__WEBPACK_IMPORTED_MODULE_3__.insertElement('beforeend', container, heading);
             subContainer = document.createElement('div');
             _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(subContainer, ["appoint-me-container__sub-container", "r__appoint-me-container__sub-container"]);
