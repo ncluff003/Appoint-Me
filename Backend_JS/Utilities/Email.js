@@ -33,9 +33,15 @@ module.exports = class sendEmail {
     this.to = user.email;
     this.firstName = user.firstname;
     this.lastName = user.lastname;
-    this.username = user.username;
-    this.url = url;
+    this.myFirstName = `Nathan`;
+    this.myLastName = `Cluff`;
     this.from = `Nathan Cluff <${process.env.NAMECHEAP_EMAIL}>`;
+    this.startTime = user.startTime;
+    this.endTime = user.endTime;
+    this.phoneNumber = user.phoneNumber;
+    this.email = user.email;
+    this.communicationPreference = user.communicationPreference;
+    this.date = user.date;
   }
   // Create Transport
   makeTransport() {
@@ -63,53 +69,19 @@ module.exports = class sendEmail {
 
   async _send(template, subject) {
     const html = pug.renderFile(`${__dirname}/../Views/Emails/${template}.pug`, {
-      from: this.from,
-      to: this.to,
-      user: this.user,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      username: this.username,
-      subject: subject,
-      url: this.url,
-
-      greeting: Calendar.getGreeting(),
-      hour: Calendar.getHour(),
-      minutes: Calendar.getMinutes(),
-      timeOfDay: Calendar.getTimeOfDay(),
-      day: Calendar.getDay(),
-      weekday: Calendar.getWeekday(),
-      month: Calendar.getMonth(),
-      year: Calendar.getYear(),
-    });
-
-    const mailOptions = {
-      from: this.from,
-      to: this.to,
-      subject: subject,
-      html: html,
-      text: htmlToText.fromString(html),
-      attachments: [
-        {
-          filename: 'KingRichard-Logo.jpg',
-          contentType: 'image/jpeg',
-          path: __dirname + `/../../Public/KingRichard-Logo.png`,
-          cid: 'company-logo',
-        },
-      ],
-    };
-
-    await this.makeTransport().sendMail(mailOptions);
-  }
-
-  async _sendInvite(template, subject, options) {
-    const html = pug.renderFile(`${__dirname}/../Views/Emails/${template}.pug`, {
       // * EVENTUALLY, THE FROM EMAIL WILL BE MADE INTO A BUSINESS OR ADMIN ONE RATHER THAN MY PERSONAL ONE.
       from: this.from,
       to: this.to,
-      user: options.user,
-      firstName: this.firstName,
-      lastName: this.lastName,
+      firstname: this.firstName,
+      lastname: this.lastName,
+      myFirstName: this.myFirstName,
+      myLastName: this.myLastName,
       subject: subject,
+      startTime: this.startTime,
+      endTime: this.endTime,
+      phoneNumber: this.phoneNumber,
+      email: this.email,
+      communicationPreference: this.communicationPreference,
 
       greeting: Calendar.getGreeting(),
       hour: Calendar.getHour(),
@@ -119,9 +91,7 @@ module.exports = class sendEmail {
       weekday: Calendar.getWeekday(),
       month: Calendar.getMonth(),
       year: Calendar.getYear(),
-      friend: options.friend,
-      inviteType: options.type,
-      budgetId: options.budgetId,
+      longDate: Calendar.getLongDate(this.date),
     });
 
     const mailOptions = {
@@ -132,51 +102,9 @@ module.exports = class sendEmail {
       text: htmlToText.fromString(html),
       attachments: [
         {
-          filename: 'KingRichard-Logo.jpg',
+          filename: 'Appoint-Me-Logo.jpg',
           contentType: 'image/jpeg',
-          path: __dirname + `/../../Public/KingRichard-Logo.png`,
-          cid: 'company-logo',
-        },
-      ],
-    };
-
-    await this.makeTransport().sendMail(mailOptions);
-  }
-
-  async _askForAppointment(template, subject, options) {
-    const html = pug.renderFile(`${__dirname}/../Views/Emails/${template}.pug`, {
-      // * EVENTUALLY, THE FROM EMAIL WILL BE MADE INTO A BUSINESS OR ADMIN ONE RATHER THAN MY PERSONAL ONE.
-      from: this.from,
-      to: this.to,
-      user: options.user,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      subject: subject,
-
-      greeting: Calendar.getGreeting(),
-      hour: Calendar.getHour(),
-      minutes: Calendar.getMinutes(),
-      timeOfDay: Calendar.getTimeOfDay(),
-      day: Calendar.getDay(),
-      weekday: Calendar.getWeekday(),
-      month: Calendar.getMonth(),
-      year: Calendar.getYear(),
-      friend: options.friend,
-      inviteType: options.type,
-      budgetId: options.budgetId,
-    });
-
-    const mailOptions = {
-      from: this.from,
-      to: this.to,
-      subject: subject,
-      html: html,
-      text: htmlToText.fromString(html),
-      attachments: [
-        {
-          filename: 'KingRichard-Logo.jpg',
-          contentType: 'image/jpeg',
-          path: __dirname + `/../../Public/KingRichard-Logo.png`,
+          path: __dirname + `/../../Public/Appoint-Me-Logo.png`,
           cid: 'company-logo',
         },
       ],
@@ -188,6 +116,10 @@ module.exports = class sendEmail {
   // Define The Email Options
 
   // * SEND APPOINTMENT ASK
+  // * Working on the details still of this email.
+  async sendAppointmentRequest() {
+    await this._send(`appointment-request`, `Meeting Request`);
+  }
 
   async sendWelcome() {
     await this._send('welcome', `Welcome To Royal King Richard's Family!`);

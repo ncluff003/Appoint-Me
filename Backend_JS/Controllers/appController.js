@@ -20,6 +20,7 @@ const crypto = require('crypto');
 //  My Middleware
 const catchAsync = require(`./../Utilities/catchAsync`);
 const AppError = require(`./../Utilities/appError`);
+const sendEmail = require(`./../Utilities/Email`);
 
 ////////////////////////////////////////////
 //  Routing Middleware
@@ -82,6 +83,7 @@ exports.getInfo = catchAsync(async (request, response) => {
 
 exports.askForAppointment = catchAsync(async (request, response) => {
   console.log(request.body);
+  await new sendEmail(request.body).sendAppointmentRequest();
 });
 
 exports.renderAppLoggedIn = catchAsync(async (request, response) => {

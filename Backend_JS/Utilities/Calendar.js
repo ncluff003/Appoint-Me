@@ -104,6 +104,22 @@ class Calendar {
     const calculatedPercent = (100 * percentage).toFixed(0);
     return `${calculatedPercent}%`;
   }
+
+  getDaySuffix(date) {
+    if (`${date}`[`${date}`.length - 1] === 1) {
+      return `st`;
+    } else if (`${date}`[`${date}`.length - 1] === 2) {
+      return `nd`;
+    } else if (`${date}`[`${date}`.length - 1] === 3) {
+      return `rd`;
+    } else {
+      return `th`;
+    }
+  }
+
+  getLongDate(date) {
+    return `${this.days[new Date(date).getDay()]}, the ${new Date(date).getDate()}${this.getDaySuffix(date)} of ${this.months[new Date(date).getMonth()]} ${new Date(date).getFullYear()}`;
+  }
 }
 
 const myCalendar = new Calendar(Date.now());
