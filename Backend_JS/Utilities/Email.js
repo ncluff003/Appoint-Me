@@ -35,6 +35,9 @@ module.exports = class sendEmail {
     this.lastName = user.lastname;
     this.myFirstName = `Nathan`;
     this.myLastName = `Cluff`;
+    this.myEmail = process.env.NAMECHEAP_EMAIL;
+    this.myPhoneNumber = `(385) 455-0345`;
+    this.myCompany = user.myCompany;
     this.from = `Nathan Cluff <${process.env.NAMECHEAP_EMAIL}>`;
     this.startTime = user.startTime;
     this.endTime = user.endTime;
@@ -43,7 +46,9 @@ module.exports = class sendEmail {
     this.communicationPreference = user.communicationPreference;
     this.date = user.date;
     this.acceptURL = `http://127.0.0.1:3434/App/Appointments`;
-    this.declineURL = `http://127.0.0.1:3434/App`;
+    this.declineURL = `http://127.0.0.1:3434/App/Appointments/Declined`;
+    this.reScheduleURL = `http://127.0.0.1:3434/App/Appointments/Re-Schedule`;
+    this.cancelURL = `http://127.0.0.1:3434/App/Appointments/Cancel`;
   }
   // Create Transport
   makeTransport() {
@@ -78,6 +83,9 @@ module.exports = class sendEmail {
       lastname: this.lastName,
       myFirstName: this.myFirstName,
       myLastName: this.myLastName,
+      myEmail: this.myEmail,
+      myPhoneNumber: this.myPhoneNumber,
+      myCompany: this.myCompany,
       subject: subject,
       date: this.date,
       startTime: this.startTime,
@@ -97,6 +105,60 @@ module.exports = class sendEmail {
       longDate: Calendar.getLongDate(this.date),
       urlOne: this.acceptURL,
       urlTwo: this.declineURL,
+      urlThree: this.cancelURL,
+    });
+
+    const mailOptions = {
+      from: this.from,
+      to: this.from,
+      subject: subject,
+      html: html,
+      text: htmlToText.fromString(html),
+      attachments: [
+        {
+          filename: 'Appoint-Me-Logo.jpg',
+          contentType: 'image/jpeg',
+          path: __dirname + `/../../Public/Appoint-Me-Logo.png`,
+          cid: 'company-logo',
+        },
+      ],
+    };
+
+    await this.makeTransport().sendMail(mailOptions);
+  }
+
+  async _sendToClient(template, subject) {
+    const html = pug.renderFile(`${__dirname}/../Views/Emails/${template}.pug`, {
+      // * EVENTUALLY, THE FROM EMAIL WILL BE MADE INTO A BUSINESS OR ADMIN ONE RATHER THAN MY PERSONAL ONE.
+      from: this.to,
+      to: this.from,
+      firstname: this.firstName,
+      lastname: this.lastName,
+      myFirstName: this.myFirstName,
+      myLastName: this.myLastName,
+      myEmail: this.myEmail,
+      myPhoneNumber: this.myPhoneNumber,
+      myCompany: this.myCompany,
+      subject: subject,
+      date: this.date,
+      startTime: this.startTime,
+      endTime: this.endTime,
+      phoneNumber: this.phoneNumber,
+      email: this.email,
+      communicationPreference: this.communicationPreference,
+
+      greeting: Calendar.getGreeting(),
+      hour: Calendar.getHour(),
+      minutes: Calendar.getMinutes(),
+      timeOfDay: Calendar.getTimeOfDay(),
+      day: Calendar.getDay(),
+      weekday: Calendar.getWeekday(),
+      month: Calendar.getMonth(),
+      year: Calendar.getYear(),
+      longDate: Calendar.getLongDate(this.date),
+      urlOne: this.acceptURL,
+      urlTwo: this.declineURL,
+      urlThree: this.cancelURL,
     });
 
     const mailOptions = {
@@ -124,5 +186,13 @@ module.exports = class sendEmail {
   // * Working on the details still of this email.
   async sendAppointmentRequest() {
     await this._send(`appointment-request`, `Meeting Request`);
+  }
+
+  async sendConfirmation() {
+    await this._sendToClient(`appointment-confirmation`, `Appointment Confirmation`);
+  }
+
+  async sendDeclinedAppointment() {
+    await this._sendToClient(`appointment-denied`, `Appointment Declined`);
   }
 };

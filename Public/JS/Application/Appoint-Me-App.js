@@ -101,6 +101,8 @@ const fillDateModal = (modal, dateText) => {
     dateText.dataset.date = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toISO();
     dateText.textContent = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(DateTime.DATE_HUGE);
     Utility.replaceClassName(modal, `open`, `closed`);
+
+    // * From here, the appointments that are on the selected day would need to be found and rendered from right here.
   });
 };
 
@@ -212,10 +214,12 @@ export const buildApp = async (app) => {
   });
 
   fillDay(calendar, app.dataset.intervals, data, utility);
-  createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
+  createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, data, utility);
 
   watchForAppointments(calendar, data, utility);
 
   fillDateModal(dateModal, date);
   buildSchedule(calendar, app.dataset.schedule, data, utility);
+
+  // * From the get go, I would need to be able to get the appointments and render them using a function declared here.
 };

@@ -4993,7 +4993,7 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   });
 };
 
-var createIntervals = function createIntervals(hours, interval, modal, utility) {
+var createIntervals = function createIntervals(hours, interval, modal, data, utility) {
   if (interval === "1-hour") {
     hours.forEach(function (hour, i) {
       var numberOfIntervals = 1,
@@ -5137,6 +5137,7 @@ var createIntervals = function createIntervals(hours, interval, modal, utility) 
         communicationPreference = child.textContent;
       }
     });
+    console.log(data.company);
     (0,_Schedule__WEBPACK_IMPORTED_MODULE_4__.submitAppointment)({
       date: date.dataset.date,
       startTime: "".concat(hourOne, ":").concat(minutesOne, " ").concat(timeOfDayOne.textContent),
@@ -5145,7 +5146,8 @@ var createIntervals = function createIntervals(hours, interval, modal, utility) 
       lastname: lastname,
       email: email,
       phoneNumber: phone,
-      communicationPreference: communicationPreference
+      communicationPreference: communicationPreference,
+      myCompany: data.company
     });
   });
 };
@@ -5654,7 +5656,7 @@ var fillDateModal = function fillDateModal(modal, dateText) {
     if (selectedDate < luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.now()) return;
     dateText.dataset.date = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toISO();
     dateText.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
-    _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(modal, "open", "closed");
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(modal, "open", "closed"); // * From here, the appointments that are on the selected day would need to be found and rendered from right here.
   });
 };
 
@@ -5779,10 +5781,10 @@ var buildApp = /*#__PURE__*/function () {
               });
             });
             (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.fillDay)(calendar, app.dataset.intervals, data, utility);
-            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, utility);
+            (0,_Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_5__.createIntervals)(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, data, utility);
             (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.watchForAppointments)(calendar, data, utility);
             fillDateModal(dateModal, date);
-            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, data, utility);
+            (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_6__.buildSchedule)(calendar, app.dataset.schedule, data, utility); // * From the get go, I would need to be able to get the appointments and render them using a function declared here.
 
           case 67:
           case "end":

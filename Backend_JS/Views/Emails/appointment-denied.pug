@@ -1,0 +1,11 @@
+extends baseEmail
+
+block content
+  table(style="position: relative; display: block; max-width: 600px; width: 600px; margin: 0 auto; padding: 0; border: 3px groove #BBBBBB77; border-top: none; border-bottom: none; background-color: #CCCCCC33; color: #333333;") 
+    tbody
+      tr.table-row
+        td.table-data(style="position: relative; display: block; width: 89%; margin: 0 auto;")  
+          blockquote.salutations(style="position: relative; border: none; margin: 0 auto 30px; text-indent: 20px; font-size: 16px; color: #333333;")= `${greeting} ${firstname} ${lastname},`
+      tr.table-row 
+        td.table-data(style="position: relative; display: block; width: 87%; margin: 0 auto;") 
+          blockquote.salutations(style="position: relative; border: none; text-indent: 20px; font-size: 16px; color: #333333;") Hello, this is #{myFirstName} #{myLastName}.  I greatly appreciate the fact that you wanted to contact, meet with, and hopefully work with #{myCompany}!  Whatever the circumstances were that caused this appointment to be declined, I would greatly appreciate if you were to try again about 1-2 weeks later.  I am sorry that this is the case, but again, I appreciate your time and desire to contact, meet with, and hopefully work with us!

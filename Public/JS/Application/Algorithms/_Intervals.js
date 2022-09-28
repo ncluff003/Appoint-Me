@@ -261,7 +261,7 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   });
 };
 
-export const createIntervals = (hours, interval, modal, utility) => {
+export const createIntervals = (hours, interval, modal, data, utility) => {
   if (interval === `1-hour`) {
     hours.forEach((hour, i) => {
       let numberOfIntervals = 1,
@@ -400,6 +400,7 @@ export const createIntervals = (hours, interval, modal, utility) => {
       }
     });
 
+    console.log(data.company);
     submitAppointment({
       date: date.dataset.date,
       startTime: `${hourOne}:${minutesOne} ${timeOfDayOne.textContent}`,
@@ -409,6 +410,7 @@ export const createIntervals = (hours, interval, modal, utility) => {
       email: email,
       phoneNumber: phone,
       communicationPreference: communicationPreference,
+      myCompany: data.company,
     });
   });
 };

@@ -112,6 +112,8 @@ exports.scheduleAppointment = catchAsync(async (request, response) => {
   freeLancerInfo.appointments.push(appointment);
   fs.writeFileSync(`${__dirname}/../Data/appointments.json`, JSON.stringify(freeLancerInfo));
 
+  await new sendEmail(details).sendConfirmation();
+
   response.status(200).json({
     status: `Success`,
     data: {
@@ -119,6 +121,11 @@ exports.scheduleAppointment = catchAsync(async (request, response) => {
       details: details,
     },
   });
+});
+
+exports.declineAppointment = catchAsync(async (request, response) => {
+  console.log(request.params);
+  await new sendEmail(request.params).sendDeclinedAppointment();
 });
 
 exports.renderAppLoggedIn = catchAsync(async (request, response) => {
