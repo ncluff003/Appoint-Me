@@ -1062,3 +1062,111 @@
     }
   }
 }
+
+.appointment-declined-container {
+  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
+}
+
+.blue-and-white {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+  .form {
+    &--declined {
+      &__section {
+        &__label {
+          font-size: 3rem;
+          color: $colorOffWhite;
+        }
+        &__input {
+          font-size: 3rem;
+          color: $colorOffWhite;
+        }
+      }
+      &__message-input {
+        font-size: 2rem;
+        color: $primaryColor;
+      }
+      &__button {
+        font-size: 2rem;
+        color: rgba($colorOffWhite, 0.8);
+        &:hover {
+          color: $primaryColor;
+        }
+      }
+    }
+  }
+}
+.green-and-white {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+}
+.gold-and-white {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+}
+.blue-and-black {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+}
+.green-and-black {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+}
+.gold-and-black {
+  .appointment-declined-container {
+    &__header {
+      font-size: 5rem;
+      font-weight: bold;
+      color: $colorOffWhite;
+    }
+    &__heading {
+      font-size: 2rem;
+      color: $colorOffWhite;
+    }
+  }
+}

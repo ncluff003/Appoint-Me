@@ -1,0 +1,26 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.appointment-declined-container {
+  @include SizeAndPositioning(relative, 75%, 35%, flex, column, nowrap, space-evenly, center, 0, 0, 0);
+  border-radius: 2.5rem;
+  padding: 3rem;
+  &__header {
+    @include SizeAndPositioning(relative, 20%, 100%, flex, row, nowrap, center, center, 0, 0, 0);
+  }
+  &__heading {
+    @include SizeAndPositioning(relative, 20%, 100%, flex, row, wrap, space-evenly, center, 0, 0, 0);
+    &__date {
+      @include SizeAndPositioning(relative, max-content, 50%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+    }
+    &__time {
+      @include SizeAndPositioning(relative, max-content, 50%, flex, row, nowrap, flex-end, center, 0, 0, 0);
+    }
+    &__to {
+      @include SizeAndPositioning(relative, max-content, 50%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+    }
+    &__from {
+      @include SizeAndPositioning(relative, max-content, 50%, flex, row, nowrap, flex-end, center, 0, 0, 0);
+    }
+  }
+}

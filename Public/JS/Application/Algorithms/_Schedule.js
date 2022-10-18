@@ -20,15 +20,15 @@ export const submitAppointment = async (details) => {
 };
 
 export const watchForAppointments = (app, data, utility) => {
+  // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
   const timePickerModal = document.querySelector('.modal--select-time');
   const hours = document.querySelectorAll('.hour');
   [...hours].forEach((hour, i) => {
     let currentHour = hour;
     hour.addEventListener(`click`, (e) => {
       e.preventDefault();
-      Utility.replaceClassName(timePickerModal, `closed`, `open`);
       const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
-      console.log(date, date.dataset.date, date.dataset);
+      Utility.replaceClassName(timePickerModal, `closed`, `open`);
       const modalDateHeader = document.querySelector('.modal--select-time__header');
       modalDateHeader.textContent = DateTime.fromISO(date.dataset.date).toLocaleString(DateTime.DATE_HUGE);
       modalDateHeader.dataset.date = date.dataset.date;
@@ -36,6 +36,8 @@ export const watchForAppointments = (app, data, utility) => {
       let splitMinutes = splitHour[1].split(' ');
       let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
       let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+
+      hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
       [...hourSelectOne.childNodes].forEach((child) => {
         if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {
           child.disabled = true;
@@ -71,9 +73,6 @@ export const watchForAppointments = (app, data, utility) => {
 
       let beginningHour = 0;
       let endHour = 4;
-
-      // * Getting the selected schedule info.
-      console.log(data);
       let scheduleEnd = data.schedule.split('-')[1];
       let timeOfDay, time;
       if (`${scheduleEnd}`.length === 3) {
@@ -103,6 +102,8 @@ export const watchForAppointments = (app, data, utility) => {
       let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
       if (splitMinutes[1] === `PM`) {
         timeOfDayOne.textContent = `PM`;
+      } else {
+        timeOfDayOne.textContent = `AM`;
       }
       let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
 
@@ -112,6 +113,80 @@ export const watchForAppointments = (app, data, utility) => {
           timeOfDayTwo.textContent = `PM`;
         } else {
           timeOfDayTwo.textContent = `AM`;
+        }
+      });
+
+      // GETTING THE PREVIOUSLY ACCEPTED APPOINTMENTS TIME'S BLACKED OUT FOR POTENTIAL CLIENTS SO THEY COULD NOT ACCIDENTALLY OVERLAP ONTO PREVIOUS APPOINTMENTS.
+
+      const minuteSelects = document.querySelectorAll('.form__select--minute');
+      let firstMinute = minuteSelects[0];
+      let secondMinute = minuteSelects[1];
+      const appointments = data.appointments;
+      let nearbyAppointments = appointments.filter((time, i) => {
+        console.log(Number(DateTime.fromISO(time.start).hour), Number(DateTime.fromISO(time.end).hour), Number(currentHour.dataset.value));
+        return Number(DateTime.fromISO(time.start).hour) === Number(currentHour.dataset.value) || Number(DateTime.fromISO(time.end).hour) === Number(currentHour.dataset.value);
+      });
+      console.log(nearbyAppointments);
+      appointments.forEach((time, i) => {
+        const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 15 });
+        if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+          console.log(time);
+          [...firstMinute.childNodes].forEach((minute, i) => {
+            Utility.removeClasses(minute, [`blacked-out`]);
+            minute.disabled = ``;
+            if (
+              DateTime.local(
+                DateTime.fromISO(date.dataset.date).year,
+                DateTime.fromISO(date.dataset.date).month,
+                DateTime.fromISO(date.dataset.date).day,
+                Number(currentHour.dataset.value),
+                Number(minute.textContent),
+                0
+              ) >=
+                DateTime.local(
+                  DateTime.fromISO(time.start).year,
+                  DateTime.fromISO(time.start).month,
+                  DateTime.fromISO(time.start).day,
+                  DateTime.fromISO(time.start).hour,
+                  DateTime.fromISO(time.start).minute,
+                  DateTime.fromISO(time.start).millisecond
+                ).minus({ minutes: 15 }) &&
+              DateTime.local(
+                DateTime.fromISO(date.dataset.date).year,
+                DateTime.fromISO(date.dataset.date).month,
+                DateTime.fromISO(date.dataset.date).day,
+                Number(currentHour.dataset.value),
+                Number(minute.textContent),
+                0
+              ) <=
+                DateTime.local(
+                  DateTime.fromISO(time.end).year,
+                  DateTime.fromISO(time.end).month,
+                  DateTime.fromISO(time.end).day,
+                  DateTime.fromISO(time.end).hour,
+                  DateTime.fromISO(time.end).minute,
+                  DateTime.fromISO(time.end).millisecond
+                ).plus({ minutes: 15 })
+            ) {
+              Utility.addClasses(minute, [`blacked-out`]);
+              minute.disabled = `true`;
+            } else {
+              minute.disabled = '';
+            }
+          });
+
+          // NEXT IS TO MAKE IT SO POTENTIAL CLIENTS WILL NOT OVERLAP APPOINTMENTS BEFORE THEY TRY TO REQUEST A TIME.
+
+          // * THIS CONDITION IS FOR CHECKING IF THE DAY IS RIGHT FOR THE CURRENT APPOINTMENTS.
+          // From here, since the first hour is chosen, the appointments need to be looped through to check if ANY of them are on the SAME day AND between the self-same hour to 3 hours from then.  If there is appointments, then ONLY all the way to the upcoming appointment should be the ONLY available times.  I might even add a buffer for the appointments themselves, just in case.  Maybe 10-15 minutes.
+          if (Number(currentHour.dataset.value) <= Number(DateTime.fromISO(time.start).hour) + 3) {
+            // [...secondMinute.childNodes].forEach((minute, i) => {
+            //   Utility.removeClasses(minute, [`blacked-out`]);
+            //   minute.disabled = '';
+            // });
+            console.log(`Appointment Close By`, Number(DateTime.fromISO(time.start).hour) - Number(currentHour.dataset.value));
+          }
         }
       });
     });

@@ -93,6 +93,12 @@
               }
             }
           }
+          .appointment {
+            background-image: linear-gradient(to right, transparent 10%, $primaryColorDark 100%);
+            &--spacer {
+              background-image: linear-gradient(to right, transparent 10%, $colorDarkerGrey 100%);
+            }
+          }
         }
         .modal {
           &--select-date,
@@ -1112,4 +1118,61 @@
       }
     }
   }
+}
+
+.blue-and-white {
+  background-color: $primaryColor;
+  border: 0.5rem groove $primaryColorDark;
+  .form {
+    &--declined {
+      &__section {
+        &__input {
+          background-color: transparent;
+          border: none;
+          border-bottom: 0.3rem groove rgba($colorOffWhite, 0.8);
+          &:focus {
+            border-color: $colorOffWhite;
+          }
+        }
+      }
+
+      &__message-input {
+        background-color: rgba($colorOffWhite, 0.8);
+        border: 0.3rem ridge rgba($colorOffWhite, 0.8);
+        &:focus {
+          border-style: groove;
+          border-color: $colorOffWhite;
+          background-color: $colorOffWhite;
+        }
+      }
+
+      &__button {
+        border: 0.3rem solid rgba($colorOffWhite, 0.8);
+        &:hover {
+          border-color: $colorOffWhite;
+          background-color: $colorOffWhite;
+        }
+      }
+    }
+  }
+}
+.green-and-white {
+  background-color: $secondaryColorDark;
+  border: 0.5rem groove $secondaryColorDark;
+}
+.gold-and-white {
+  background-color: $tertiaryColor;
+  border: 0.5rem groove $tertiaryColor;
+}
+.blue-and-black {
+  background-color: $primaryColor;
+  border: 0.5rem groove $primaryColorDark;
+}
+.green-and-black {
+  background-color: $secondaryColorDark;
+  border: 0.5rem groove $secondaryColorDark;
+}
+.gold-and-black {
+  background-color: $tertiaryColor;
+  border: 0.5rem groove $tertiaryColor;
 }

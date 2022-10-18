@@ -1,0 +1,10 @@
+@use '../../../Public/SCSS/Utilities/Mixins' as *;
+@use '../../../Public/SCSS/Utilities/Variables' as *;
+
+.appointment {
+  @include SizingItem(absolute, max-content, 100%);
+  right: 0;
+  &--spacer {
+    @extend .appointment;
+  }
+}

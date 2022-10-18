@@ -1,0 +1,18 @@
+extends base
+  
+block App-Content 
+  section.master-grid-container.r__master-grid-container
+    section.app-landing-container--declined-appointment.r__app-landing-container--declined-appointment.column_1-24.row_1-18
+      section.appointment-declined-container.r__appointment-declined-container(data-company=`${data.myCompany}` data-email=`${data.email}` data-start=`${data.start}` data-end=`${data.end}`)
+        h2.appointment-declined-container__header.r__appointment-declined-container__header= `Appointment Declined`
+        header.appointment-declined-container__heading.r__appointment-declined-container__heading 
+          h3.appointment-declined-container__heading__date.r__appointment-declined-container__date= `${data.date}`
+          h3.appointment-declined-container__heading__time.r__appointment-declined-container__time= `${data.startTime} to ${data.endTime}`
+          h3.appointment-declined-container__heading__to.r__appointment-declined-container__to= `To: ${data.firstname} ${data.lastname}`
+          h3.appointment-declined-container__heading__from.r__appointment-declined-container__from= `From: ${data.myFirstName} ${data.myLastName}`
+        form.form--declined.r__form--declined
+          section.form--declined__section.r__form--declined__section
+            label.form--declined__section__label.r__form--declined__section__label= `Subject`
+            input.form--declined__section__input.r__form--declined__section__input(type="text" placeholder=`Email Subject Here`)
+          textarea.form--declined__message-input.r__form--declined__message-input(placeholder=`Reason For Declined Appointment Here...`)
+          button.form--declined__button.r__form--declined__button Send Message

@@ -28,7 +28,6 @@ const sendEmail = require(`./../Utilities/Email`);
 ////////////////////////////////////////////
 //  My Modules
 const Calendar = require(`./../Utilities/Calendar`);
-const response = require('http-browserify/lib/response');
 
 ////////////////////////////////////////////
 //  MY FUNCTIONS
@@ -93,6 +92,8 @@ exports.scheduleAppointment = catchAsync(async (request, response) => {
   let appointment = {
     index: freeLancerInfo.appointments.length,
     date: details.date,
+    start: details.start,
+    end: details.end,
     startTime: details.startTime,
     endTime: details.endTime,
     attendees: [],
@@ -123,9 +124,17 @@ exports.scheduleAppointment = catchAsync(async (request, response) => {
   });
 });
 
+exports.sendDeclinedAppointment = catchAsync(async (request, response) => {
+  console.log(request.params);
+});
+
 exports.declineAppointment = catchAsync(async (request, response) => {
   console.log(request.params);
-  await new sendEmail(request.params).sendDeclinedAppointment();
+  // await new sendEmail(request.params).sendDeclinedAppointment();
+  response.status(200).render(`_declined-Appointment`, {
+    title: `Appointment Declined Message`,
+    data: request.params,
+  });
 });
 
 exports.renderAppLoggedIn = catchAsync(async (request, response) => {

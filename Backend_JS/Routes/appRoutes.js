@@ -28,8 +28,10 @@ const userRouter = require('./userRoutes');
 router.route(`/`).get(appController.renderApp).post(authController.login);
 router.route(`/Info`).get(appController.getInfo);
 router.route(`/Appointment`).post(appController.askForAppointment);
-router.route(`/Appointments/:date/:startTime/:endTime/:email/:phoneNumber/:communicationPreference/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`).get(appController.scheduleAppointment);
-router.route(`/Appointments/Declined/:date/:startTime/:endTime/:email/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`).get(appController.declineAppointment);
+router
+  .route(`/Appointments/:date/:startTime/:endTime/:start/:end/:email/:phoneNumber/:communicationPreference/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`)
+  .get(appController.scheduleAppointment);
+router.route(`/Appointments/Declined/:date/:startTime/:endTime/:start/:end/:email/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`).get(appController.declineAppointment);
 router.route('/User').post(userController.searchForUser);
 router.use(`/Users`, userRouter);
 router.use('/API', APIRouter);

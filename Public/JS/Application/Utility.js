@@ -205,7 +205,7 @@ export const getLocalStorageLocalInformation = () => {
   return { earth, api };
 };
 
-export const build = (moment, translate) => {
+export const build = () => {
   let minuteStart = 0;
   let numberOfMinutes = 60;
   let minutes = [];

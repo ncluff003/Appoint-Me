@@ -368,10 +368,14 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
 
   submitAppointmentButton.addEventListener(`click`, (e) => {
     e.preventDefault();
+    let humanStart = start.value,
+      humanEnd = end.value;
+
     if (start.value > 12) {
-      start.value -= 12;
-    } else if (end.value > 12) {
-      end.value -= 12;
+      humanStart = start.value -= 12;
+    }
+    if (end.value > 12) {
+      humanEnd = end.value -= 12;
     }
 
     // * If startMinute is one digit it needs a padded zero.
@@ -400,18 +404,41 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
       }
     });
 
-    console.log(data.company);
-    submitAppointment({
+    let dateISO = date.dataset.date;
+    let year = DateTime.fromISO(dateISO).year;
+    let month = DateTime.fromISO(dateISO).month;
+    let day = DateTime.fromISO(dateISO).day;
+
+    timeOfDayOne.textContent === `PM` ? (hourOne = Number(hourOne) + 12) : (hourOne = hourOne);
+    timeOfDayTwo.textContent === `PM` ? (hourTwo = Number(hourTwo) + 12) : (hourTwo = hourTwo);
+
+    let appointmentObject = {
       date: date.dataset.date,
-      startTime: `${hourOne}:${minutesOne} ${timeOfDayOne.textContent}`,
-      endTime: `${hourTwo}:${minutesTwo} ${timeOfDayTwo.textContent}`,
+      humanStartTime: `${humanStart}:${minutesOne} ${timeOfDayOne.textContent}`,
+      humanEndTime: `${humanEnd}:${minutesTwo} ${timeOfDayTwo.textContent}`,
+      startTime: DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO(),
+      endTime: DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toISO(),
       firstname: firstname,
       lastname: lastname,
       email: email,
       phoneNumber: phone,
       communicationPreference: communicationPreference,
       myCompany: data.company,
-    });
+    };
+
+    console.log(
+      hourOne,
+      startMinute.value,
+      DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0),
+      DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO()
+    );
+    console.log(appointmentObject, DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO());
+    console.log(
+      data.company,
+      DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toBSON(),
+      DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toBSON()
+    );
+    submitAppointment(appointmentObject);
   });
 };
 
@@ -421,6 +448,7 @@ export const fillDay = (container, intervals, data, utility) => {
   let startHour = 0;
   while (startHour < hours) {
     const hour = document.createElement('section');
+    hour.dataset.value = startHour;
     console.log(hour);
     Utility.addClasses(hour, [`hour`, `r__hour`]);
     Utility.insertElement('beforeend', container, hour);
@@ -443,5 +471,13 @@ export const fillDay = (container, intervals, data, utility) => {
     }
     Utility.insertElement(`beforeend`, hour, time);
     startHour++;
+  }
+
+  let dateHeading = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  if (data.appointments.length > 0) {
+    let forToday = data.appointments.filter((appointment) => {
+      return DateTime.fromISO(appointment.date).toLocaleString(DateTime.DATE_HUGE) === DateTime.fromISO(dateHeading.dataset.date).toLocaleString(DateTime.DATE_HUGE);
+    });
+    console.log(data, forToday);
   }
 };

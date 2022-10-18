@@ -756,6 +756,89 @@
   color: #ffd700;
 }
 
+.appointment-declined-container {
+  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
+}
+
+.blue-and-white .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.blue-and-white .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+.blue-and-white .form--declined__section__label {
+  font-size: 3rem;
+  color: #fafafa;
+}
+.blue-and-white .form--declined__section__input {
+  font-size: 3rem;
+  color: #fafafa;
+}
+.blue-and-white .form--declined__message-input {
+  font-size: 2rem;
+  color: #2a7fff;
+}
+.blue-and-white .form--declined__button {
+  font-size: 2rem;
+  color: rgba(250, 250, 250, 0.8);
+}
+.blue-and-white .form--declined__button:hover {
+  color: #2a7fff;
+}
+
+.green-and-white .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.green-and-white .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+
+.gold-and-white .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.gold-and-white .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+
+.blue-and-black .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.blue-and-black .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+
+.green-and-black .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.green-and-black .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+
+.gold-and-black .appointment-declined-container__header {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fafafa;
+}
+.gold-and-black .appointment-declined-container__heading {
+  font-size: 2rem;
+  color: #fafafa;
+}
+
 .gridTV {
   display: grid;
   height: 100vh;
@@ -37544,7 +37627,7 @@
   grid-row: 18/span 1;
 }
 
-.app-landing-container {
+.app-landing-container, .app-landing-container--declined-appointment {
   position: relative;
   height: 100%;
   width: 100%;
@@ -37555,7 +37638,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar {
+.app-landing-container .calendar, .app-landing-container--declined-appointment .calendar {
   position: relative;
   height: 100%;
   width: 100%;
@@ -37566,7 +37649,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar .appoint-me-header {
+.app-landing-container .calendar .appoint-me-header, .app-landing-container--declined-appointment .calendar .appoint-me-header {
   position: relative;
   height: 12.5%;
   width: 100%;
@@ -37578,7 +37661,7 @@
   transform: rotate(0) translate(0, 0);
   padding: 2rem;
 }
-.app-landing-container .calendar .appoint-me-header .icon {
+.app-landing-container .calendar .appoint-me-header .icon, .app-landing-container--declined-appointment .calendar .appoint-me-header .icon {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -37586,14 +37669,14 @@
   stroke: currentColor;
   fill: currentColor;
 }
-.app-landing-container .calendar .appoint-me-header .icon-appoint-me-logo {
+.app-landing-container .calendar .appoint-me-header .icon-appoint-me-logo, .app-landing-container--declined-appointment .calendar .appoint-me-header .icon-appoint-me-logo {
   width: 1.251953125em;
   margin-right: 1rem;
 }
-.app-landing-container .calendar .appoint-me-header__title {
+.app-landing-container .calendar .appoint-me-header__title, .app-landing-container--declined-appointment .calendar .appoint-me-header__title {
   transform: translate(0, 0.5rem);
 }
-.app-landing-container .calendar .appoint-me-container {
+.app-landing-container .calendar .appoint-me-container, .app-landing-container--declined-appointment .calendar .appoint-me-container {
   position: relative;
   height: 87.5%;
   width: 100%;
@@ -37605,7 +37688,7 @@
   transform: rotate(0) translate(0, 0);
   padding: 2rem;
 }
-.app-landing-container .calendar .appoint-me-container__heading {
+.app-landing-container .calendar .appoint-me-container__heading, .app-landing-container--declined-appointment .calendar .appoint-me-container__heading {
   position: relative;
   height: 10%;
   width: 100%;
@@ -37616,7 +37699,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar .appoint-me-container__sub-container {
+.app-landing-container .calendar .appoint-me-container__sub-container, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container {
   position: relative;
   height: 90%;
   width: 100%;
@@ -37628,7 +37711,7 @@
   transform: rotate(0) translate(0, 0);
   border-radius: 0.5rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__heading {
+.app-landing-container .calendar .appoint-me-container__sub-container__heading, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__heading {
   position: relative;
   height: 12.5%;
   width: 100%;
@@ -37640,7 +37723,7 @@
   transform: rotate(0) translate(0, 0);
   padding: 0.5rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__heading__date {
+.app-landing-container .calendar .appoint-me-container__sub-container__heading__date, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__heading__date {
   position: relative;
   height: 100%;
   width: 60%;
@@ -37652,7 +37735,7 @@
   transform: rotate(0) translate(0, 0);
   min-width: 60%;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__heading .select-date-button {
+.app-landing-container .calendar .appoint-me-container__sub-container__heading .select-date-button, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__heading .select-date-button {
   position: relative;
   height: 60%;
   width: 40%;
@@ -37666,11 +37749,11 @@
   border: none;
   border-radius: 5rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__heading .select-date-button:hover {
+.app-landing-container .calendar .appoint-me-container__sub-container__heading .select-date-button:hover, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__heading .select-date-button:hover {
   cursor: pointer;
   transition: background-color 0.5s, color 0.5s;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar {
   position: relative;
   height: 87.5%;
   width: 100%;
@@ -37682,7 +37765,7 @@
   transform: rotate(0) translate(0, 0);
   overflow-y: auto;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour {
   position: relative;
   height: 8rem;
   width: 100%;
@@ -37694,7 +37777,7 @@
   transform: rotate(0) translate(0, 0);
   min-height: 8rem;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour__time {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour__time, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour__time {
   position: absolute;
   height: max-content;
   width: max-content;
@@ -37708,7 +37791,7 @@
   left: 1rem;
   z-index: 5;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .one-hour {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .one-hour, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour .one-hour {
   position: relative;
   height: 100%;
   width: 100%;
@@ -37719,7 +37802,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .thirty-minutes {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .thirty-minutes, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour .thirty-minutes {
   position: relative;
   height: 50%;
   width: 100%;
@@ -37730,7 +37813,7 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .fifteen-minutes {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour .fifteen-minutes, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour .fifteen-minutes {
   position: relative;
   height: 25%;
   width: 100%;
@@ -37741,52 +37824,135 @@
   align-items: center;
   transform: rotate(0) translate(0, 0);
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour:hover {
   cursor: pointer;
   transition: background-color 0.25s;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__time {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__time, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__time {
   transition: color 0.5s, background-color 0.125s;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__part {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__part, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__part {
   transition: border 0.25s;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out {
   background-color: #555555;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__time {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__time, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__time {
   background-color: transparent;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1), .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) {
   background-color: #555555;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) .hour__time {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) .hour__time, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:nth-of-type(2n + 1) .hour__time {
   background-color: transparent;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.fifteen-minutes,
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.fifteen-minutes, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.fifteen-minutes,
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.thirty-minutes,
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour {
+.app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.thirty-minutes,
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour,
+.app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
   border: none;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover {
   cursor: default;
   background-color: #555555;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__time {
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__time, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__time {
   background-color: transparent;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.fifteen-minutes,
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.fifteen-minutes, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.fifteen-minutes,
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.thirty-minutes,
-.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour {
+.app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.thirty-minutes,
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour,
+.app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container__calendar .blacked-out:hover .hour__part.one-hour {
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
   border: none;
 }
-.app-landing-container .calendar .appoint-me-container__sub-container .modal-close-icon:hover {
+.app-landing-container .calendar .appoint-me-container__sub-container .modal-close-icon:hover, .app-landing-container--declined-appointment .calendar .appoint-me-container__sub-container .modal-close-icon:hover {
   cursor: pointer;
   transition: color 0.5s;
+}
+.appointment-declined-container {
+  position: relative;
+  height: 75%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  border-radius: 2.5rem;
+  padding: 3rem;
+}
+.appointment-declined-container__header {
+  position: relative;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.appointment-declined-container__heading {
+  position: relative;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.appointment-declined-container__heading__date {
+  position: relative;
+  height: max-content;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.appointment-declined-container__heading__time {
+  position: relative;
+  height: max-content;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.appointment-declined-container__heading__to {
+  position: relative;
+  height: max-content;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.appointment-declined-container__heading__from {
+  position: relative;
+  height: max-content;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
 }
 
 .application-display {
@@ -42724,6 +42890,60 @@
   background-color: #333333;
 }
 
+.blue-and-white {
+  background-color: #2a7fff;
+  border: 0.5rem groove #0062f6;
+}
+.blue-and-white .form--declined__section__input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 0.3rem groove rgba(250, 250, 250, 0.8);
+}
+.blue-and-white .form--declined__section__input:focus {
+  border-color: #fafafa;
+}
+.blue-and-white .form--declined__message-input {
+  background-color: rgba(250, 250, 250, 0.8);
+  border: 0.3rem ridge rgba(250, 250, 250, 0.8);
+}
+.blue-and-white .form--declined__message-input:focus {
+  border-style: groove;
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+.blue-and-white .form--declined__button {
+  border: 0.3rem solid rgba(250, 250, 250, 0.8);
+}
+.blue-and-white .form--declined__button:hover {
+  border-color: #fafafa;
+  background-color: #fafafa;
+}
+
+.green-and-white {
+  background-color: #2cae1f;
+  border: 0.5rem groove #2cae1f;
+}
+
+.gold-and-white {
+  background-color: #ffd700;
+  border: 0.5rem groove #ffd700;
+}
+
+.blue-and-black {
+  background-color: #2a7fff;
+  border: 0.5rem groove #0062f6;
+}
+
+.green-and-black {
+  background-color: #2cae1f;
+  border: 0.5rem groove #2cae1f;
+}
+
+.gold-and-black {
+  background-color: #ffd700;
+  border: 0.5rem groove #ffd700;
+}
+
 .two-factor-form-container {
   position: absolute;
   height: 100vh;
@@ -42905,7 +43125,7 @@
   background-color: #f2f2f2;
 }
 
-.form, .form--appointment {
+.form, .form--declined, .form--appointment {
   position: relative;
   height: max-content;
   width: 100%;
@@ -42915,9 +43135,6 @@
   justify-content: flex-start;
   align-items: center;
   transform: rotate(0) translate(0, 0);
-}
-.form--appointment {
-  overflow-y: auto;
 }
 .form__section, .form__section--phone, .form__section--email, .form__section--names {
   position: relative;
@@ -43060,9 +43277,93 @@
 .form__select option.blacked-out, .form__select--hour option.blacked-out, .form__select--minute option.blacked-out {
   background-color: #555555;
 }
+.form--appointment {
+  overflow-y: auto;
+}
 .form--appointment .communication-preference-header {
   padding: 0 3rem;
   margin: 2rem 0 3rem;
+}
+.form--declined {
+  height: 40%;
+}
+.form--declined__section {
+  position: relative;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+.form--declined__section__label {
+  position: relative;
+  height: max-content;
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+}
+.form--declined__section__input {
+  position: relative;
+  height: max-content;
+  width: 77.5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  padding-left: 1rem;
+}
+.form--declined__section__input:focus {
+  outline: none;
+}
+.form--declined__message-input {
+  position: relative;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  transform: rotate(0) translate(0, 0);
+  resize: none;
+  padding: 0.5rem 0.75rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+}
+.form--declined__message-input:focus {
+  outline: none;
+}
+.form--declined__button {
+  position: relative;
+  height: 20%;
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  margin-top: 2rem;
+  border-radius: 0.9rem;
+}
+.form--declined__button:hover {
+  cursor: pointer;
+  transition: color 0.5s, background-color 0.5s, border 0.5s;
 }
 
 .switch {

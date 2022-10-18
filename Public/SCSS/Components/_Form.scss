@@ -3,10 +3,6 @@
 
 .form {
   @include SizeAndPositioning(relative, max-content, 100%, flex, column, nowrap, flex-start, center, 0, 0, 0);
-  &--appointment {
-    @extend .form;
-    overflow-y: auto;
-  }
 
   &__section {
     @include SizeAndPositioning(relative, 7rem, 100%, flex, row, nowrap, center, center, 0, 0, 0);
@@ -137,9 +133,56 @@
   }
 
   &--appointment {
+    @extend .form;
+    overflow-y: auto;
     .communication-preference-header {
       padding: 0 3rem;
       margin: 2rem 0 3rem;
+    }
+  }
+
+  &--declined {
+    @extend .form;
+    height: 40%;
+    &__section {
+      @include SizeAndPositioning(relative, 20%, 100%, flex, row, nowrap, space-around, center, 0, 0, 0);
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      &__label {
+        @include SizeAndPositioning(relative, max-content, 20%, flex, row, nowrap, center, center, 0, 0, 0);
+      }
+      &__input {
+        @include SizeAndPositioning(relative, max-content, 77.5%, flex, row, nowrap, flex-start, center, 0, 0, 0);
+        padding-left: 1rem;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    &__message-input {
+      @include SizeAndPositioning(relative, 60%, 100%, flex, row, nowrap, flex-start, flex-end, 0, 0, 0);
+      resize: none;
+      padding: 0.5rem 0.75rem;
+      background-color: transparent;
+      border: none;
+      border-radius: 0.5rem;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__button {
+      @include SizeAndPositioning(relative, 20%, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+      padding: 1rem;
+      background-color: transparent;
+      border: none;
+      margin-top: 2rem;
+      border-radius: 0.9rem;
+      &:hover {
+        cursor: pointer;
+        transition: color 0.5s, background-color 0.5s, border 0.5s;
+      }
     }
   }
 }

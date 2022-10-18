@@ -133,4 +133,7 @@
       }
     }
   }
+  &--declined-appointment {
+    @extend .app-landing-container;
+  }
 }

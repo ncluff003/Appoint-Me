@@ -1,11 +1,52 @@
 import axios from 'axios';
+import qs from 'qs';
 import * as Utility from './Utility';
 import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../Classes/Cache';
 import { fillDay, createIntervals } from './Algorithms/_Intervals';
 import { buildSchedule, watchForAppointments } from './Algorithms/_Schedule';
-import { DateTime, Info } from 'luxon';
+import { DateTime, Info, Duration } from 'luxon';
 
-const fillDateModal = (modal, dateText) => {
+export const adjustDeclinedAppointment = (data, container, utility) => {
+  console.log(data);
+  const date = document.querySelector('.appointment-declined-container__heading__date');
+  const requestedDate = date.textContent;
+  const currentDate = DateTime.now();
+  date.textContent = currentDate.toLocaleString(DateTime.DATE_HUGE);
+  const company = container.dataset.company;
+  const email = container.dataset.email;
+  const start = container.dataset.start;
+  const end = container.dataset.end;
+
+  const submitMessageButton = document.querySelector('.form--declined__button');
+  submitMessageButton.addEventListener(`click`, async (e) => {
+    e.preventDefault();
+    try {
+      console.log(company, email, start, end, requestedDate, currentDate);
+      const name = document.querySelector('.appointment-declined-container__heading__to').textContent.split(' ');
+      console.log(document.querySelector('.appointment-declined-container__heading__to').textContent);
+      const message = document.querySelector('.form--declined__message-input').value;
+      const inputs = document.querySelectorAll('.form--declined__section__input');
+      const subject = inputs[0].value;
+      const messageObject = {
+        firstname: name[1],
+        lastname: name[2],
+        email: email,
+        subject: subject,
+        message: message,
+      };
+      // `/App/Appointments/Declined/:date/:startTime/:endTime/:start/:end/:email/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`
+      const response = await axios({
+        method: `POST`,
+        url: `/App/Appointments/Declined/`,
+        data: qs.stringify(messageObject),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
+
+const fillDateModal = (modal, dateText, data) => {
   let months = Info.months('long');
   const header = document.createElement('header');
   Utility.addClasses(header, [`modal--select-date__header`, `r__modal--select-date__header`]);
@@ -97,16 +138,81 @@ const fillDateModal = (modal, dateText) => {
     dayInput.value === '' ? (dayInput.value = Number(dayInput.placeholder)) : (dayInput.value = Number(dayInput.value));
     yearInput.value === '' ? (yearInput.value = Number(yearInput.placeholder)) : (yearInput.value = Number(yearInput.value));
     let selectedDate = DateTime.local(Number(yearInput.value), Number(monthInput.value) + 1, Number(dayInput.value));
-    if (selectedDate < DateTime.now()) return;
+    if (DateTime.fromISO(selectedDate).day < DateTime.now().day) return;
     dateText.dataset.date = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toISO();
     dateText.textContent = DateTime.local(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleString(DateTime.DATE_HUGE);
     Utility.replaceClassName(modal, `open`, `closed`);
 
     // * From here, the appointments that are on the selected day would need to be found and rendered from right here.
+
+    const oldAppointments = document.querySelectorAll('.appointment');
+    [...oldAppointments].forEach((app) => app.remove());
+    console.log(`Appointments Removed`);
+
+    data.appointments.forEach((time, i) => {
+      console.log(DateTime.fromISO(dateText.dataset.date).day, DateTime.fromISO(time.date).day);
+      if (DateTime.fromISO(dateText.dataset.date).day === DateTime.fromISO(time.date).day) {
+        const day = document.querySelector('.appoint-me-container__sub-container__calendar');
+        const appointment = document.createElement(`section`);
+        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+        Utility.insertElement('beforeend', day, appointment);
+        appointment.dataset.start = time.start;
+        appointment.dataset.end = time.end;
+        const appointmentHeader = document.createElement('h3');
+        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+        appointmentHeader.textContent = `Appointment at ${time.startTime} to ${time.endTime}`;
+        Utility.insertElement('beforeend', appointment, appointmentHeader);
+
+        console.log(Number(DateTime.fromISO(time.start).hour));
+        const startHour = Number(DateTime.fromISO(time.start).hour);
+        const startMinute = Number(DateTime.fromISO(time.start).minute);
+        const startDivisor = startMinute / 60;
+
+        const endHour = Number(DateTime.fromISO(time.end).hour);
+        const endMinute = Number(DateTime.fromISO(time.end).minute);
+        const endDivisor = startMinute / 60;
+
+        let timeDifference, hourDifference, minuteDifference, timeOfDay, appointmentHeight;
+
+        minuteDifference = DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().minutes / 60;
+        hourDifference = DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().hours;
+        console.log(DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes'], { conversionAccuracy: 'longterm' }).toObject());
+        console.log(DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject());
+        console.log(DateTime.fromISO(time.start));
+        console.log(DateTime.fromISO(time.end), DateTime.fromISO(time.end).toFormat('a'));
+
+        // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+        if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(startHour + minuteDifference) * 8}rem`;
+
+          // CALCULATE HEIGHT
+          appointmentHeight = (hourDifference + minuteDifference) * 8;
+
+          // SET APPOINTMENT LENGTH
+          appointment.style.height = `${appointmentHeight}rem`;
+
+          // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(startHour + minuteDifference) * 8}rem`;
+
+          // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+          if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
+            // CALCULATE HEIGHT
+            appointmentHeight = (hourDifference + minuteDifference) * 8;
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
+          }
+        }
+      }
+    });
   });
 };
 
-const retrieveInfo = async () => {
+export const retrieveInfo = async () => {
   try {
     const response = await axios({
       method: `GET`,
@@ -117,6 +223,119 @@ const retrieveInfo = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const renderAppointments = (appointments, hours) => {
+  console.log(appointments);
+  const day = document.querySelector('.appoint-me-container__sub-container__calendar');
+  const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  appointments.forEach((time, i) => {
+    if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+      console.log(DateTime.fromISO(date.dataset.date).day);
+      const appointment = document.createElement(`section`);
+      Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+      Utility.insertElement('beforeend', day, appointment);
+      appointment.dataset.start = time.start;
+      appointment.dataset.end = time.end;
+      const appointmentHeader = document.createElement('h3');
+      Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+      appointmentHeader.textContent = `Appointment at ${time.startTime} to ${time.endTime}`;
+      Utility.insertElement('beforeend', appointment, appointmentHeader);
+
+      if (i > 0) {
+        console.log(
+          Math.abs(
+            DateTime.fromISO(appointments[i - 1].end)
+              .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
+              .toObject().minutes
+          )
+        );
+        let previousAppointment = appointments[i - 1];
+        let allDomAppointments = document.querySelectorAll('.appointment');
+        let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
+        if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+          const spacer = document.createElement('div');
+          Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+
+          const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+
+          const appointmentEndHour = convertedEndTime.hour;
+          const appointmentEndMinute = convertedEndTime.minute / 60;
+          const appointmentEndSecond = convertedEndTime.second / 3600;
+
+          Utility.insertElement('afterend', previousDomAppointment, spacer);
+          spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
+          spacer.style.height = `${
+            (Math.abs(
+              DateTime.fromISO(appointments[i - 1].end)
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                .toObject().minutes
+            ) /
+              60) *
+            8
+          }rem`;
+        }
+      }
+
+      /*
+        * HERE IS WHAT NEEDS TO HAPPEN
+        @ 1. Place start of hour where it is scheduled with the lentgth going as planned.
+        @ 2. Subtract 7 1/2 minutes from the start so it is moved back.
+        @ 3. Add 15 minutes so it goes to the length of having 7 1/2 minutes of a buffer on either end.
+
+
+        * THERE NEEDS TO BE ENOUGH SPACE TO PLACE AN APPOINTMENT.  PREFERRABLY 45 MINUTES IN BETWEEN APPOINTMENTS.
+      */
+
+      const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+      const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
+
+      const appointmentStartHour = convertedStartTime.hour;
+      const appointmentStartMinute = convertedStartTime.minute / 60;
+      const appointmentStartSecond = convertedStartTime.second / 3600;
+
+      const appointmentEndHour = convertedEndTime.hour;
+      const appointmentEndMinute = convertedEndTime.minute / 60;
+      const appointmentEndSecond = convertedEndTime.second / 3600;
+
+      console.log(convertedStartTime, convertedEndTime);
+
+      let hourDifference, minuteDifference, secondDifference, appointmentHeight;
+
+      hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
+      minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+      secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+      // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+      if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
+        // PLACE APPOINTMENT
+        appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+
+        // CALCULATE HEIGHT
+        appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+        console.log(appointmentHeight);
+
+        // SET APPOINTMENT LENGTH
+        appointment.style.height = `${appointmentHeight}rem`;
+
+        // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+        // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+      } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
+        console.log(minuteDifference);
+        // PLACE APPOINTMENT
+        appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+
+        // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+        if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
+          // CALCULATE HEIGHT
+          appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+          console.log(appointmentHeight);
+
+          // SET APPOINTMENT LENGTH
+          appointment.style.height = `${appointmentHeight}rem`;
+        }
+      }
+    }
+  });
 };
 
 export const buildApp = async (app) => {
@@ -218,8 +437,94 @@ export const buildApp = async (app) => {
 
   watchForAppointments(calendar, data, utility);
 
-  fillDateModal(dateModal, date);
+  fillDateModal(dateModal, date, data);
   buildSchedule(calendar, app.dataset.schedule, data, utility);
+
+  console.log(data, DateTime.fromISO(data.appointments[0].start).minute, DateTime.fromISO(data.appointments[0].end).minute);
+  const oldAppointments = document.querySelectorAll('.appointment');
+  [...oldAppointments].forEach((app) => app.remove());
+  console.log(`Appointments Removed`);
+
+  const appointments = data.appointments;
+  renderAppointments(appointments, document.querySelectorAll('.hour'));
+
+  const hourSelects = document.querySelectorAll('.form__select--hour');
+  const minuteSelects = document.querySelectorAll('.form__select--minute');
+  let firstHour = hourSelects[0];
+  let secondHour = hourSelects[1];
+  let firstMinute = minuteSelects[0];
+  let secondMinute = minuteSelects[1];
+  secondHour.addEventListener(`change`, (e) => {
+    e.preventDefault();
+    console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
+    appointments.forEach((time, i) => {
+      if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+        console.log(time);
+        [...secondMinute.childNodes].forEach((minute, i) => {
+          Utility.removeClasses(minute, [`blacked-out`]);
+          minute.disabled = ``;
+          if (
+            DateTime.local(
+              DateTime.fromISO(date.dataset.date).year,
+              DateTime.fromISO(date.dataset.date).month,
+              DateTime.fromISO(date.dataset.date).day,
+              Number(secondHour.selectedIndex),
+              Number(minute.textContent),
+              0
+            ) >=
+              DateTime.local(
+                DateTime.fromISO(time.start).year,
+                DateTime.fromISO(time.start).month,
+                DateTime.fromISO(time.start).day,
+                DateTime.fromISO(time.start).hour,
+                DateTime.fromISO(time.start).minute,
+                DateTime.fromISO(time.start).millisecond
+              ).minus({ minutes: 15 }) &&
+            DateTime.local(
+              DateTime.fromISO(date.dataset.date).year,
+              DateTime.fromISO(date.dataset.date).month,
+              DateTime.fromISO(date.dataset.date).day,
+              Number(secondHour.selectedIndex),
+              Number(minute.textContent),
+              0
+            ) <=
+              DateTime.local(
+                DateTime.fromISO(time.end).year,
+                DateTime.fromISO(time.end).month,
+                DateTime.fromISO(time.end).day,
+                DateTime.fromISO(time.end).hour,
+                DateTime.fromISO(time.end).minute,
+                DateTime.fromISO(time.end).millisecond
+              ).plus({ minutes: 15 })
+          ) {
+            Utility.addClasses(minute, [`blacked-out`]);
+            minute.disabled = `true`;
+          } else {
+            minute.disabled = ``;
+          }
+        });
+      }
+    });
+  });
+
+  // What I need now is that once a starting time is selected, I would want it to not be able to overlap a previous appointment entirely.  So, an appointment could be from 1:15pm to 2pm.  If someone selects 1pm and the starting minute seleced is 5, so 1:05pm is the start time, they should only be allowed to go for 9 minutes, or until 1:14pm.  That is needed because normally, people can choose up to a 3 hour appointment if it is clear.
+
+  // The easiest way to do avoid these things is that as the first minute is selected, and there is an appointment in the next few hours, the hours ahead are needing to be blacked out.
+
+  // firstMinute.addEventListener(`change`, (e) => {
+  //   e.preventDefault();
+  //   console.log(firstMinute.selectedIndex, firstMinute.value, firstHour.value, firstHour.selectedIndex);
+  //   let lookAheadHour = Number(firstHour.selectedIndex + 3);
+
+  //   appointments.forEach((time, i) => {
+  //     // Checking to see if there is an appointment that starts between the first hour selected to about 3 hours from then.
+  //     if (DateTime.fromISO(time.start).hour === firstHour.selectedIndex || DateTime.fromISO(time.start).hour < lookAheadHour + 1) {
+  //       /*
+  //         If the selected hour is 10am and there is an appointment between 10am to 1pm the hours after the appointments start need to be blacked out.
+  //       */
+  //     }
+  //   });
+  // });
 
   // * From the get go, I would need to be able to get the appointments and render them using a function declared here.
 };
