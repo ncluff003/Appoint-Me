@@ -72,7 +72,7 @@ export const watchForAppointments = (app, data, utility) => {
       });
 
       let beginningHour = 0;
-      let endHour = 4;
+      let endHour = 3;
       let scheduleEnd = data.schedule.split('-')[1];
       let timeOfDay, time;
       if (`${scheduleEnd}`.length === 3) {
@@ -92,9 +92,10 @@ export const watchForAppointments = (app, data, utility) => {
         endHour = 3;
       }
 
+      const appointments = data.appointments;
       while (beginningHour < endHour) {
         Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
-        hourSelectTwo.childNodes[firstHour].disabled = false;
+        hourSelectTwo.childNodes[firstHour].disabled = '';
         firstHour += 1;
         beginningHour++;
       }
@@ -121,20 +122,32 @@ export const watchForAppointments = (app, data, utility) => {
       const minuteSelects = document.querySelectorAll('.form__select--minute');
       let firstMinute = minuteSelects[0];
       let secondMinute = minuteSelects[1];
-      const appointments = data.appointments;
       let nearbyAppointments = appointments.filter((time, i) => {
         console.log(Number(DateTime.fromISO(time.start).hour), Number(DateTime.fromISO(time.end).hour), Number(currentHour.dataset.value));
         return Number(DateTime.fromISO(time.start).hour) === Number(currentHour.dataset.value) || Number(DateTime.fromISO(time.end).hour) === Number(currentHour.dataset.value);
       });
+
       console.log(nearbyAppointments);
+      // CLEAR THE BLACKED OUT MINUTES EVERY SINGLE TIME AN HOUR IS CLICKED
+      // -- This is to reset the day to show the correct blacked out minutes according to the hour.
+      [...firstMinute.childNodes].forEach((minute, i) => {
+        Utility.removeClasses(minute, [`blacked-out`]);
+        minute.disabled = ``;
+      });
+
+      const hourBeforePrevious = hours[[...hours].indexOf(currentHour) - 2];
+      const previousHour = hours[[...hours].indexOf(currentHour) - 1];
+      const nextHour = hours[[...hours].indexOf(currentHour) + 1];
+      const hourAfterNext = hours[[...hours].indexOf(currentHour) + 2];
+
+      console.log(nextHour);
       appointments.forEach((time, i) => {
         const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
         const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 15 });
         if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+          console.log(convertedStartTime.hour, convertedEndTime.hour);
           console.log(time);
           [...firstMinute.childNodes].forEach((minute, i) => {
-            Utility.removeClasses(minute, [`blacked-out`]);
-            minute.disabled = ``;
             if (
               DateTime.local(
                 DateTime.fromISO(date.dataset.date).year,
@@ -171,26 +184,106 @@ export const watchForAppointments = (app, data, utility) => {
             ) {
               Utility.addClasses(minute, [`blacked-out`]);
               minute.disabled = `true`;
-            } else {
-              minute.disabled = '';
+            }
+          });
+          [...secondMinute.childNodes].forEach((minute, i) => {
+            if (
+              DateTime.local(
+                DateTime.fromISO(date.dataset.date).year,
+                DateTime.fromISO(date.dataset.date).month,
+                DateTime.fromISO(date.dataset.date).day,
+                Number(currentHour.dataset.value),
+                Number(minute.textContent),
+                0
+              ) >=
+                DateTime.local(
+                  DateTime.fromISO(time.start).year,
+                  DateTime.fromISO(time.start).month,
+                  DateTime.fromISO(time.start).day,
+                  DateTime.fromISO(time.start).hour,
+                  DateTime.fromISO(time.start).minute,
+                  DateTime.fromISO(time.start).millisecond
+                ).minus({ minutes: 15 }) &&
+              DateTime.local(
+                DateTime.fromISO(date.dataset.date).year,
+                DateTime.fromISO(date.dataset.date).month,
+                DateTime.fromISO(date.dataset.date).day,
+                Number(currentHour.dataset.value),
+                Number(minute.textContent),
+                0
+              ) <=
+                DateTime.local(
+                  DateTime.fromISO(time.end).year,
+                  DateTime.fromISO(time.end).month,
+                  DateTime.fromISO(time.end).day,
+                  DateTime.fromISO(time.end).hour,
+                  DateTime.fromISO(time.end).minute,
+                  DateTime.fromISO(time.end).millisecond
+                ).plus({ minutes: 15 })
+            ) {
+              Utility.addClasses(minute, [`blacked-out`]);
+              minute.disabled = `true`;
             }
           });
 
-          // NEXT IS TO MAKE IT SO POTENTIAL CLIENTS WILL NOT OVERLAP APPOINTMENTS BEFORE THEY TRY TO REQUEST A TIME.
-
-          // * THIS CONDITION IS FOR CHECKING IF THE DAY IS RIGHT FOR THE CURRENT APPOINTMENTS.
-          // From here, since the first hour is chosen, the appointments need to be looped through to check if ANY of them are on the SAME day AND between the self-same hour to 3 hours from then.  If there is appointments, then ONLY all the way to the upcoming appointment should be the ONLY available times.  I might even add a buffer for the appointments themselves, just in case.  Maybe 10-15 minutes.
-          if (Number(currentHour.dataset.value) <= Number(DateTime.fromISO(time.start).hour) + 3) {
-            // [...secondMinute.childNodes].forEach((minute, i) => {
-            //   Utility.removeClasses(minute, [`blacked-out`]);
-            //   minute.disabled = '';
-            // });
-            console.log(`Appointment Close By`, Number(DateTime.fromISO(time.start).hour) - Number(currentHour.dataset.value));
+          // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
+          if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2) && Number(convertedStartTime.hour) - Number(currentHour.dataset.value) > -1) {
+            console.log(`An appointment is close by!`, currentHour.nextSibling);
+            let hourDifference = Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value));
+            let nextHour = Number(currentHour.nextSibling.dataset.value);
+            let hourAfterNext = Number(currentHour.nextSibling.nextSibling.dataset.value);
+            console.log(nextHour, hourAfterNext, hourDifference);
+            if (
+              hourDifference === 0 ||
+              (hourDifference === 1 &&
+                convertedStartTime <=
+                  DateTime.local(
+                    Number(DateTime.fromISO(date.dataset.date).year),
+                    Number(DateTime.fromISO(date.dataset.date).month),
+                    Number(DateTime.fromISO(date.dataset.date).day),
+                    nextHour,
+                    Number(DateTime.fromISO(date.dataset.date).minute),
+                    Number(DateTime.fromISO(date.dataset.date).second)
+                  ))
+            ) {
+              // Black out the next two hours.  (ie. if it is anywhere from 9:00am to 10:00am, 10 and 11 are blacked out.)
+            } else if (hourDifference === 2) {
+              // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
+            }
           }
-        }
-      });
-    });
-  });
+
+          // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT
+          let previousAppointment, nextAppointment;
+
+          // IF NUMBER OF APPOINTMENTS ARE MORE THAN 0NE, THERE IS A PREVIOUS APPOINTMENT FROM SECOND ONWARDS.
+          if (i > 0) {
+            previousAppointment = appointments[i - 1];
+          }
+          if (appointments.length > 1) {
+            // IF THERE IS A NEXT APPOINTMENT SET THE NEXT APPOINTMENT
+            if (appointments[i + 1] !== undefined) {
+              nextAppointment = appointments[i + 1];
+            }
+          }
+
+          /*
+            * STEPS TO SETTING UP AN APPOINTMENT
+            @ 1. Click on an hour.
+              x @ a. Make starting hour the currently clicked hour.
+              x @ b. Black out hours other than the clicked hour.
+              x @ c. Black out available starting minutes.
+              @ d. Black out ending hours based on if an appointment is nearby or not.
+            @ 2. Check selected hour.
+            @ 3. Select first minute to complete start time.
+              @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
+            @ 4. Select ending hour.
+              @ a. If there is an hour ahead of the time (ie 10am compared to 9am), black out the minutes as are needed upon the change of the second hour.
+            @ 5. Select ending minute to complete selected appointment time.
+          */
+        } // END -- IF IT IS INSIDE OF THE CURRENT DAY
+      }); // END OF APPOINTMENT LOOP
+    }); // HOUR CLICKED
+  }); // HOUR LOOP
 };
 
 export const buildSchedule = (container, schedule, data, utility) => {
@@ -227,7 +320,7 @@ export const buildSchedule = (container, schedule, data, utility) => {
 
   if ((startOfDay === `am` && endOfDay === `pm`) || (startOfDay === `am` && endOfDay === `am`) || (startOfDay === `pm` && endOfDay === `pm`)) {
     hours.forEach((hour, i) => {
-      if (i < start || i > end) {
+      if (i < start || i + 1 > end) {
         Utility.addClasses(hour, [`blacked-out`]);
         hour.style.pointerEvents = 'none';
       }

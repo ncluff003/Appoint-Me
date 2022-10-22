@@ -5121,7 +5121,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       });
 
       var beginningHour = 0;
-      var endHour = 4;
+      var endHour = 3;
       var scheduleEnd = data.schedule.split('-')[1];
       var timeOfDay, time;
 
@@ -5143,9 +5143,11 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
         endHour = 3;
       }
 
+      var appointments = data.appointments;
+
       while (beginningHour < endHour) {
         _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
-        hourSelectTwo.childNodes[firstHour].disabled = false;
+        hourSelectTwo.childNodes[firstHour].disabled = '';
         firstHour += 1;
         beginningHour++;
       }
@@ -5172,12 +5174,23 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       var minuteSelects = document.querySelectorAll('.form__select--minute');
       var firstMinute = minuteSelects[0];
       var secondMinute = minuteSelects[1];
-      var appointments = data.appointments;
       var nearbyAppointments = appointments.filter(function (time, i) {
         console.log(Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour), Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).hour), Number(currentHour.dataset.value));
         return Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour) === Number(currentHour.dataset.value) || Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).hour) === Number(currentHour.dataset.value);
       });
-      console.log(nearbyAppointments);
+      console.log(nearbyAppointments); // CLEAR THE BLACKED OUT MINUTES EVERY SINGLE TIME AN HOUR IS CLICKED
+      // -- This is to reset the day to show the correct blacked out minutes according to the hour.
+
+      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(firstMinute.childNodes).forEach(function (minute, i) {
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(minute, ["blacked-out"]);
+        minute.disabled = "";
+      });
+
+      var hourBeforePrevious = hours[(0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).indexOf(currentHour) - 2];
+      var previousHour = hours[(0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).indexOf(currentHour) - 1];
+      var nextHour = hours[(0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).indexOf(currentHour) + 1];
+      var hourAfterNext = hours[(0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).indexOf(currentHour) + 2];
+      console.log(nextHour);
       appointments.forEach(function (time, i) {
         var convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).minus({
           minutes: 15
@@ -5187,12 +5200,10 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
         });
 
         if (luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.date).day === luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day) {
+          console.log(convertedStartTime.hour, convertedEndTime.hour);
           console.log(time);
 
           (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(firstMinute.childNodes).forEach(function (minute, i) {
-            _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(minute, ["blacked-out"]);
-            minute.disabled = "";
-
             if (luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day, Number(currentHour.dataset.value), Number(minute.textContent), 0) >= luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).day, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).minute, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).millisecond).minus({
               minutes: 15
             }) && luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day, Number(currentHour.dataset.value), Number(minute.textContent), 0) <= luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).day, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).hour, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).minute, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).millisecond).plus({
@@ -5200,25 +5211,59 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
             })) {
               _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(minute, ["blacked-out"]);
               minute.disabled = "true";
-            } else {
-              minute.disabled = '';
             }
-          }); // NEXT IS TO MAKE IT SO POTENTIAL CLIENTS WILL NOT OVERLAP APPOINTMENTS BEFORE THEY TRY TO REQUEST A TIME.
-          // * THIS CONDITION IS FOR CHECKING IF THE DAY IS RIGHT FOR THE CURRENT APPOINTMENTS.
-          // From here, since the first hour is chosen, the appointments need to be looped through to check if ANY of them are on the SAME day AND between the self-same hour to 3 hours from then.  If there is appointments, then ONLY all the way to the upcoming appointment should be the ONLY available times.  I might even add a buffer for the appointments themselves, just in case.  Maybe 10-15 minutes.
+          });
+
+          (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).forEach(function (minute, i) {
+            if (luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day, Number(currentHour.dataset.value), Number(minute.textContent), 0) >= luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).day, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).minute, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).millisecond).minus({
+              minutes: 15
+            }) && luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day, Number(currentHour.dataset.value), Number(minute.textContent), 0) <= luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).year, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).month, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).day, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).hour, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).minute, luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.end).millisecond).plus({
+              minutes: 15
+            })) {
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(minute, ["blacked-out"]);
+              minute.disabled = "true";
+            }
+          }); // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
 
 
-          if (Number(currentHour.dataset.value) <= Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour) + 3) {
-            // [...secondMinute.childNodes].forEach((minute, i) => {
-            //   Utility.removeClasses(minute, [`blacked-out`]);
-            //   minute.disabled = '';
-            // });
-            console.log("Appointment Close By", Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(time.start).hour) - Number(currentHour.dataset.value));
+          if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2)) {
+            console.log("An appointment is close by!");
+          } // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT
+
+
+          var previousAppointment, nextAppointment; // IF NUMBER OF APPOINTMENTS ARE MORE THAN 0NE, THERE IS A PREVIOUS APPOINTMENT FROM SECOND ONWARDS.
+
+          if (i > 0) {
+            previousAppointment = appointments[i - 1];
           }
-        }
-      });
-    });
-  });
+
+          if (appointments.length > 1) {
+            // IF THERE IS A NEXT APPOINTMENT SET THE NEXT APPOINTMENT
+            if (appointments[i + 1] !== undefined) {
+              nextAppointment = appointments[i + 1];
+            }
+          }
+          /*
+            * STEPS TO SETTING UP AN APPOINTMENT
+            @ 1. Click on an hour.
+              x @ a. Make starting hour the currently clicked hour.
+              x @ b. Black out hours other than the clicked hour.
+              x @ c. Black out available starting minutes.
+              @ d. Black out ending hours based on if an appointment is nearby or not.
+            @ 2. Check selected hour.
+            @ 3. Select first minute to complete start time.
+              @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
+            @ 4. Select ending hour.
+              @ a. If there is an hour ahead of the time (ie 10am compared to 9am), black out the minutes as are needed upon the change of the second hour.
+            @ 5. Select ending minute to complete selected appointment time.
+          */
+
+        } // END -- IF IT IS INSIDE OF THE CURRENT DAY
+
+      }); // END OF APPOINTMENT LOOP
+    }); // HOUR CLICKED
+  }); // HOUR LOOP
+
 };
 var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   var hours = document.querySelectorAll('.hour');
@@ -5255,7 +5300,7 @@ var buildSchedule = function buildSchedule(container, schedule, data, utility) {
 
   if (startOfDay === "am" && endOfDay === "pm" || startOfDay === "am" && endOfDay === "am" || startOfDay === "pm" && endOfDay === "pm") {
     hours.forEach(function (hour, i) {
-      if (i < start || i > end) {
+      if (i < start || i + 1 > end) {
         _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hour, ["blacked-out"]);
         hour.style.pointerEvents = 'none';
       }
@@ -5573,26 +5618,20 @@ var renderAppointments = function renderAppointments(appointments, hours) {
       _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', appointment, appointmentHeader);
 
       if (i > 0) {
-        console.log(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['minutes']).toObject().minutes));
+        console.log(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+          minutes: 15
+        }), ['minutes']).toObject().minutes));
         var previousAppointment = appointments[i - 1];
+        var allDomAppointments = document.querySelectorAll('.appointment');
+        var previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
 
         if (Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(previousAppointment.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
           var spacer = document.createElement('div');
           _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(spacer, ["appointment--spacer", "r__appointment--spacer"]);
 
-          var _convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(previousAppointment.start).minus({
-            minutes: 15
-          });
-
           var _convertedEndTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(previousAppointment.end).plus({
             minutes: 0
           });
-
-          var _appointmentStartHour = _convertedStartTime.hour;
-
-          var _appointmentStartMinute = _convertedStartTime.minute / 60;
-
-          var _appointmentStartSecond = _convertedStartTime.second / 3600;
 
           var _appointmentEndHour = _convertedEndTime.hour;
 
@@ -5600,8 +5639,11 @@ var renderAppointments = function renderAppointments(appointments, hours) {
 
           var _appointmentEndSecond = _convertedEndTime.second / 3600;
 
+          _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('afterend', previousDomAppointment, spacer);
           spacer.style.top = "".concat((Number(_appointmentEndHour) + Number(_appointmentEndMinute) + Number(_appointmentEndSecond)) * 8, "rem");
-          spacer.textContent = "Hello!";
+          spacer.style.height = "".concat(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+            minutes: 15
+          }), ["minutes"]).toObject().minutes) / 60 * 8, "rem");
         }
       }
       /*
