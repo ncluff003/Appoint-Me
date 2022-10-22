@@ -247,8 +247,16 @@ export const watchForAppointments = (app, data, utility) => {
                   ))
             ) {
               // Black out the next two hours.  (ie. if it is anywhere from 9:00am to 10:00am, 10 and 11 are blacked out.)
+              console.log(`Two Hours Blacked Out.`);
+              [...hourSelectTwo.childNodes].forEach((hourItem) => {
+                if (Number(hourItem.value) === nextHour || Number(hourItem.value) === hourAfterNext) {
+                  Utility.addClasses(hourItem, [`blacked-out`]);
+                  hourItem.disabled = 'true';
+                }
+              });
             } else if (hourDifference === 2) {
               // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
+              console.log(`One Hour Blacked Out.`);
             }
           }
 
