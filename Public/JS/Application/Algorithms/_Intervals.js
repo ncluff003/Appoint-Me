@@ -8,8 +8,6 @@ const fillMakeAppointmentModal = (modal, dateText, hour) => {
   let splitHour = hour.dataset.time.split(':');
   let splitMinutes = splitHour[1].split(' ');
 
-  console.log(splitHour);
-
   if (modal.childNodes.length === 1) {
     let months = Info.months('long');
     let utility = get(`utility`);
@@ -355,11 +353,9 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
   const end = hoursSelections[1];
   const startMinute = minutes[0];
   const endMinute = minutes[1];
-  console.log(start.value, end.value, startMinute.value, endMinute.value);
 
   const submitAppointmentButton = document.querySelectorAll(`.button--modal`)[0];
   const appointmentForm = document.querySelectorAll('.form--appointment');
-  console.log(submitAppointmentButton, appointmentForm, modal);
 
   let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
   let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
@@ -449,7 +445,6 @@ export const fillDay = (container, intervals, data, utility) => {
   while (startHour < hours) {
     const hour = document.createElement('section');
     hour.dataset.value = startHour;
-    console.log(hour);
     Utility.addClasses(hour, [`hour`, `r__hour`]);
     Utility.insertElement('beforeend', container, hour);
 
@@ -478,6 +473,5 @@ export const fillDay = (container, intervals, data, utility) => {
     let forToday = data.appointments.filter((appointment) => {
       return DateTime.fromISO(appointment.date).toLocaleString(DateTime.DATE_HUGE) === DateTime.fromISO(dateHeading.dataset.date).toLocaleString(DateTime.DATE_HUGE);
     });
-    console.log(data, forToday);
   }
 };

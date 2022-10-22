@@ -74,7 +74,6 @@ const fillDateModal = (modal, dateText, data) => {
   Utility.addClasses(monthInput, [`modal--select-date__date-picker-container__month`, `r__modal--select-date__date-picker-container__month`]);
   Utility.addClasses(yearInput, [`modal--select-date__date-picker-container__year`, `r__modal--select-date__date-picker-container__year`]);
 
-  console.log(months);
   months.forEach((month, i) => {
     const option = document.createElement('option');
     Utility.addClasses(option, [`modal--select-date__date-picker-container__month__option`, `r__modal--select-date__date-picker-container__month__option`]);
@@ -95,7 +94,6 @@ const fillDateModal = (modal, dateText, data) => {
   Utility.insertElement(`beforeend`, datePickerContainer, monthInput);
   Utility.insertElement(`beforeend`, datePickerContainer, yearInput);
 
-  console.log(monthInput[monthInput.options.selectedIndex].value);
   let date = DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
   dayInput.min = 1;
   dayInput.max = date.daysInMonth;
@@ -226,7 +224,6 @@ export const retrieveInfo = async () => {
 };
 
 const renderAppointments = (appointments, hours) => {
-  console.log(appointments);
   const day = document.querySelector('.appoint-me-container__sub-container__calendar');
   const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   appointments.forEach((time, i) => {
@@ -407,8 +404,6 @@ export const buildApp = async (app) => {
   Utility.addClasses(calendar, [`appoint-me-container__sub-container__calendar`, `r__appoint-me-container__sub-container__calendar`]);
   Utility.insertElement('beforeend', subContainer, calendar);
 
-  console.log(app.dataset.intervals, app.dataset.schedule);
-
   const dateModal = document.createElement('section');
   Utility.addClasses(dateModal, [`modal--select-date`, `r__modal--select-date`, `closed`]);
   Utility.insertElement(`afterbegin`, subContainer, dateModal);
@@ -440,10 +435,8 @@ export const buildApp = async (app) => {
   fillDateModal(dateModal, date, data);
   buildSchedule(calendar, app.dataset.schedule, data, utility);
 
-  console.log(data, DateTime.fromISO(data.appointments[0].start).minute, DateTime.fromISO(data.appointments[0].end).minute);
   const oldAppointments = document.querySelectorAll('.appointment');
   [...oldAppointments].forEach((app) => app.remove());
-  console.log(`Appointments Removed`);
 
   const appointments = data.appointments;
   renderAppointments(appointments, document.querySelectorAll('.hour'));
@@ -454,58 +447,89 @@ export const buildApp = async (app) => {
   let secondHour = hourSelects[1];
   let firstMinute = minuteSelects[0];
   let secondMinute = minuteSelects[1];
-  secondHour.addEventListener(`change`, (e) => {
+  firstMinute.addEventListener(`change`, (e) => {
     e.preventDefault();
-    console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
+    // Generally, on change, the second minute select should have the minutes before and on the value of the first minute blacked out.
+
+    // REMOVE BLACKED OUT CLASS FOR EACH SECOND TIME MINUTE.
+    [...secondMinute.childNodes].forEach((minute, i) => {
+      Utility.removeClasses(minute, [`blacked-out`]);
+      minute.disabled = '';
+    });
+
+    const date = DateTime.fromISO(document.querySelector('.appoint-me-container__sub-container__heading__date').dataset.date);
+
     appointments.forEach((time, i) => {
-      if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
-        console.log(time);
-        [...secondMinute.childNodes].forEach((minute, i) => {
-          Utility.removeClasses(minute, [`blacked-out`]);
-          minute.disabled = ``;
-          if (
-            DateTime.local(
-              DateTime.fromISO(date.dataset.date).year,
-              DateTime.fromISO(date.dataset.date).month,
-              DateTime.fromISO(date.dataset.date).day,
-              Number(secondHour.selectedIndex),
-              Number(minute.textContent),
-              0
-            ) >=
-              DateTime.local(
-                DateTime.fromISO(time.start).year,
-                DateTime.fromISO(time.start).month,
-                DateTime.fromISO(time.start).day,
-                DateTime.fromISO(time.start).hour,
-                DateTime.fromISO(time.start).minute,
-                DateTime.fromISO(time.start).millisecond
-              ).minus({ minutes: 15 }) &&
-            DateTime.local(
-              DateTime.fromISO(date.dataset.date).year,
-              DateTime.fromISO(date.dataset.date).month,
-              DateTime.fromISO(date.dataset.date).day,
-              Number(secondHour.selectedIndex),
-              Number(minute.textContent),
-              0
-            ) <=
-              DateTime.local(
-                DateTime.fromISO(time.end).year,
-                DateTime.fromISO(time.end).month,
-                DateTime.fromISO(time.end).day,
-                DateTime.fromISO(time.end).hour,
-                DateTime.fromISO(time.end).minute,
-                DateTime.fromISO(time.end).millisecond
-              ).plus({ minutes: 15 })
-          ) {
-            Utility.addClasses(minute, [`blacked-out`]);
-            minute.disabled = `true`;
-          } else {
-            minute.disabled = ``;
-          }
-        });
+      const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+      const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 15 });
+
+      if (DateTime.fromISO(time.date).day === date.day) {
+        if (
+          DateTime.local(
+            DateTime.fromISO(time.start).year,
+            DateTime.fromISO(time.start).month,
+            DateTime.fromISO(time.start).day,
+            DateTime.fromISO(time.start).hour,
+            DateTime.fromISO(time.start).minute,
+            DateTime.fromISO(time.start).second
+          )
+        ) {
+        }
       }
     });
   });
+  // secondHour.addEventListener(`change`, (e) => {
+  //   e.preventDefault();
+  //   console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
+  //   appointments.forEach((time, i) => {
+  //     if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+  //       console.log(time);
+  //       [...secondMinute.childNodes].forEach((minute, i) => {
+  //         Utility.removeClasses(minute, [`blacked-out`]);
+  //         minute.disabled = ``;
+  //         if (
+  //           DateTime.local(
+  //             DateTime.fromISO(date.dataset.date).year,
+  //             DateTime.fromISO(date.dataset.date).month,
+  //             DateTime.fromISO(date.dataset.date).day,
+  //             Number(secondHour.selectedIndex),
+  //             Number(minute.textContent),
+  //             0
+  //           ) >=
+  //             DateTime.local(
+  //               DateTime.fromISO(time.start).year,
+  //               DateTime.fromISO(time.start).month,
+  //               DateTime.fromISO(time.start).day,
+  //               DateTime.fromISO(time.start).hour,
+  //               DateTime.fromISO(time.start).minute,
+  //               DateTime.fromISO(time.start).millisecond
+  //             ).minus({ minutes: 15 }) &&
+  //           DateTime.local(
+  //             DateTime.fromISO(date.dataset.date).year,
+  //             DateTime.fromISO(date.dataset.date).month,
+  //             DateTime.fromISO(date.dataset.date).day,
+  //             Number(secondHour.selectedIndex),
+  //             Number(minute.textContent),
+  //             0
+  //           ) <=
+  //             DateTime.local(
+  //               DateTime.fromISO(time.end).year,
+  //               DateTime.fromISO(time.end).month,
+  //               DateTime.fromISO(time.end).day,
+  //               DateTime.fromISO(time.end).hour,
+  //               DateTime.fromISO(time.end).minute,
+  //               DateTime.fromISO(time.end).millisecond
+  //             ).plus({ minutes: 15 })
+  //         ) {
+  //           Utility.addClasses(minute, [`blacked-out`]);
+  //           minute.disabled = `true`;
+  //         } else {
+  //           minute.disabled = ``;
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
 
   // What I need now is that once a starting time is selected, I would want it to not be able to overlap a previous appointment entirely.  So, an appointment could be from 1:15pm to 2pm.  If someone selects 1pm and the starting minute seleced is 5, so 1:05pm is the start time, they should only be allowed to go for 9 minutes, or until 1:14pm.  That is needed because normally, people can choose up to a 3 hour appointment if it is clear.
 

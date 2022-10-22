@@ -4552,7 +4552,6 @@ var fillMakeAppointmentModal = function fillMakeAppointmentModal(modal, dateText
   // * Eventually what will happen here is literally ONLY the filling up of everything, and it will ONLY happen once.
   var splitHour = hour.dataset.time.split(':');
   var splitMinutes = splitHour[1].split(' ');
-  console.log(splitHour);
 
   if (modal.childNodes.length === 1) {
     var months = luxon__WEBPACK_IMPORTED_MODULE_2__.Info.months('long');
@@ -4879,10 +4878,8 @@ var createIntervals = function createIntervals(hours, interval, modal, data, uti
   var end = hoursSelections[1];
   var startMinute = minutes[0];
   var endMinute = minutes[1];
-  console.log(start.value, end.value, startMinute.value, endMinute.value);
   var submitAppointmentButton = document.querySelectorAll(".button--modal")[0];
   var appointmentForm = document.querySelectorAll('.form--appointment');
-  console.log(submitAppointmentButton, appointmentForm, modal);
   var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
   var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
   var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
@@ -4958,7 +4955,6 @@ var fillDay = function fillDay(container, intervals, data, utility) {
   while (startHour < hours) {
     var hour = document.createElement('section');
     hour.dataset.value = startHour;
-    console.log(hour);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(hour, ["hour", "r__hour"]);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', container, hour);
     var time = document.createElement('p');
@@ -4988,7 +4984,6 @@ var fillDay = function fillDay(container, intervals, data, utility) {
     var forToday = data.appointments.filter(function (appointment) {
       return luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(appointment.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.DATE_HUGE) === luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateHeading.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.DATE_HUGE);
     });
-    console.log(data, forToday);
   }
 };
 
@@ -5226,8 +5221,30 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
           }); // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
 
 
-          if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2)) {
-            console.log("An appointment is close by!");
+          if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2) && Number(convertedStartTime.hour) - Number(currentHour.dataset.value) > -1) {
+            console.log("An appointment is close by!", currentHour.nextSibling);
+            var hourDifference = Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value));
+
+            var _nextHour = Number(currentHour.nextSibling.dataset.value);
+
+            var _hourAfterNext = Number(currentHour.nextSibling.nextSibling.dataset.value);
+
+            console.log(_nextHour, _hourAfterNext, hourDifference);
+
+            if (hourDifference === 0 || hourDifference === 1 && convertedStartTime <= luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.local(Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).year), Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).month), Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).day), _nextHour, Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).minute), Number(luxon__WEBPACK_IMPORTED_MODULE_6__.DateTime.fromISO(date.dataset.date).second))) {
+              // Black out the next two hours.  (ie. if it is anywhere from 9:00am to 10:00am, 10 and 11 are blacked out.)
+              console.log("Two Hours Blacked Out.");
+
+              (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (hourItem) {
+                if (Number(hourItem.value) === _nextHour || Number(hourItem.value) === _hourAfterNext) {
+                  _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hourItem, ["blacked-out"]);
+                  hourItem.disabled = 'true';
+                }
+              });
+            } else if (hourDifference === 2) {
+              // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
+              console.log("One Hour Blacked Out.");
+            }
           } // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT
 
 
@@ -5245,12 +5262,12 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
           }
           /*
             * STEPS TO SETTING UP AN APPOINTMENT
-            @ 1. Click on an hour.
+            x @ 1. Click on an hour.
               x @ a. Make starting hour the currently clicked hour.
               x @ b. Black out hours other than the clicked hour.
               x @ c. Black out available starting minutes.
-              @ d. Black out ending hours based on if an appointment is nearby or not.
-            @ 2. Check selected hour.
+              x @ d. Black out ending hours based on if an appointment is nearby or not.
+            x @ 2. Check selected hour.
             @ 3. Select first minute to complete start time.
               @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
             @ 4. Select ending hour.
@@ -5295,8 +5312,6 @@ var buildSchedule = function buildSchedule(container, schedule, data, utility) {
   if (endOfDay === "pm") {
     end += 12;
   }
-
-  console.log(startOfDay, endOfDay, start, end);
 
   if (startOfDay === "am" && endOfDay === "pm" || startOfDay === "am" && endOfDay === "am" || startOfDay === "pm" && endOfDay === "pm") {
     hours.forEach(function (hour, i) {
@@ -5441,7 +5456,6 @@ var fillDateModal = function fillDateModal(modal, dateText, data) {
   _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(dayInput, ["modal--select-date__date-picker-container__day", "r__modal--select-date__date-picker-container__day"]);
   _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(monthInput, ["modal--select-date__date-picker-container__month", "r__modal--select-date__date-picker-container__month"]);
   _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(yearInput, ["modal--select-date__date-picker-container__year", "r__modal--select-date__date-picker-container__year"]);
-  console.log(months);
   months.forEach(function (month, i) {
     var option = document.createElement('option');
     _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(option, ["modal--select-date__date-picker-container__month__option", "r__modal--select-date__date-picker-container__month__option"]);
@@ -5458,7 +5472,6 @@ var fillDateModal = function fillDateModal(modal, dateText, data) {
   _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement("beforeend", datePickerContainer, dayInput);
   _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement("beforeend", datePickerContainer, monthInput);
   _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement("beforeend", datePickerContainer, yearInput);
-  console.log(monthInput[monthInput.options.selectedIndex].value);
   var date = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(Number(yearInput.placeholder), Number(monthInput.value + 1), Number(dayInput.placeholder));
   dayInput.min = 1;
   dayInput.max = date.daysInMonth;
@@ -5601,7 +5614,6 @@ var retrieveInfo = /*#__PURE__*/function () {
 }();
 
 var renderAppointments = function renderAppointments(appointments, hours) {
-  console.log(appointments);
   var day = document.querySelector('.appoint-me-container__sub-container__calendar');
   var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   appointments.forEach(function (time, i) {
@@ -5762,7 +5774,6 @@ var buildApp = /*#__PURE__*/function () {
             calendar = document.createElement('section');
             _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(calendar, ["appoint-me-container__sub-container__calendar", "r__appoint-me-container__sub-container__calendar"]);
             _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', subContainer, calendar);
-            console.log(app.dataset.intervals, app.dataset.schedule);
             dateModal = document.createElement('section');
             _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(dateModal, ["modal--select-date", "r__modal--select-date", "closed"]);
             _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement("afterbegin", subContainer, dateModal);
@@ -5787,14 +5798,12 @@ var buildApp = /*#__PURE__*/function () {
             (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_8__.watchForAppointments)(calendar, data, utility);
             fillDateModal(dateModal, date, data);
             (0,_Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_8__.buildSchedule)(calendar, app.dataset.schedule, data, utility);
-            console.log(data, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(data.appointments[0].start).minute, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(data.appointments[0].end).minute);
             oldAppointments = document.querySelectorAll('.appointment');
 
             (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(oldAppointments).forEach(function (app) {
               return app.remove();
             });
 
-            console.log("Appointments Removed");
             appointments = data.appointments;
             renderAppointments(appointments, document.querySelectorAll('.hour'));
             hourSelects = document.querySelectorAll('.form__select--hour');
@@ -5803,31 +5812,77 @@ var buildApp = /*#__PURE__*/function () {
             secondHour = hourSelects[1];
             firstMinute = minuteSelects[0];
             secondMinute = minuteSelects[1];
-            secondHour.addEventListener("change", function (e) {
-              e.preventDefault();
-              console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
-              appointments.forEach(function (time, i) {
-                if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.date).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {
-                  console.log(time);
+            firstMinute.addEventListener("change", function (e) {
+              e.preventDefault(); // Generally, on change, the second minute select should have the minutes before and on the value of the first minute blacked out.
 
-                  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).forEach(function (minute, i) {
-                    _Utility__WEBPACK_IMPORTED_MODULE_5__.removeClasses(minute, ["blacked-out"]);
-                    minute.disabled = "";
+              var availableMinutes = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).filter(function (minute, i) {
+                return !minute.classList.contains("blacked-out");
+              });
 
-                    if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day, Number(secondHour.selectedIndex), Number(minute.textContent), 0) >= luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).hour, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minute, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).millisecond).minus({
-                      minutes: 15
-                    }) && luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day, Number(secondHour.selectedIndex), Number(minute.textContent), 0) <= luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).hour, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).minute, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).millisecond).plus({
-                      minutes: 15
-                    })) {
-                      _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(minute, ["blacked-out"]);
-                      minute.disabled = "true";
-                    } else {
-                      minute.disabled = "";
-                    }
-                  });
+              availableMinutes.forEach(function (minute) {
+                _Utility__WEBPACK_IMPORTED_MODULE_5__.removeClasses(minute, ["blacked-out"]);
+                minute.disabled = '';
+              });
+
+              (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(availableMinutes).forEach(function (minute) {
+                if (Number(minute.value) <= Number(firstMinute.value)) {
+                  _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(minute, ["blacked-out"]);
+                  minute.disabled = 'true';
                 }
               });
-            }); // What I need now is that once a starting time is selected, I would want it to not be able to overlap a previous appointment entirely.  So, an appointment could be from 1:15pm to 2pm.  If someone selects 1pm and the starting minute seleced is 5, so 1:05pm is the start time, they should only be allowed to go for 9 minutes, or until 1:14pm.  That is needed because normally, people can choose up to a 3 hour appointment if it is clear.
+            }); // secondHour.addEventListener(`change`, (e) => {
+            //   e.preventDefault();
+            //   console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
+            //   appointments.forEach((time, i) => {
+            //     if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+            //       console.log(time);
+            //       [...secondMinute.childNodes].forEach((minute, i) => {
+            //         Utility.removeClasses(minute, [`blacked-out`]);
+            //         minute.disabled = ``;
+            //         if (
+            //           DateTime.local(
+            //             DateTime.fromISO(date.dataset.date).year,
+            //             DateTime.fromISO(date.dataset.date).month,
+            //             DateTime.fromISO(date.dataset.date).day,
+            //             Number(secondHour.selectedIndex),
+            //             Number(minute.textContent),
+            //             0
+            //           ) >=
+            //             DateTime.local(
+            //               DateTime.fromISO(time.start).year,
+            //               DateTime.fromISO(time.start).month,
+            //               DateTime.fromISO(time.start).day,
+            //               DateTime.fromISO(time.start).hour,
+            //               DateTime.fromISO(time.start).minute,
+            //               DateTime.fromISO(time.start).millisecond
+            //             ).minus({ minutes: 15 }) &&
+            //           DateTime.local(
+            //             DateTime.fromISO(date.dataset.date).year,
+            //             DateTime.fromISO(date.dataset.date).month,
+            //             DateTime.fromISO(date.dataset.date).day,
+            //             Number(secondHour.selectedIndex),
+            //             Number(minute.textContent),
+            //             0
+            //           ) <=
+            //             DateTime.local(
+            //               DateTime.fromISO(time.end).year,
+            //               DateTime.fromISO(time.end).month,
+            //               DateTime.fromISO(time.end).day,
+            //               DateTime.fromISO(time.end).hour,
+            //               DateTime.fromISO(time.end).minute,
+            //               DateTime.fromISO(time.end).millisecond
+            //             ).plus({ minutes: 15 })
+            //         ) {
+            //           Utility.addClasses(minute, [`blacked-out`]);
+            //           minute.disabled = `true`;
+            //         } else {
+            //           minute.disabled = ``;
+            //         }
+            //       });
+            //     }
+            //   });
+            // });
+            // What I need now is that once a starting time is selected, I would want it to not be able to overlap a previous appointment entirely.  So, an appointment could be from 1:15pm to 2pm.  If someone selects 1pm and the starting minute seleced is 5, so 1:05pm is the start time, they should only be allowed to go for 9 minutes, or until 1:14pm.  That is needed because normally, people can choose up to a 3 hour appointment if it is clear.
             // The easiest way to do avoid these things is that as the first minute is selected, and there is an appointment in the next few hours, the hours ahead are needing to be blacked out.
             // firstMinute.addEventListener(`change`, (e) => {
             //   e.preventDefault();
@@ -5844,7 +5899,7 @@ var buildApp = /*#__PURE__*/function () {
             // });
             // * From the get go, I would need to be able to get the appointments and render them using a function declared here.
 
-          case 80:
+          case 77:
           case "end":
             return _context3.stop();
         }

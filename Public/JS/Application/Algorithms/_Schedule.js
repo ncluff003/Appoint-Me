@@ -226,6 +226,7 @@ export const watchForAppointments = (app, data, utility) => {
             }
           });
 
+          let newAvailableHours;
           // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
           if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2) && Number(convertedStartTime.hour) - Number(currentHour.dataset.value) > -1) {
             console.log(`An appointment is close by!`, currentHour.nextSibling);
@@ -254,9 +255,23 @@ export const watchForAppointments = (app, data, utility) => {
                   hourItem.disabled = 'true';
                 }
               });
+              newAvailableHours = [...hourSelectTwo.childNodes].filter((hour) => {
+                return !hour.classList.contains('blacked-out');
+              });
+              hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
+              if (hourSelectTwo.selectedIndex > 12) {
+                timeOfDayTwo.textContent = `PM`;
+              }
             } else if (hourDifference === 2) {
               // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
               console.log(`One Hour Blacked Out.`);
+              newAvailableHours = [...hourSelectTwo.childNodes].filter((hour) => {
+                return !hour.classList.contains('blacked-out');
+              });
+              hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
+              if (hourSelectTwo.selectedIndex > 12) {
+                timeOfDayTwo.textContent = `PM`;
+              }
             }
           }
 
@@ -276,12 +291,12 @@ export const watchForAppointments = (app, data, utility) => {
 
           /*
             * STEPS TO SETTING UP AN APPOINTMENT
-            @ 1. Click on an hour.
+            x @ 1. Click on an hour.
               x @ a. Make starting hour the currently clicked hour.
               x @ b. Black out hours other than the clicked hour.
               x @ c. Black out available starting minutes.
-              @ d. Black out ending hours based on if an appointment is nearby or not.
-            @ 2. Check selected hour.
+              x @ d. Black out ending hours based on if an appointment is nearby or not.
+            x @ 2. Check selected hour.
             @ 3. Select first minute to complete start time.
               @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
             @ 4. Select ending hour.
@@ -323,8 +338,6 @@ export const buildSchedule = (container, schedule, data, utility) => {
   if (endOfDay === `pm`) {
     end += 12;
   }
-
-  console.log(startOfDay, endOfDay, start, end);
 
   if ((startOfDay === `am` && endOfDay === `pm`) || (startOfDay === `am` && endOfDay === `am`) || (startOfDay === `pm` && endOfDay === `pm`)) {
     hours.forEach((hour, i) => {
