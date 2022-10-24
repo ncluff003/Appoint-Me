@@ -5218,8 +5218,9 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
               _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(minute, ["blacked-out"]);
               minute.disabled = "true";
             }
-          }); // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
+          });
 
+          var newAvailableHours; // CHECK IF THERE IS AN APPOINTMENT THAT IS AT MOST 2 HOURS AWAY & THE DIFFERENCE IS GREATER THAN NEGATIVE ONE.
 
           if (Math.abs(Number(convertedStartTime.hour) - Number(currentHour.dataset.value) <= 2) && Number(convertedStartTime.hour) - Number(currentHour.dataset.value) > -1) {
             console.log("An appointment is close by!", currentHour.nextSibling);
@@ -5241,9 +5242,26 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                   hourItem.disabled = 'true';
                 }
               });
+
+              newAvailableHours = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).filter(function (hour) {
+                return !hour.classList.contains('blacked-out');
+              });
+              hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
+
+              if (hourSelectTwo.selectedIndex > 12) {
+                timeOfDayTwo.textContent = "PM";
+              }
             } else if (hourDifference === 2) {
               // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
               console.log("One Hour Blacked Out.");
+              newAvailableHours = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).filter(function (hour) {
+                return !hour.classList.contains('blacked-out');
+              });
+              hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
+
+              if (hourSelectTwo.selectedIndex > 12) {
+                timeOfDayTwo.textContent = "PM";
+              }
             }
           } // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT
 
@@ -5813,91 +5831,117 @@ var buildApp = /*#__PURE__*/function () {
             firstMinute = minuteSelects[0];
             secondMinute = minuteSelects[1];
             firstMinute.addEventListener("change", function (e) {
-              e.preventDefault(); // Generally, on change, the second minute select should have the minutes before and on the value of the first minute blacked out.
+              e.preventDefault();
+              var endingAppointments = [];
+              var beginningAppointments = []; // Generally, on change, the second minute select should have the minutes before and on the value of the first minute blacked out.
+              // REMOVE BLACKED OUT CLASS FOR EACH SECOND TIME MINUTE.
 
-              var availableMinutes = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).filter(function (minute, i) {
-                return !minute.classList.contains("blacked-out");
-              });
-
-              availableMinutes.forEach(function (minute) {
+              (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).forEach(function (minute, i) {
                 _Utility__WEBPACK_IMPORTED_MODULE_5__.removeClasses(minute, ["blacked-out"]);
                 minute.disabled = '';
               });
 
-              (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(availableMinutes).forEach(function (minute) {
-                if (Number(minute.value) <= Number(firstMinute.value)) {
-                  _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(minute, ["blacked-out"]);
-                  minute.disabled = 'true';
+              var date = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(document.querySelector('.appoint-me-container__sub-container__heading__date').dataset.date);
+              appointments.forEach(function (time, i) {
+                var convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+                  minutes: 15
+                });
+                var convertedEndTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).plus({
+                  minutes: 15
+                }); // USE APPOINTMENTS THAT ARE ON THIS DAY ONLY
+
+                if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.date).day === date.day) {
+                  // GET THE MINIMUM HOUR THAT IS ABLE TO BE SELECTED BY THE USER FOR THE FIRST VALUE.
+                  var minimumTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(firstHour.value), 0, 0); // GET THE USER'S SELECTED STARTING TIME
+
+                  var selectedTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(secondHour.value), Number(firstMinute.value), 0); // GATHER APPOINTMENTS THAT END ON THE SELECTED HOUR
+
+                  if (convertedEndTime >= minimumTime) {
+                    endingAppointments.push(convertedEndTime);
+                  } // GATHER APPOINTMENTS THAT BEGIN ON OR AFTER THE SELECTED HOUR
+
+
+                  if (convertedStartTime >= minimumTime) {
+                    beginningAppointments.push(convertedStartTime);
+                  }
+
+                  if (endingAppointments.length > 0) {
+                    endingAppointments.forEach(function (appointment) {
+                      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).forEach(function (minute) {
+                        var minuteCheckedTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(selectedTime.hour), Number(minute.value), 0);
+
+                        if (minuteCheckedTime <= appointment) {
+                          if (minuteCheckedTime <= selectedTime) {
+                            _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(minute, ["blacked-out"]);
+                            minute.disabled = 'true';
+                          }
+                        }
+                      });
+                    });
+                  } // USE APPOINTMENTS THAT BEGIN AND END AFTER THE FIRST AVAILABLE HOUR ONLY
+                  // if (convertedEndTime >= minimumTime || convertedStartTime >= minimumTime) {
+                  //   [...secondMinute.childNodes].forEach((minute, i) => {
+                  //     // GETTING THE TIME TO CHECK EACH APPOINTMENT WITH FOR THE MINUTES.
+                  //     let minuteCheckedTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(selectedTime.hour), Number(minute.value), 0);
+                  //     if (minuteCheckedTime <= selectedTime) {
+                  //       Utility.addClasses(minute, [`blacked-out`]);
+                  //       minute.disabled = 'true';
+                  //     }
+                  //   });
+                  // }
+                  //   // if (Number(DateTime.fromISO(time.end).hour) === Number(minimumTime.hour) || Number(DateTime.fromISO(time.start).hour === Number(minimumTime.hour))) {
+                  //   // }
+                  //   let checkedStartTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(convertedStartTime.hour), Number(convertedStartTime.minute), 0);
+                  //   let checkedEndTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(convertedEndTime.hour), Number(convertedEndTime.minute), 0);
+                  //   if (checkedEndTime >= minimumTime && checkedEndTime <= selectedTime) {
+                  //     console.log(checkedEndTime);
+                  //   }
+                  //   if (minuteCheckedTime >= checkedEndTime && minuteCheckedTime <= checkedStartTime && minuteCheckedTime < minimumTime) {
+                  //     console.log(selectedTime);
+                  //   }
+                  // });
+
                 }
-              });
-            }); // secondHour.addEventListener(`change`, (e) => {
-            //   e.preventDefault();
-            //   console.log(firstHour.value, firstHour.selectedIndex, secondHour.selectedIndex, secondHour.value);
-            //   appointments.forEach((time, i) => {
-            //     if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
-            //       console.log(time);
-            //       [...secondMinute.childNodes].forEach((minute, i) => {
-            //         Utility.removeClasses(minute, [`blacked-out`]);
-            //         minute.disabled = ``;
-            //         if (
-            //           DateTime.local(
-            //             DateTime.fromISO(date.dataset.date).year,
-            //             DateTime.fromISO(date.dataset.date).month,
-            //             DateTime.fromISO(date.dataset.date).day,
-            //             Number(secondHour.selectedIndex),
-            //             Number(minute.textContent),
-            //             0
-            //           ) >=
-            //             DateTime.local(
-            //               DateTime.fromISO(time.start).year,
-            //               DateTime.fromISO(time.start).month,
-            //               DateTime.fromISO(time.start).day,
-            //               DateTime.fromISO(time.start).hour,
-            //               DateTime.fromISO(time.start).minute,
-            //               DateTime.fromISO(time.start).millisecond
-            //             ).minus({ minutes: 15 }) &&
-            //           DateTime.local(
-            //             DateTime.fromISO(date.dataset.date).year,
-            //             DateTime.fromISO(date.dataset.date).month,
-            //             DateTime.fromISO(date.dataset.date).day,
-            //             Number(secondHour.selectedIndex),
-            //             Number(minute.textContent),
-            //             0
-            //           ) <=
-            //             DateTime.local(
-            //               DateTime.fromISO(time.end).year,
-            //               DateTime.fromISO(time.end).month,
-            //               DateTime.fromISO(time.end).day,
-            //               DateTime.fromISO(time.end).hour,
-            //               DateTime.fromISO(time.end).minute,
-            //               DateTime.fromISO(time.end).millisecond
-            //             ).plus({ minutes: 15 })
-            //         ) {
-            //           Utility.addClasses(minute, [`blacked-out`]);
-            //           minute.disabled = `true`;
-            //         } else {
-            //           minute.disabled = ``;
-            //         }
-            //       });
-            //     }
-            //   });
-            // });
-            // What I need now is that once a starting time is selected, I would want it to not be able to overlap a previous appointment entirely.  So, an appointment could be from 1:15pm to 2pm.  If someone selects 1pm and the starting minute seleced is 5, so 1:05pm is the start time, they should only be allowed to go for 9 minutes, or until 1:14pm.  That is needed because normally, people can choose up to a 3 hour appointment if it is clear.
-            // The easiest way to do avoid these things is that as the first minute is selected, and there is an appointment in the next few hours, the hours ahead are needing to be blacked out.
-            // firstMinute.addEventListener(`change`, (e) => {
-            //   e.preventDefault();
-            //   console.log(firstMinute.selectedIndex, firstMinute.value, firstHour.value, firstHour.selectedIndex);
-            //   let lookAheadHour = Number(firstHour.selectedIndex + 3);
-            //   appointments.forEach((time, i) => {
-            //     // Checking to see if there is an appointment that starts between the first hour selected to about 3 hours from then.
-            //     if (DateTime.fromISO(time.start).hour === firstHour.selectedIndex || DateTime.fromISO(time.start).hour < lookAheadHour + 1) {
-            //       /*
-            //         If the selected hour is 10am and there is an appointment between 10am to 1pm the hours after the appointments start need to be blacked out.
-            //       */
-            //     }
-            //   });
-            // });
-            // * From the get go, I would need to be able to get the appointments and render them using a function declared here.
+              }); // [...secondMinute.childNodes].forEach((minute, i) => {
+              //   if (
+              //     DateTime.local(
+              //       DateTime.fromISO(date.dataset.date).year,
+              //       DateTime.fromISO(date.dataset.date).month,
+              //       DateTime.fromISO(date.dataset.date).day,
+              //       Number(currentHour.dataset.value),
+              //       Number(minute.textContent),
+              //       0
+              //     ) >=
+              //       DateTime.local(
+              //         DateTime.fromISO(time.start).year,
+              //         DateTime.fromISO(time.start).month,
+              //         DateTime.fromISO(time.start).day,
+              //         DateTime.fromISO(time.start).hour,
+              //         DateTime.fromISO(time.start).minute,
+              //         DateTime.fromISO(time.start).millisecond
+              //       ).minus({ minutes: 15 }) &&
+              //     DateTime.local(
+              //       DateTime.fromISO(date.dataset.date).year,
+              //       DateTime.fromISO(date.dataset.date).month,
+              //       DateTime.fromISO(date.dataset.date).day,
+              //       Number(currentHour.dataset.value),
+              //       Number(minute.textContent),
+              //       0
+              //     ) <=
+              //       DateTime.local(
+              //         DateTime.fromISO(time.end).year,
+              //         DateTime.fromISO(time.end).month,
+              //         DateTime.fromISO(time.end).day,
+              //         DateTime.fromISO(time.end).hour,
+              //         DateTime.fromISO(time.end).minute,
+              //         DateTime.fromISO(time.end).millisecond
+              //       ).plus({ minutes: 15 })
+              //   ) {
+              //     Utility.addClasses(minute, [`blacked-out`]);
+              //     minute.disabled = `true`;
+              //   }
+              // });
+            });
 
           case 77:
           case "end":
