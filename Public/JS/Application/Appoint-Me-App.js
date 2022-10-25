@@ -223,114 +223,118 @@ export const retrieveInfo = async () => {
   }
 };
 
-const renderAppointments = (appointments, hours) => {
+const renderAppointments = (appointments, hours, utility) => {
   const day = document.querySelector('.appoint-me-container__sub-container__calendar');
   const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   appointments.forEach((time, i) => {
-    if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
-      console.log(DateTime.fromISO(date.dataset.date).day);
-      const appointment = document.createElement(`section`);
-      Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
-      Utility.insertElement('beforeend', day, appointment);
-      appointment.dataset.start = time.start;
-      appointment.dataset.end = time.end;
-      const appointmentHeader = document.createElement('h3');
-      Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
-      appointmentHeader.textContent = `Appointment at ${time.startTime} to ${time.endTime}`;
-      Utility.insertElement('beforeend', appointment, appointmentHeader);
+    if (utility.overnight === false) {
+      if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+        console.log(DateTime.fromISO(date.dataset.date).day);
+        const appointment = document.createElement(`section`);
+        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+        Utility.insertElement('beforeend', day, appointment);
+        appointment.dataset.start = time.start;
+        appointment.dataset.end = time.end;
+        const appointmentHeader = document.createElement('h3');
+        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+        appointmentHeader.textContent = `Appointment at ${time.startTime} to ${time.endTime}`;
+        Utility.insertElement('beforeend', appointment, appointmentHeader);
 
-      if (i > 0) {
-        console.log(
-          Math.abs(
-            DateTime.fromISO(appointments[i - 1].end)
-              .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
-              .toObject().minutes
-          )
-        );
-        let previousAppointment = appointments[i - 1];
-        let allDomAppointments = document.querySelectorAll('.appointment');
-        let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
-        if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
-          const spacer = document.createElement('div');
-          Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
-
-          const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
-
-          const appointmentEndHour = convertedEndTime.hour;
-          const appointmentEndMinute = convertedEndTime.minute / 60;
-          const appointmentEndSecond = convertedEndTime.second / 3600;
-
-          Utility.insertElement('afterend', previousDomAppointment, spacer);
-          spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
-          spacer.style.height = `${
-            (Math.abs(
+        if (i > 0) {
+          console.log(
+            Math.abs(
               DateTime.fromISO(appointments[i - 1].end)
-                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
                 .toObject().minutes
-            ) /
-              60) *
-            8
-          }rem`;
+            )
+          );
+          let previousAppointment = appointments[i - 1];
+          let allDomAppointments = document.querySelectorAll('.appointment');
+          let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
+          if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            const spacer = document.createElement('div');
+            Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+
+            const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+
+            const appointmentEndHour = convertedEndTime.hour;
+            const appointmentEndMinute = convertedEndTime.minute / 60;
+            const appointmentEndSecond = convertedEndTime.second / 3600;
+
+            Utility.insertElement('afterend', previousDomAppointment, spacer);
+            spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
+            spacer.style.height = `${
+              (Math.abs(
+                DateTime.fromISO(appointments[i - 1].end)
+                  .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                  .toObject().minutes
+              ) /
+                60) *
+              8
+            }rem`;
+          }
         }
-      }
 
-      /*
-        * HERE IS WHAT NEEDS TO HAPPEN
-        @ 1. Place start of hour where it is scheduled with the lentgth going as planned.
-        @ 2. Subtract 7 1/2 minutes from the start so it is moved back.
-        @ 3. Add 15 minutes so it goes to the length of having 7 1/2 minutes of a buffer on either end.
+        /*
+          * HERE IS WHAT NEEDS TO HAPPEN
+          @ 1. Place start of hour where it is scheduled with the lentgth going as planned.
+          @ 2. Subtract 7 1/2 minutes from the start so it is moved back.
+          @ 3. Add 15 minutes so it goes to the length of having 7 1/2 minutes of a buffer on either end.
+  
+  
+          * THERE NEEDS TO BE ENOUGH SPACE TO PLACE AN APPOINTMENT.  PREFERRABLY 45 MINUTES IN BETWEEN APPOINTMENTS.
+        */
 
+        const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
 
-        * THERE NEEDS TO BE ENOUGH SPACE TO PLACE AN APPOINTMENT.  PREFERRABLY 45 MINUTES IN BETWEEN APPOINTMENTS.
-      */
+        const appointmentStartHour = convertedStartTime.hour;
+        const appointmentStartMinute = convertedStartTime.minute / 60;
+        const appointmentStartSecond = convertedStartTime.second / 3600;
 
-      const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
-      const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
+        const appointmentEndHour = convertedEndTime.hour;
+        const appointmentEndMinute = convertedEndTime.minute / 60;
+        const appointmentEndSecond = convertedEndTime.second / 3600;
 
-      const appointmentStartHour = convertedStartTime.hour;
-      const appointmentStartMinute = convertedStartTime.minute / 60;
-      const appointmentStartSecond = convertedStartTime.second / 3600;
+        console.log(convertedStartTime, convertedEndTime);
 
-      const appointmentEndHour = convertedEndTime.hour;
-      const appointmentEndMinute = convertedEndTime.minute / 60;
-      const appointmentEndSecond = convertedEndTime.second / 3600;
+        let hourDifference, minuteDifference, secondDifference, appointmentHeight;
 
-      console.log(convertedStartTime, convertedEndTime);
+        hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
+        minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+        secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+        // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+        if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
 
-      let hourDifference, minuteDifference, secondDifference, appointmentHeight;
-
-      hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
-      minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
-      secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
-      // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
-      if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
-        // PLACE APPOINTMENT
-        appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
-
-        // CALCULATE HEIGHT
-        appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
-        console.log(appointmentHeight);
-
-        // SET APPOINTMENT LENGTH
-        appointment.style.height = `${appointmentHeight}rem`;
-
-        // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
-        // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
-      } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
-        console.log(minuteDifference);
-        // PLACE APPOINTMENT
-        appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
-
-        // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
-        if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
           // CALCULATE HEIGHT
           appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
           console.log(appointmentHeight);
 
           // SET APPOINTMENT LENGTH
           appointment.style.height = `${appointmentHeight}rem`;
+
+          // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
+          console.log(minuteDifference);
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+
+          // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+          if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
+            // CALCULATE HEIGHT
+            appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+            console.log(appointmentHeight);
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
+          }
         }
       }
+    } else if (utility.overnight === true) {
+      console.log(`No applicable appointments`);
     }
   });
 };
@@ -430,16 +434,15 @@ export const buildApp = async (app) => {
   fillDay(calendar, app.dataset.intervals, data, utility);
   createIntervals(document.querySelectorAll('.hour'), app.dataset.intervals, timeModal, data, utility);
 
-  watchForAppointments(calendar, data, utility);
-
   fillDateModal(dateModal, date, data);
   buildSchedule(calendar, app.dataset.schedule, data, utility);
+  watchForAppointments(calendar, data, utility);
 
   const oldAppointments = document.querySelectorAll('.appointment');
   [...oldAppointments].forEach((app) => app.remove());
 
   const appointments = data.appointments;
-  renderAppointments(appointments, document.querySelectorAll('.hour'));
+  renderAppointments(appointments, document.querySelectorAll('.hour'), utility);
 
   const hourSelects = document.querySelectorAll('.form__select--hour');
   const minuteSelects = document.querySelectorAll('.form__select--minute');

@@ -5061,7 +5061,8 @@ var submitAppointment = /*#__PURE__*/function () {
   };
 }();
 var watchForAppointments = function watchForAppointments(app, data, utility) {
-  // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
+  console.log(data); // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
+
   var timePickerModal = document.querySelector('.modal--select-time');
   var hours = document.querySelectorAll('.hour');
 
@@ -5296,11 +5297,11 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
               x @ c. Black out available starting minutes.
               x @ d. Black out ending hours based on if an appointment is nearby or not.
             x @ 2. Check selected hour.
-            @ 3. Select first minute to complete start time.
-              @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
-            @ 4. Select ending hour.
-              @ a. If there is an hour ahead of the time (ie 10am compared to 9am), black out the minutes as are needed upon the change of the second hour.
-            @ 5. Select ending minute to complete selected appointment time.
+            x @ 3. Select first minute to complete start time.
+              x @ a. Black out ending minutes based off of the selected starting minute. (Minutes before the selected starting time.)
+            x @ 4. Select ending hour.
+              x @ a. If there is an hour ahead of the time (ie 10am compared to 9am), black out the minutes as are needed upon the change of the second hour.
+            x @ 5. Select ending minute to complete selected appointment time.
           */
 
         } // END -- IF IT IS INSIDE OF THE CURRENT DAY
@@ -5963,6 +5964,7 @@ var buildApp = /*#__PURE__*/function () {
                   }
 
                   if (endingAppointments.length > 0) {
+                    console.log("An appointment breaks this hour");
                     endingAppointments.forEach(function (appointment) {
                       // BLACK OUT BASED ON THE ENDING APPOINTMENT ONLY IF THE SELECTED HOURS MATCH
                       if (Number(secondSelectedTime.hour) === Number(firstSelectedTime.hour)) {
@@ -5979,7 +5981,7 @@ var buildApp = /*#__PURE__*/function () {
                       } else if (Number(secondSelectedTime.hour) != Number(firstSelectedTime.hour)) {
                         (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(secondMinute.childNodes).forEach(function (minute) {
                           _Utility__WEBPACK_IMPORTED_MODULE_5__.removeClasses(minute, ["blacked-out"]);
-                          minute.disabled = 'true';
+                          minute.disabled = '';
                         });
                       }
                     });
