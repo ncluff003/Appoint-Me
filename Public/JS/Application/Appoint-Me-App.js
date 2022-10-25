@@ -525,4 +525,93 @@ export const buildApp = async (app) => {
       }
     });
   });
+
+  secondHour.addEventListener('change', (e) => {
+    e.preventDefault();
+    console.log(`Second Hour Changed!`);
+
+    let endingAppointments = [];
+    let beginningAppointments = [];
+    // Generally, on change, the second minute select should have the minutes before and on the value of the first minute blacked out.
+
+    // REMOVE BLACKED OUT CLASS FOR EACH SECOND TIME MINUTE.
+    [...secondMinute.childNodes].forEach((minute, i) => {
+      Utility.removeClasses(minute, [`blacked-out`]);
+      minute.disabled = '';
+    });
+
+    const date = DateTime.fromISO(document.querySelector('.appoint-me-container__sub-container__heading__date').dataset.date);
+
+    appointments.forEach((time, i) => {
+      const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+      const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 15 });
+
+      // USE APPOINTMENTS THAT ARE ON THIS DAY ONLY
+      if (DateTime.fromISO(time.date).day === date.day) {
+        // GET THE MINIMUM HOUR THAT IS ABLE TO BE SELECTED BY THE USER FOR THE FIRST VALUE.
+        let minimumTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(secondHour.value), 0, 0);
+        // GET THE MAXIMUM TIME THAT CAN BE SELECTED.
+        let maximumTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(secondHour.value), 59, 0);
+        // GET THE USER'S SELECTED STARTING TIME
+        let firstSelectedTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(firstHour.value), Number(firstMinute.value), 0);
+
+        // MAIN ISSUE I AM HAVING IS IF THE MINUTE IN THIS TIME IS ACTUALLY THE RIGHT MINUTE VALUE
+        let secondSelectedTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(secondHour.value), Number(firstMinute.value), 0);
+
+        // GATHER APPOINTMENTS THAT END ON THE SELECTED HOUR
+        if (convertedEndTime >= minimumTime) {
+          endingAppointments.push([convertedStartTime, convertedEndTime]);
+        }
+        // GATHER APPOINTMENTS THAT BEGIN ON OR AFTER THE SELECTED HOUR
+        if (convertedStartTime >= minimumTime) {
+          beginningAppointments.push([convertedStartTime, convertedEndTime]);
+        }
+
+        if (endingAppointments.length > 0) {
+          console.log(`An appointment breaks this hour`);
+          endingAppointments.forEach((appointment) => {
+            // BLACK OUT BASED ON THE ENDING APPOINTMENT ONLY IF THE SELECTED HOURS MATCH
+            if (Number(secondSelectedTime.hour) === Number(firstSelectedTime.hour)) {
+              [...secondMinute.childNodes].forEach((minute) => {
+                let minuteCheckedTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(firstSelectedTime.hour), Number(minute.value), 0);
+                if (minuteCheckedTime <= appointment[1]) {
+                  if (minuteCheckedTime <= firstSelectedTime) {
+                    Utility.addClasses(minute, [`blacked-out`]);
+                    minute.disabled = 'true';
+                  }
+                }
+              });
+            } else if (Number(secondSelectedTime.hour) != Number(firstSelectedTime.hour)) {
+              [...secondMinute.childNodes].forEach((minute) => {
+                Utility.removeClasses(minute, [`blacked-out`]);
+                minute.disabled = '';
+              });
+            }
+          });
+        }
+
+        let sameHourAppointments = [];
+        if (beginningAppointments.length > 0) {
+          beginningAppointments.forEach((appointment, i) => {
+            if (Number(appointment[0].hour) === Number(secondSelectedTime.hour)) {
+              sameHourAppointments.push(appointment);
+            }
+          });
+        }
+
+        if (sameHourAppointments.length >= 1) {
+          // EVERY APPOINTMENT IS THE FOLLOWING ARRAY: [BEGINNING, END].
+          sameHourAppointments.forEach((appointment, i) => {
+            [...secondMinute.childNodes].forEach((minute, i) => {
+              let minuteCheckedTime = DateTime.local(Number(date.year), Number(date.month), Number(date.day), Number(secondSelectedTime.hour), Number(minute.value), 0);
+              if (minuteCheckedTime >= appointment[0] && minuteCheckedTime <= appointment[1]) {
+                Utility.addClasses(minute, [`blacked-out`]);
+                minute.disabled = 'true';
+              }
+            });
+          });
+        }
+      }
+    });
+  });
 };

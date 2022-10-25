@@ -234,18 +234,21 @@ export const watchForAppointments = (app, data, utility) => {
             let nextHour = Number(currentHour.nextSibling.dataset.value);
             let hourAfterNext = Number(currentHour.nextSibling.nextSibling.dataset.value);
             console.log(nextHour, hourAfterNext, hourDifference);
+            console.log(
+              DateTime.local(
+                Number(DateTime.fromISO(date.dataset.date).year),
+                Number(DateTime.fromISO(date.dataset.date).month),
+                Number(DateTime.fromISO(date.dataset.date).day),
+                nextHour,
+                Number(DateTime.fromISO(date.dataset.date).minute),
+                Number(DateTime.fromISO(date.dataset.date).second)
+              )
+            );
             if (
               hourDifference === 0 ||
               (hourDifference === 1 &&
                 convertedStartTime <=
-                  DateTime.local(
-                    Number(DateTime.fromISO(date.dataset.date).year),
-                    Number(DateTime.fromISO(date.dataset.date).month),
-                    Number(DateTime.fromISO(date.dataset.date).day),
-                    nextHour,
-                    Number(DateTime.fromISO(date.dataset.date).minute),
-                    Number(DateTime.fromISO(date.dataset.date).second)
-                  ))
+                  DateTime.local(Number(DateTime.fromISO(date.dataset.date).year), Number(DateTime.fromISO(date.dataset.date).month), Number(DateTime.fromISO(date.dataset.date).day), nextHour, 0, 0))
             ) {
               // Black out the next two hours.  (ie. if it is anywhere from 9:00am to 10:00am, 10 and 11 are blacked out.)
               console.log(`Two Hours Blacked Out.`);
@@ -262,12 +265,24 @@ export const watchForAppointments = (app, data, utility) => {
               if (hourSelectTwo.selectedIndex > 12) {
                 timeOfDayTwo.textContent = `PM`;
               }
-            } else if (hourDifference === 2) {
-              // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
-              console.log(`One Hour Blacked Out.`);
+            } else if (
+              hourDifference === 1 &&
+              convertedStartTime >=
+                DateTime.local(Number(DateTime.fromISO(date.dataset.date).year), Number(DateTime.fromISO(date.dataset.date).month), Number(DateTime.fromISO(date.dataset.date).day), nextHour, 0, 0)
+            ) {
               newAvailableHours = [...hourSelectTwo.childNodes].filter((hour) => {
                 return !hour.classList.contains('blacked-out');
               });
+              console.log(`One Hour Blacked Out.`);
+              Utility.addClasses(newAvailableHours[2], [`blacked-out`]);
+              newAvailableHours[2].disabled = 'true';
+              hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
+              if (hourSelectTwo.selectedIndex > 12) {
+                timeOfDayTwo.textContent = `PM`;
+              }
+            } else if (hourDifference === 2) {
+              console.log(`Zero Hours Blacked Out.`);
+              // Black out only the hour after the next.  (ie. if it is anywhere from 10:01am onwards, only 11 is blacked out.)
               hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
               if (hourSelectTwo.selectedIndex > 12) {
                 timeOfDayTwo.textContent = `PM`;
