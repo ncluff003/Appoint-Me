@@ -401,6 +401,10 @@ export const buildSchedule = (container, schedule, data, utility) => {
   } else if (startOfDay === `pm` && endOfDay === `am`) {
     // THIS IS FOR OVERNIGHT SCHEDULES
     hours.forEach((hour, i) => {
+      console.log(end);
+      if (Number(hour.dataset.value) < end) {
+        Utility.addClasses(hour, [`previous-day`]);
+      }
       if (i + 1 > end && i < start) {
         Utility.addClasses(hour, [`blacked-out`]);
         hour.style.pointerEvents = 'none';

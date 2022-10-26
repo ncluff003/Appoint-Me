@@ -335,6 +335,9 @@ const renderAppointments = (appointments, hours, utility) => {
       }
     } else if (utility.overnight === true) {
       console.log(`No applicable appointments`);
+      if (DateTime.fromISO(date.dataset.date).day - DateTime.fromISO(time.start).day === 1) {
+        console.log(`Overnight Appointment Alert!`);
+      }
     }
   });
 };
