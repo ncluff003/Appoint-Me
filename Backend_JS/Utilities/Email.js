@@ -166,6 +166,7 @@ module.exports = class sendEmail {
       month: Calendar.getMonth(),
       year: Calendar.getYear(),
       longDate: Calendar.getLongDate(this.date),
+      rawDate: this.date,
       urlOne: this.acceptURL,
       urlTwo: this.declineURL,
       urlThree: this.cancelURL,

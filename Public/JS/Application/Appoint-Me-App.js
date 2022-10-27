@@ -5,6 +5,7 @@ import { get, getAll, set, timeTillExpires, remove, useNamespace } from './../Cl
 import { fillDay, createIntervals } from './Algorithms/_Intervals';
 import { buildSchedule, watchForAppointments } from './Algorithms/_Schedule';
 import { DateTime, Info, Duration } from 'luxon';
+import { myCalendar } from './../Classes/FrontEnd-Calendar';
 
 export const adjustDeclinedAppointment = (data, container, utility) => {
   console.log(data);
@@ -228,7 +229,7 @@ const renderAppointments = (appointments, hours, utility) => {
   const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   appointments.forEach((time, i) => {
     if (utility.overnight === false) {
-      if (DateTime.fromISO(time.date).day === DateTime.fromISO(date.dataset.date).day) {
+      if (DateTime.fromISO(time.start).day === DateTime.fromISO(date.dataset.date).day) {
         console.log(DateTime.fromISO(date.dataset.date).day);
         const appointment = document.createElement(`section`);
         Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
@@ -334,9 +335,157 @@ const renderAppointments = (appointments, hours, utility) => {
         }
       }
     } else if (utility.overnight === true) {
-      console.log(`No applicable appointments`);
       if (DateTime.fromISO(date.dataset.date).day - DateTime.fromISO(time.start).day === 1) {
         console.log(`Overnight Appointment Alert!`);
+      }
+      if (i === 3) {
+      }
+      console.log(time);
+      let startHour, endHour;
+      startHour = time.startTime.split(' ')[0].split(':')[0];
+      endHour = time.endTime.split(' ')[0].split(':')[0];
+      let startTimeOfDay = time.startTime.split(' ')[1];
+      let endTimeOfDay = time.endTime.split(' ')[1];
+      console.log(startHour, endHour, startTimeOfDay, endTimeOfDay);
+
+      if (DateTime.fromISO(time.start).day === DateTime.fromISO(date.dataset.date).day) {
+        console.log(`Appointment Starting...`);
+
+        const appointment = document.createElement(`section`);
+        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+        Utility.insertElement('beforeend', day, appointment);
+        appointment.dataset.start = time.start;
+        appointment.dataset.end = time.end;
+        const appointmentHeader = document.createElement('h3');
+        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+        console.log(
+          `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${DateTime.fromISO(time.start).monthLong} at ${DateTime.fromISO(
+            time.start
+          ).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${DateTime.fromISO(time.end).day}${myCalendar.getDaySuffix(
+            DateTime.fromISO(time.end).day
+          )} of ${DateTime.fromISO(time.end).monthLong}`
+        );
+        appointmentHeader.textContent = `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${
+          DateTime.fromISO(time.start).monthLong
+        } at ${DateTime.fromISO(time.start).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${
+          DateTime.fromISO(time.end).day
+        }${myCalendar.getDaySuffix(DateTime.fromISO(time.end).day)} of ${DateTime.fromISO(time.end).monthLong}`;
+        Utility.insertElement('beforeend', appointment, appointmentHeader);
+
+        if (i > 0) {
+          console.log(
+            Math.abs(
+              DateTime.fromISO(appointments[i - 1].end)
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
+                .toObject().minutes
+            )
+          );
+          let previousAppointment = appointments[i - 1];
+          let allDomAppointments = document.querySelectorAll('.appointment');
+          let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
+          if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            const spacer = document.createElement('div');
+            Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+
+            const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+
+            const appointmentEndHour = convertedEndTime.hour;
+            const appointmentEndMinute = convertedEndTime.minute / 60;
+            const appointmentEndSecond = convertedEndTime.second / 3600;
+
+            Utility.insertElement('afterend', previousDomAppointment, spacer);
+            spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
+            spacer.style.height = `${
+              (Math.abs(
+                DateTime.fromISO(appointments[i - 1].end)
+                  .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                  .toObject().minutes
+              ) /
+                60) *
+              8
+            }rem`;
+          }
+        }
+
+        const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
+
+        const appointmentStartHour = convertedStartTime.hour;
+        const appointmentStartMinute = convertedStartTime.minute / 60;
+        const appointmentStartSecond = convertedStartTime.second / 3600;
+
+        const appointmentEndHour = convertedEndTime.hour;
+        const appointmentEndMinute = convertedEndTime.minute / 60;
+        const appointmentEndSecond = convertedEndTime.second / 3600;
+
+        console.log(convertedStartTime, convertedEndTime);
+
+        let hourDifference, minuteDifference, secondDifference, appointmentHeight;
+
+        hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
+        minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+        secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+      }
+
+      if (DateTime.fromISO(time.end).day === DateTime.fromISO(date.dataset.date).day) {
+        console.log(`Appointment Ending...`);
+        const appointment = document.createElement(`section`);
+        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+        Utility.insertElement('beforeend', day, appointment);
+        appointment.dataset.start = time.start;
+        appointment.dataset.end = time.end;
+        const appointmentHeader = document.createElement('h3');
+        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+        console.log(
+          `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${DateTime.fromISO(time.start).monthLong} at ${DateTime.fromISO(
+            time.start
+          ).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${DateTime.fromISO(time.end).day}${myCalendar.getDaySuffix(
+            DateTime.fromISO(time.end).day
+          )} of ${DateTime.fromISO(time.end).monthLong}`
+        );
+        appointmentHeader.textContent = `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${
+          DateTime.fromISO(time.start).monthLong
+        } at ${DateTime.fromISO(time.start).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${
+          DateTime.fromISO(time.end).day
+        }${myCalendar.getDaySuffix(DateTime.fromISO(time.end).day)} of ${DateTime.fromISO(time.end).monthLong}`;
+        Utility.insertElement('beforeend', appointment, appointmentHeader);
+
+        if (i > 0) {
+          console.log(
+            Math.abs(
+              DateTime.fromISO(appointments[i - 1].end)
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
+                .toObject().minutes
+            )
+          );
+          let previousAppointment = appointments[i - 1];
+          let allDomAppointments = document.querySelectorAll('.appointment');
+          let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
+          if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            const spacer = document.createElement('div');
+            Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+
+            const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+
+            const appointmentEndHour = convertedEndTime.hour;
+            const appointmentEndMinute = convertedEndTime.minute / 60;
+            const appointmentEndSecond = convertedEndTime.second / 3600;
+
+            Utility.insertElement('afterend', previousDomAppointment, spacer);
+            spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
+            spacer.style.height = `${
+              (Math.abs(
+                DateTime.fromISO(appointments[i - 1].end)
+                  .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                  .toObject().minutes
+              ) /
+                60) *
+              8
+            }rem`;
+          }
+        }
+      }
+      if (DateTime.fromISO(time.start).day === DateTime.fromISO(date.dataset.date).day && DateTime.fromISO(time.end).day === DateTime.fromISO(date.dataset.date).day) {
       }
     }
   });
