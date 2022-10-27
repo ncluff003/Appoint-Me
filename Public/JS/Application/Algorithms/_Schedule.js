@@ -48,66 +48,144 @@ export const watchForAppointments = (app, data, utility) => {
       let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
 
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
-      [...hourSelectOne.childNodes].forEach((child) => {
-        if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {
-          child.disabled = true;
-          Utility.addClasses(child, [`blacked-out`]);
-        } else if (currentHour.dataset.time !== `12:00 AM`) {
-          if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+
+      if (utility.overnight === false) {
+        [...hourSelectOne.childNodes].forEach((child) => {
+          if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {
             child.disabled = true;
             Utility.addClasses(child, [`blacked-out`]);
-          } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-            child.disabled = true;
-            Utility.addClasses(child, [`blacked-out`]);
+          } else if (currentHour.dataset.time !== `12:00 AM`) {
+            if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+              child.disabled = true;
+              Utility.addClasses(child, [`blacked-out`]);
+            } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+              child.disabled = true;
+              Utility.addClasses(child, [`blacked-out`]);
+            } else {
+              child.disabled = false;
+              Utility.removeClasses(child, [`blacked-out`]);
+            }
           } else {
             child.disabled = false;
             Utility.removeClasses(child, [`blacked-out`]);
           }
-        } else {
-          child.disabled = false;
-          Utility.removeClasses(child, [`blacked-out`]);
+        });
+
+        // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
+        let firstHour;
+        [...hourSelectTwo.childNodes].forEach((child) => {
+          Utility.addClasses(child, [`blacked-out`]);
+          child.disabled = true;
+          let timeOfDay = splitMinutes[1];
+          if (timeOfDay === `AM` && Number(splitHour[0]) === 12) {
+            firstHour = 0;
+          } else if (timeOfDay === `AM` && Number(splitHour[0]) !== 12) {
+            firstHour = Number(splitHour[0]);
+          } else if (timeOfDay === `PM` && Number(splitHour[0]) === 12) {
+            firstHour = Number(splitHour[0]);
+          } else {
+            firstHour = Number(splitHour[0]) + 12;
+          }
+        });
+
+        let beginningHour = 0;
+        let endHour = 3;
+        let scheduleEnd = data.schedule.split('-')[1];
+        let timeOfDay, time;
+        if (`${scheduleEnd}`.length === 3) {
+          timeOfDay = `${scheduleEnd}`.slice(1);
+          time = Number(`${scheduleEnd}`.slice(0, 1));
+        } else if (`${scheduleEnd}`.length === 4) {
+          timeOfDay = `${scheduleEnd}`.slice(2);
+          time = Number(`${scheduleEnd}`.slice(0, 2));
         }
-      });
 
-      let firstHour;
-      [...hourSelectTwo.childNodes].forEach((child) => {
-        Utility.addClasses(child, [`blacked-out`]);
-        child.disabled = true;
-        let timeOfDay = splitMinutes[1];
-        if (timeOfDay === `AM` || (timeOfDay === `PM` && Number(splitHour[0]) === 12)) {
-          firstHour = Number(splitHour[0]);
-        } else {
-          firstHour = Number(splitHour[0]) + 12;
+        let hour = Number(splitHour[0]);
+        if (hour === time) {
+          endHour = 1;
+        } else if (hour === time - 1) {
+          endHour = 2;
+        } else if (hour === time - 2) {
+          endHour = 3;
         }
-      });
 
-      let beginningHour = 0;
-      let endHour = 3;
-      let scheduleEnd = data.schedule.split('-')[1];
-      let timeOfDay, time;
-      if (`${scheduleEnd}`.length === 3) {
-        timeOfDay = `${scheduleEnd}`.slice(1);
-        time = Number(`${scheduleEnd}`.slice(0, 1));
-      } else if (`${scheduleEnd}`.length === 4) {
-        timeOfDay = `${scheduleEnd}`.slice(2);
-        time = Number(`${scheduleEnd}`.slice(0, 2));
-      }
+        const appointments = data.appointments;
+        while (beginningHour < endHour) {
+          Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
+          hourSelectTwo.childNodes[firstHour].disabled = '';
+          firstHour += 1;
+          beginningHour++;
+        }
+      } else if (utility.overnight === true) {
+        console.log(`Hi`);
+        [...hourSelectOne.childNodes].forEach((child) => {
+          if (child.value !== '0' && currentHour.dataset.time === `12:00 AM`) {
+            child.disabled = true;
+            Utility.addClasses(child, [`blacked-out`]);
+          } else if (currentHour.dataset.time !== `12:00 AM`) {
+            if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
+              child.disabled = true;
+              Utility.addClasses(child, [`blacked-out`]);
+            } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
+              child.disabled = true;
+              Utility.addClasses(child, [`blacked-out`]);
+            } else {
+              child.disabled = false;
+              Utility.removeClasses(child, [`blacked-out`]);
+            }
+          } else {
+            child.disabled = false;
+            Utility.removeClasses(child, [`blacked-out`]);
+          }
+        });
 
-      let hour = Number(splitHour[0]);
-      if (hour === time) {
-        endHour = 1;
-      } else if (hour === time - 1) {
-        endHour = 2;
-      } else if (hour === time - 2) {
-        endHour = 3;
-      }
+        // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
+        let firstHour;
+        [...hourSelectTwo.childNodes].forEach((child) => {
+          Utility.addClasses(child, [`blacked-out`]);
+          child.disabled = true;
+          let timeOfDay = splitMinutes[1];
+          console.log(timeOfDay, Number(splitHour[0]), timeOfDay === `AM` && Number(splitHour[0] === 12));
+          if (timeOfDay === `AM` && Number(splitHour[0]) === 12) {
+            firstHour = 0;
+          } else if (timeOfDay === `AM` && Number(splitHour[0]) !== 12) {
+            firstHour = Number(splitHour[0]);
+          } else if (timeOfDay === `PM` && Number(splitHour[0]) === 12) {
+            firstHour = Number(splitHour[0]);
+          } else {
+            firstHour = Number(splitHour[0]) + 12;
+          }
+        });
+        console.log(firstHour);
 
-      const appointments = data.appointments;
-      while (beginningHour < endHour) {
-        Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
-        hourSelectTwo.childNodes[firstHour].disabled = '';
-        firstHour += 1;
-        beginningHour++;
+        let beginningHour = 0;
+        let endHour = 3;
+        let scheduleEnd = data.schedule.split('-')[1];
+        let timeOfDay, time;
+        if (`${scheduleEnd}`.length === 3) {
+          timeOfDay = `${scheduleEnd}`.slice(1);
+          time = Number(`${scheduleEnd}`.slice(0, 1));
+        } else if (`${scheduleEnd}`.length === 4) {
+          timeOfDay = `${scheduleEnd}`.slice(2);
+          time = Number(`${scheduleEnd}`.slice(0, 2));
+        }
+
+        let hour = Number(splitHour[0]);
+        if (hour === time) {
+          endHour = 1;
+        } else if (hour === time - 1) {
+          endHour = 2;
+        } else if (hour === time - 2) {
+          endHour = 3;
+        }
+
+        const appointments = data.appointments;
+        while (beginningHour < endHour) {
+          Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
+          hourSelectTwo.childNodes[firstHour].disabled = '';
+          firstHour += 1;
+          beginningHour++;
+        }
       }
 
       let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];

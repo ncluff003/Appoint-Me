@@ -5092,71 +5092,117 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
 
-      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
-        if (child.value !== 0 && currentHour.dataset.time === "12:00 AM") {
-          child.disabled = true;
-          _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-        } else if (currentHour.dataset.time !== "12:00 AM") {
-          if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+      if (utility.overnight === false) {
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+          if (child.value !== 0 && currentHour.dataset.time === "12:00 AM") {
             child.disabled = true;
             _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-          } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
-            child.disabled = true;
-            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+          } else if (currentHour.dataset.time !== "12:00 AM") {
+            if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+              child.disabled = true;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+            } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
+              child.disabled = true;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+            } else {
+              child.disabled = false;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+            }
           } else {
             child.disabled = false;
             _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
           }
-        } else {
-          child.disabled = false;
-          _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+        }); // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
+
+
+        var firstHour;
+
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+          child.disabled = true;
+          var timeOfDay = splitMinutes[1];
+
+          if (timeOfDay === "AM" || timeOfDay === "PM" && Number(splitHour[0]) === 12) {
+            firstHour = Number(splitHour[0]);
+          } else {
+            firstHour = Number(splitHour[0]) + 12;
+          }
+        });
+
+        var beginningHour = 0;
+        var endHour = 3;
+        var _scheduleEnd = data.schedule.split('-')[1];
+        var timeOfDay, time;
+
+        if ("".concat(_scheduleEnd).length === 3) {
+          timeOfDay = "".concat(_scheduleEnd).slice(1);
+          time = Number("".concat(_scheduleEnd).slice(0, 1));
+        } else if ("".concat(_scheduleEnd).length === 4) {
+          timeOfDay = "".concat(_scheduleEnd).slice(2);
+          time = Number("".concat(_scheduleEnd).slice(0, 2));
         }
-      });
 
-      var firstHour;
+        var _hour = Number(splitHour[0]);
 
-      (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
-        _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-        child.disabled = true;
-        var timeOfDay = splitMinutes[1];
-
-        if (timeOfDay === "AM" || timeOfDay === "PM" && Number(splitHour[0]) === 12) {
-          firstHour = Number(splitHour[0]);
-        } else {
-          firstHour = Number(splitHour[0]) + 12;
+        if (_hour === time) {
+          endHour = 1;
+        } else if (_hour === time - 1) {
+          endHour = 2;
+        } else if (_hour === time - 2) {
+          endHour = 3;
         }
-      });
 
-      var beginningHour = 0;
-      var endHour = 3;
-      var scheduleEnd = data.schedule.split('-')[1];
-      var timeOfDay, time;
+        var _appointments = data.appointments;
 
-      if ("".concat(scheduleEnd).length === 3) {
-        timeOfDay = "".concat(scheduleEnd).slice(1);
-        time = Number("".concat(scheduleEnd).slice(0, 1));
-      } else if ("".concat(scheduleEnd).length === 4) {
-        timeOfDay = "".concat(scheduleEnd).slice(2);
-        time = Number("".concat(scheduleEnd).slice(0, 2));
-      }
+        while (beginningHour < endHour) {
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
+          hourSelectTwo.childNodes[firstHour].disabled = '';
+          firstHour += 1;
+          beginningHour++;
+        }
+      } else if (utility.overnight === true) {
+        console.log("Hi");
 
-      var hour = Number(splitHour[0]);
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
+          if (child.value !== '0' && currentHour.dataset.time === "12:00 AM") {
+            child.disabled = true;
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+          } else if (currentHour.dataset.time !== "12:00 AM") {
+            if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
+              child.disabled = true;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+            } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
+              child.disabled = true;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+            } else {
+              child.disabled = false;
+              _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+            }
+          } else {
+            child.disabled = false;
+            _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+          }
+        }); // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
 
-      if (hour === time) {
-        endHour = 1;
-      } else if (hour === time - 1) {
-        endHour = 2;
-      } else if (hour === time - 2) {
-        endHour = 3;
-      }
 
-      var appointments = data.appointments;
+        var _firstHour;
 
-      while (beginningHour < endHour) {
-        _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
-        hourSelectTwo.childNodes[firstHour].disabled = '';
-        firstHour += 1;
-        beginningHour++;
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+          child.disabled = true;
+          var timeOfDay = splitMinutes[1];
+          console.log(timeOfDay, Number(splitHour[0]));
+
+          if (timeOfDay === "AM" || timeOfDay === "PM" && Number(splitHour[0]) === 12) {
+            _firstHour = Number(splitHour[0]);
+          } else if (timeOfDay === "AM" && Number(splitHour[0] === 12)) {
+            _firstHour = 0;
+          } else {
+            _firstHour = Number(splitHour[0]) + 12;
+          }
+        });
+
+        console.log(_firstHour);
       }
 
       var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
@@ -5382,6 +5428,10 @@ var buildSchedule = function buildSchedule(container, schedule, data, utility) {
     // THIS IS FOR OVERNIGHT SCHEDULES
     hours.forEach(function (hour, i) {
       console.log(end);
+
+      if (Number(hour.dataset.value) < end) {
+        _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hour, ["previous-day"]);
+      }
 
       if (i + 1 > end && i < start) {
         _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(hour, ["blacked-out"]);
