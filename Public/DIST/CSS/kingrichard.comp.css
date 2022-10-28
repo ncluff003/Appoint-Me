@@ -76,6 +76,13 @@
 .app-landing-container .calendar .appoint-me-container__sub-container__calendar .hour:hover .hour__time {
   color: #fafafa;
 }
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .appointment__header {
+  font-size: 1.2rem;
+}
+.app-landing-container .calendar .appoint-me-container__sub-container__calendar .appointment--spacer {
+  font-family: MADE Tommy Soft Medium, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+}
 .app-landing-container .calendar .appoint-me-container__sub-container .modal-close-icon {
   font-size: 4rem;
 }
@@ -157,6 +164,9 @@
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .blacked-out .hour__time {
   color: #fafafa;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .appointment__header {
+  color: rgba(250, 250, 250, 0.8);
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal-close-icon {
   color: rgba(250, 250, 250, 0.8);
@@ -246,13 +256,13 @@
   color: #111111;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__heading__date {
-  color: #2a7fff;
+  color: #38d927;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__heading .select-date-button {
-  color: rgba(42, 127, 255, 0.5);
+  color: rgba(56, 217, 39, 0.5);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__calendar .hour__time {
-  color: rgba(0, 98, 246, 0.8);
+  color: rgba(44, 174, 31, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container__calendar .hour:hover .hour__time {
   color: #333333;
@@ -285,7 +295,7 @@
   color: rgba(51, 51, 51, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-date .button--modal:hover {
-  color: #2a7fff;
+  color: #38d927;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time__header {
   color: #333333;
@@ -309,7 +319,7 @@
   color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--hour option, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--minute option {
-  color: #2a7fff;
+  color: #38d927;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select .blacked-out, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--hour .blacked-out, .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__select--minute .blacked-out {
   color: rgba(250, 250, 250, 0.8);
@@ -330,7 +340,7 @@
   color: #333333;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form__section--commPreference label.clicked {
-  color: #2a7fff;
+  color: #38d927;
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form--appointment .communication-preference-header {
   color: #333333;
@@ -339,7 +349,7 @@
   color: rgba(51, 51, 51, 0.8);
 }
 .app-landing-container .blue-and-black .appoint-me-container__sub-container .modal--select-time .form--appointment .button--modal:hover {
-  color: #2a7fff;
+  color: #38d927;
 }
 .app-landing-container .green-and-white .appoint-me-header .icon-appoint-me-logo {
   color: #fafafa;
@@ -756,10 +766,6 @@
   color: #ffd700;
 }
 
-.appointment-declined-container {
-  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
-}
-
 .blue-and-white .appointment-declined-container__header {
   font-size: 5rem;
   font-weight: bold;
@@ -779,14 +785,14 @@
 }
 .blue-and-white .form--declined__message-input {
   font-size: 2rem;
-  color: #2a7fff;
+  color: #38d927;
 }
 .blue-and-white .form--declined__button {
   font-size: 2rem;
   color: rgba(250, 250, 250, 0.8);
 }
 .blue-and-white .form--declined__button:hover {
-  color: #2a7fff;
+  color: #38d927;
 }
 
 .green-and-white .appointment-declined-container__header {
@@ -837,6 +843,10 @@
 .gold-and-black .appointment-declined-container__heading {
   font-size: 2rem;
   color: #fafafa;
+}
+
+.appointment-declined-container {
+  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
 }
 
 .gridTV {

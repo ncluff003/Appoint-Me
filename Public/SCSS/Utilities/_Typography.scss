@@ -42,6 +42,16 @@
               }
             }
           }
+
+          .appointment {
+            &__header {
+              font-size: 1.2rem;
+            }
+            &--spacer {
+              font-family: MADE Tommy Soft Medium, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
+              font-size: 1.1rem;
+            }
+          }
         }
         .modal {
           &-close-icon {
@@ -180,6 +190,12 @@
               color: $colorOffWhite;
             }
           }
+
+          .appointment {
+            &__header {
+              color: rgba($colorOffWhite, 0.8);
+            }
+          }
         }
         .modal {
           &-close-icon {
@@ -312,16 +328,16 @@
       &__sub-container {
         &__heading {
           &__date {
-            color: $primaryColor;
+            color: $secondaryColor;
           }
           .select-date-button {
-            color: rgba($primaryColor, 0.5);
+            color: rgba($secondaryColor, 0.5);
           }
         }
         &__calendar {
           .hour {
             &__time {
-              color: rgba($primaryColorDark, 0.8);
+              color: rgba($secondaryColorDark, 0.8);
             }
             &:hover {
               .hour__time {
@@ -363,7 +379,7 @@
               &--modal {
                 color: rgba($colorDarkerGrey, 0.8);
                 &:hover {
-                  color: $primaryColor;
+                  color: $secondaryColor;
                 }
               }
             }
@@ -400,7 +416,7 @@
                 &--minute {
                   @extend .form__select;
                   option {
-                    color: $primaryColor;
+                    color: $secondaryColor;
                   }
                 }
                 .blacked-out {
@@ -428,7 +444,7 @@
                 &--commPreference {
                   color: $colorDarkerGrey;
                   label.clicked {
-                    color: $primaryColor;
+                    color: $secondaryColor;
                   }
                 }
               }
@@ -440,7 +456,7 @@
                   &--modal {
                     color: rgba($colorDarkerGrey, 0.8);
                     &:hover {
-                      color: $primaryColor;
+                      color: $secondaryColor;
                     }
                   }
                 }
@@ -1063,10 +1079,6 @@
   }
 }
 
-.appointment-declined-container {
-  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
-}
-
 .blue-and-white {
   .appointment-declined-container {
     &__header {
@@ -1093,13 +1105,13 @@
       }
       &__message-input {
         font-size: 2rem;
-        color: $primaryColor;
+        color: $secondaryColor;
       }
       &__button {
         font-size: 2rem;
         color: rgba($colorOffWhite, 0.8);
         &:hover {
-          color: $primaryColor;
+          color: $secondaryColor;
         }
       }
     }
@@ -1169,4 +1181,8 @@
       color: $colorOffWhite;
     }
   }
+}
+
+.appointment-declined-container {
+  font-family: MADE Tommy Soft, Roboto Condensed, Purely Me, Verdana, Arial, Helvetica, sans-serif;
 }

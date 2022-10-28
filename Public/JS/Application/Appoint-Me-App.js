@@ -215,7 +215,7 @@ export const retrieveInfo = async () => {
   }
 };
 
-const renderAppointments = (appointments, hours, utility) => {
+const renderAppointments = (appointments, app, hours, utility) => {
   const day = document.querySelector('.appoint-me-container__sub-container__calendar');
   const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   console.log(appointments);
@@ -277,7 +277,20 @@ const renderAppointments = (appointments, hours, utility) => {
           * THERE NEEDS TO BE ENOUGH SPACE TO PLACE AN APPOINTMENT.  PREFERRABLY 45 MINUTES IN BETWEEN APPOINTMENTS.
         */
 
-        const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        let schedule = app.dataset.schedule;
+        let scheduleStart = schedule.split('-')[0];
+        let scheduledStartHour;
+        if (scheduleStart.length === 3) {
+          scheduledStartHour = Number(scheduleStart[0]);
+        } else if (scheduleStart.length === 4) {
+          scheduledStartHour = Number(scheduleStart.slice(0, 2));
+        }
+        let convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        console.log(scheduledStartHour);
+        if (Number(DateTime.fromISO(time.start).hour) === scheduledStartHour) {
+          convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 0 });
+          console.log(convertedStartTime);
+        }
         const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
 
         const appointmentStartHour = convertedStartTime.hour;
@@ -706,7 +719,7 @@ export const buildApp = async (app) => {
   [...oldAppointments].forEach((app) => app.remove());
 
   const appointments = data.appointments.sort((a, b) => DateTime.fromISO(a.start) - DateTime.fromISO(b.start));
-  renderAppointments(appointments, document.querySelectorAll('.hour'), utility);
+  renderAppointments(appointments, app, document.querySelectorAll('.hour'), utility);
 
   const hourSelects = document.querySelectorAll('.form__select--hour');
   const minuteSelects = document.querySelectorAll('.form__select--minute');

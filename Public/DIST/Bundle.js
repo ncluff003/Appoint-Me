@@ -5943,7 +5943,7 @@ var retrieveInfo = /*#__PURE__*/function () {
   };
 }();
 
-var renderAppointments = function renderAppointments(appointments, hours, utility) {
+var renderAppointments = function renderAppointments(appointments, app, hours, utility) {
   var day = document.querySelector('.appoint-me-container__sub-container__calendar');
   var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
   console.log(appointments);
@@ -5998,9 +5998,28 @@ var renderAppointments = function renderAppointments(appointments, hours, utilit
         */
 
 
+        var schedule = app.dataset.schedule;
+        var scheduleStart = schedule.split('-')[0];
+        var scheduledStartHour;
+
+        if (scheduleStart.length === 3) {
+          scheduledStartHour = Number(scheduleStart[0]);
+        } else if (scheduleStart.length === 4) {
+          scheduledStartHour = Number(scheduleStart.slice(0, 2));
+        }
+
         var convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
           minutes: 15
         });
+        console.log(scheduledStartHour);
+
+        if (Number(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).hour) === scheduledStartHour) {
+          convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+            minutes: 0
+          });
+          console.log(convertedStartTime);
+        }
+
         var convertedEndTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).plus({
           minutes: 0
         });
@@ -6398,7 +6417,7 @@ var buildApp = /*#__PURE__*/function () {
             appointments = data.appointments.sort(function (a, b) {
               return luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(a.start) - luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(b.start);
             });
-            renderAppointments(appointments, document.querySelectorAll('.hour'), utility);
+            renderAppointments(appointments, app, document.querySelectorAll('.hour'), utility);
             hourSelects = document.querySelectorAll('.form__select--hour');
             minuteSelects = document.querySelectorAll('.form__select--minute');
             firstHour = hourSelects[0];
