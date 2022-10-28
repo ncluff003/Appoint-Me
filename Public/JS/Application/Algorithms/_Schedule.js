@@ -48,7 +48,13 @@ export const watchForAppointments = (app, data, utility) => {
       let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
 
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
-
+      hourSelectTwo.value = Number(currentHour.dataset.value);
+      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+      if (hourSelectTwo.value >= 12) {
+        timeOfDayTwo.textContent = `PM`;
+      } else {
+        timeOfDayTwo.textContent = `AM`;
+      }
       if (utility.overnight === false) {
         [...hourSelectOne.childNodes].forEach((child) => {
           if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {

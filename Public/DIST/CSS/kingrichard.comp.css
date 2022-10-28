@@ -97,7 +97,7 @@
 }
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-date__date-picker-container input,
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-date__date-picker-container select {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .app-landing-container .calendar .appoint-me-container__sub-container .modal--select-date .button--modal {
   font-size: 2rem;
@@ -46547,7 +46547,7 @@
 .modal--select-date__date-picker-container select {
   position: relative;
   height: 8rem;
-  width: max-content;
+  width: 30%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

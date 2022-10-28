@@ -29,7 +29,7 @@
 
       input,
       select {
-        @include SizeAndPositioning(relative, 8rem, max-content, flex, row, nowrap, center, center, 0, 0, 0);
+        @include SizeAndPositioning(relative, 8rem, 30%, flex, row, nowrap, center, center, 0, 0, 0);
         background-color: transparent;
         border: none;
         margin: 0 1rem;
