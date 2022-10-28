@@ -8,7 +8,6 @@ import { DateTime, Info, Duration } from 'luxon';
 import { myCalendar } from './../Classes/FrontEnd-Calendar';
 
 export const adjustDeclinedAppointment = (data, container, utility) => {
-  console.log(data);
   const date = document.querySelector('.appointment-declined-container__heading__date');
   const requestedDate = date.textContent;
   const currentDate = DateTime.now();
@@ -22,9 +21,7 @@ export const adjustDeclinedAppointment = (data, container, utility) => {
   submitMessageButton.addEventListener(`click`, async (e) => {
     e.preventDefault();
     try {
-      console.log(company, email, start, end, requestedDate, currentDate);
       const name = document.querySelector('.appointment-declined-container__heading__to').textContent.split(' ');
-      console.log(document.querySelector('.appointment-declined-container__heading__to').textContent);
       const message = document.querySelector('.form--declined__message-input').value;
       const inputs = document.querySelectorAll('.form--declined__section__input');
       const subject = inputs[0].value;
@@ -35,7 +32,7 @@ export const adjustDeclinedAppointment = (data, container, utility) => {
         subject: subject,
         message: message,
       };
-      // `/App/Appointments/Declined/:date/:startTime/:endTime/:start/:end/:email/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`
+
       const response = await axios({
         method: `POST`,
         url: `/App/Appointments/Declined/`,
@@ -149,7 +146,6 @@ const fillDateModal = (modal, dateText, data) => {
     console.log(`Appointments Removed`);
 
     data.appointments.forEach((time, i) => {
-      console.log(DateTime.fromISO(dateText.dataset.date).day, DateTime.fromISO(time.date).day);
       if (DateTime.fromISO(dateText.dataset.date).day === DateTime.fromISO(time.date).day) {
         const day = document.querySelector('.appoint-me-container__sub-container__calendar');
         const appointment = document.createElement(`section`);
@@ -162,7 +158,6 @@ const fillDateModal = (modal, dateText, data) => {
         appointmentHeader.textContent = `Appointment at ${time.startTime} to ${time.endTime}`;
         Utility.insertElement('beforeend', appointment, appointmentHeader);
 
-        console.log(Number(DateTime.fromISO(time.start).hour));
         const startHour = Number(DateTime.fromISO(time.start).hour);
         const startMinute = Number(DateTime.fromISO(time.start).minute);
         const startDivisor = startMinute / 60;
@@ -175,10 +170,6 @@ const fillDateModal = (modal, dateText, data) => {
 
         minuteDifference = DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().minutes / 60;
         hourDifference = DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().hours;
-        console.log(DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes'], { conversionAccuracy: 'longterm' }).toObject());
-        console.log(DateTime.fromISO(time.end).diff(DateTime.fromISO(time.start), ['hours', 'minutes']).toObject());
-        console.log(DateTime.fromISO(time.start));
-        console.log(DateTime.fromISO(time.end), DateTime.fromISO(time.end).toFormat('a'));
 
         // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
         if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
@@ -227,10 +218,10 @@ export const retrieveInfo = async () => {
 const renderAppointments = (appointments, hours, utility) => {
   const day = document.querySelector('.appoint-me-container__sub-container__calendar');
   const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  console.log(appointments);
   appointments.forEach((time, i) => {
     if (utility.overnight === false) {
       if (DateTime.fromISO(time.start).day === DateTime.fromISO(date.dataset.date).day) {
-        console.log(DateTime.fromISO(date.dataset.date).day);
         const appointment = document.createElement(`section`);
         Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
         Utility.insertElement('beforeend', day, appointment);
@@ -338,8 +329,6 @@ const renderAppointments = (appointments, hours, utility) => {
       if (DateTime.fromISO(date.dataset.date).day - DateTime.fromISO(time.start).day === 1) {
         console.log(`Overnight Appointment Alert!`);
       }
-      if (i === 3) {
-      }
       console.log(time);
       let startHour, endHour;
       startHour = time.startTime.split(' ')[0].split(':')[0];
@@ -351,6 +340,138 @@ const renderAppointments = (appointments, hours, utility) => {
       if (DateTime.fromISO(time.start).day === DateTime.fromISO(date.dataset.date).day) {
         console.log(`Appointment Starting...`);
 
+        const appointment = document.createElement(`section`);
+        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
+        Utility.insertElement('beforeend', day, appointment);
+        appointment.dataset.start = time.start;
+        appointment.dataset.end = time.end;
+        const appointmentHeader = document.createElement('h3');
+        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
+        console.log(
+          `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${DateTime.fromISO(time.start).monthLong} at ${DateTime.fromISO(
+            time.start
+          ).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${DateTime.fromISO(time.end).day}${myCalendar.getDaySuffix(
+            DateTime.fromISO(time.end).day
+          )} of ${DateTime.fromISO(time.end).monthLong}`
+        );
+        appointmentHeader.textContent = `${time.type} starting at ${DateTime.fromISO(time.start).toLocaleString(DateTime.TIME_SIMPLE)} on the ${
+          DateTime.fromISO(time.start).day
+        }${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${DateTime.fromISO(time.start).monthLong} and ending at ${DateTime.fromISO(time.end).toLocaleString(
+          DateTime.TIME_SIMPLE
+        )} on the ${DateTime.fromISO(time.end).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.end).day)} of ${DateTime.fromISO(time.end).monthLong}`;
+        Utility.insertElement('beforeend', appointment, appointmentHeader);
+
+        if (i > 0) {
+          console.log(
+            Math.abs(
+              DateTime.fromISO(appointments[i - 1].end)
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['hours', 'minutes'])
+                .toObject().hours
+            ),
+            Math.abs(
+              DateTime.fromISO(appointments[i - 1].end)
+                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['hours', 'minutes'])
+                .toObject().minutes
+            )
+          );
+          let previousAppointment = appointments[i - 1];
+          console.log(previousAppointment);
+          let allDomAppointments = document.querySelectorAll('.appointment');
+          let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
+          if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            const spacer = document.createElement('div');
+            Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+
+            const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+
+            const appointmentEndHour = convertedEndTime.hour;
+            const appointmentEndMinute = convertedEndTime.minute / 60;
+            const appointmentEndSecond = convertedEndTime.second / 3600;
+
+            Utility.insertElement('afterend', previousDomAppointment, spacer);
+            spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
+            spacer.style.height = `${
+              (Math.abs(
+                DateTime.fromISO(appointments[i - 1].end)
+                  .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
+                  .toObject().minutes
+              ) /
+                60) *
+              8
+            }rem`;
+          }
+        }
+
+        const convertedStartTime = DateTime.fromISO(time.start).minus({ minutes: 15 });
+        const convertedEndTime = DateTime.fromISO(time.end).plus({ minutes: 0 });
+
+        const appointmentStartHour = convertedStartTime.hour;
+        const appointmentStartMinute = convertedStartTime.minute / 60;
+        const appointmentStartSecond = convertedStartTime.second / 3600;
+
+        const appointmentEndHour = convertedEndTime.hour;
+        const appointmentEndMinute = convertedEndTime.minute / 60;
+        const appointmentEndSecond = convertedEndTime.second / 3600;
+
+        console.log(convertedStartTime, convertedEndTime, DateTime.fromISO(time.end));
+
+        let hourDifference, minuteDifference, secondDifference, appointmentHeight;
+
+        hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
+        minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+        secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+
+        // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+        if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+
+          // CALCULATE HEIGHT
+          appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+          console.log(appointmentHeight);
+
+          // SET APPOINTMENT LENGTH
+          appointment.style.height = `${appointmentHeight}rem`;
+
+          // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
+          console.log(minuteDifference);
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+          console.log(hourDifference, minuteDifference, secondDifference);
+
+          // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+          if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
+            // CALCULATE HEIGHT
+            appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+            console.log(appointmentHeight);
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
+          } else if (DateTime.fromISO(time.end).toFormat('a') === `AM`) {
+            // GET MIDNIGHT TIME
+            let midnight = DateTime.local(DateTime.fromISO(convertedStartTime).year, DateTime.fromISO(convertedStartTime).month, DateTime.fromISO(convertedStartTime).plus({ days: 1 }).day, 0, 0, 0);
+            console.log(midnight);
+
+            let midnightHourDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().hours;
+            let midnightMinuteDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+            let midnightSecondDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+
+            console.log(midnightHourDifference, midnightMinuteDifference, midnightSecondDifference);
+
+            // CALCULATE HEIGHT
+            appointmentHeight = (midnightHourDifference + midnightMinuteDifference + midnightSecondDifference) * 8;
+            console.log(appointmentHeight);
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
+          }
+        }
+      }
+
+      if (DateTime.fromISO(time.end).day === DateTime.fromISO(date.dataset.date).day) {
+        console.log(`Appointment Ending...`);
         const appointment = document.createElement(`section`);
         Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
         Utility.insertElement('beforeend', day, appointment);
@@ -425,63 +546,54 @@ const renderAppointments = (appointments, hours, utility) => {
         hourDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
         minuteDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
         secondDifference = convertedEndTime.diff(convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
-      }
 
-      if (DateTime.fromISO(time.end).day === DateTime.fromISO(date.dataset.date).day) {
-        console.log(`Appointment Ending...`);
-        const appointment = document.createElement(`section`);
-        Utility.addClasses(appointment, [`appointment`, `r__appointment`]);
-        Utility.insertElement('beforeend', day, appointment);
-        appointment.dataset.start = time.start;
-        appointment.dataset.end = time.end;
-        const appointmentHeader = document.createElement('h3');
-        Utility.addClasses(appointmentHeader, [`appointment__header`, `r__appointment__header`]);
-        console.log(
-          `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${DateTime.fromISO(time.start).monthLong} at ${DateTime.fromISO(
-            time.start
-          ).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${DateTime.fromISO(time.end).day}${myCalendar.getDaySuffix(
-            DateTime.fromISO(time.end).day
-          )} of ${DateTime.fromISO(time.end).monthLong}`
-        );
-        appointmentHeader.textContent = `${time.type} on the ${DateTime.fromISO(time.start).day}${myCalendar.getDaySuffix(DateTime.fromISO(time.start).day)} of ${
-          DateTime.fromISO(time.start).monthLong
-        } at ${DateTime.fromISO(time.start).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(time.end).toLocaleString(DateTime.TIME_SIMPLE)} on the ${
-          DateTime.fromISO(time.end).day
-        }${myCalendar.getDaySuffix(DateTime.fromISO(time.end).day)} of ${DateTime.fromISO(time.end).monthLong}`;
-        Utility.insertElement('beforeend', appointment, appointmentHeader);
+        // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+        if (DateTime.fromISO(time.start).toFormat('a') === `AM`) {
+          // PLACE APPOINTMENT
+          appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
 
-        if (i > 0) {
-          console.log(
-            Math.abs(
-              DateTime.fromISO(appointments[i - 1].end)
-                .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), ['minutes'])
-                .toObject().minutes
-            )
-          );
-          let previousAppointment = appointments[i - 1];
-          let allDomAppointments = document.querySelectorAll('.appointment');
-          let previousDomAppointment = allDomAppointments[allDomAppointments.length - 1];
-          if (Math.abs(DateTime.fromISO(previousAppointment.end).diff(DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
-            const spacer = document.createElement('div');
-            Utility.addClasses(spacer, [`appointment--spacer`, `r__appointment--spacer`]);
+          // CALCULATE HEIGHT
+          appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+          console.log(appointmentHeight);
 
-            const convertedEndTime = DateTime.fromISO(previousAppointment.end).plus({ minutes: 0 });
+          // SET APPOINTMENT LENGTH
+          appointment.style.height = `${appointmentHeight}rem`;
 
-            const appointmentEndHour = convertedEndTime.hour;
-            const appointmentEndMinute = convertedEndTime.minute / 60;
-            const appointmentEndSecond = convertedEndTime.second / 3600;
+          // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (DateTime.fromISO(time.start).toFormat('a') === `PM`) {
+          console.log(minuteDifference);
 
-            Utility.insertElement('afterend', previousDomAppointment, spacer);
-            spacer.style.top = `${(Number(appointmentEndHour) + Number(appointmentEndMinute) + Number(appointmentEndSecond)) * 8}rem`;
-            spacer.style.height = `${
-              (Math.abs(
-                DateTime.fromISO(appointments[i - 1].end)
-                  .diff(DateTime.fromISO(time.start).minus({ minutes: 15 }), [`minutes`])
-                  .toObject().minutes
-              ) /
-                60) *
-              8
-            }rem`;
+          // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+          if (DateTime.fromISO(time.end).toFormat('a') === `PM`) {
+            // PLACE APPOINTMENT
+            appointment.style.top = `${(appointmentStartHour + appointmentStartMinute + appointmentStartSecond) * 8}rem`;
+            // CALCULATE HEIGHT
+            appointmentHeight = (hourDifference + minuteDifference + secondDifference) * 8;
+            console.log(appointmentHeight);
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
+          } else if (DateTime.fromISO(time.end).toFormat('a') === `AM`) {
+            // GET MIDNIGHT TIME
+            let midnight = DateTime.local(DateTime.fromISO(convertedEndTime).year, DateTime.fromISO(convertedEndTime).month, DateTime.fromISO(convertedEndTime).day, 0, 0, 0);
+            console.log(midnight);
+
+            // PLACE APPOINTMENT
+            appointment.style.top = `${(midnight.hour + midnight.minute + midnight.second) * 8}rem`;
+
+            let midnightHourDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().hours;
+            let midnightMinuteDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+            let midnightSecondDifference = convertedEndTime.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+
+            console.log(midnightHourDifference, midnightMinuteDifference, midnightSecondDifference);
+
+            // CALCULATE HEIGHT
+            appointmentHeight = (midnightHourDifference + midnightMinuteDifference + midnightSecondDifference) * 8;
+            console.log(appointmentHeight);
+
+            // SET APPOINTMENT LENGTH
+            appointment.style.height = `${appointmentHeight}rem`;
           }
         }
       }
@@ -593,7 +705,7 @@ export const buildApp = async (app) => {
   const oldAppointments = document.querySelectorAll('.appointment');
   [...oldAppointments].forEach((app) => app.remove());
 
-  const appointments = data.appointments;
+  const appointments = data.appointments.sort((a, b) => DateTime.fromISO(a.start) - DateTime.fromISO(b.start));
   renderAppointments(appointments, document.querySelectorAll('.hour'), utility);
 
   const hourSelects = document.querySelectorAll('.form__select--hour');

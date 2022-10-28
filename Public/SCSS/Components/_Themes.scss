@@ -94,9 +94,20 @@
             }
           }
           .appointment {
-            background-image: linear-gradient(to right, transparent 10%, $primaryColorDark 100%);
+            background-image: linear-gradient(to right, rgba($colorOffWhite, 0.7) 22.5%, $primaryColorLight 22.5%, $primaryColorLight 100%);
+            &::after {
+              position: absolute;
+              height: 100%;
+              width: 77.5%;
+              top: 0;
+              right: 0;
+              content: '';
+              border-top: 0.2rem groove $primaryColorDark;
+              border-right: 0.2rem groove $primaryColorDark;
+              border-bottom: 0.2rem groove $primaryColorDark;
+            }
             &--spacer {
-              background-image: linear-gradient(to right, transparent 10%, $colorDarkerGrey 100%);
+              background-image: linear-gradient(to right, rgba($colorOffWhite, 0.7) 22.5%, $colorDarkerGrey 22.5%, $colorDarkerGrey 100%);
             }
           }
         }
@@ -1121,7 +1132,7 @@
 }
 
 .blue-and-white {
-  background-color: $primaryColor;
+  background-color: $primaryColorLight;
   border: 0.5rem groove $primaryColorDark;
   .form {
     &--declined {

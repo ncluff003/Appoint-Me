@@ -41923,6 +41923,31 @@
   grid-row: 16/span 1;
 }
 
+.appointment, .appointment--spacer {
+  position: absolute;
+  height: max-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  transform: rotate(0) translate(0, 0);
+  right: 0;
+  padding-top: 1rem;
+}
+.appointment__header {
+  position: relative;
+  height: max-content;
+  width: 70%;
+  display: flex;
+  flex-flow: row wrap;
+  transform: translate(4.5rem, 0);
+}
+.appointment--spacer {
+  padding-top: 0;
+}
+
 .app-landing-container .blue-and-white {
   border-left: 0.3rem groove #0062f6;
   border-right: 0.3rem groove #0062f6;
@@ -42030,6 +42055,23 @@
   border-top-color: #bbbbbb;
   border-bottom-color: #bbbbbb;
   border: none;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .appointment {
+  background-image: linear-gradient(to right, rgba(250, 250, 250, 0.7) 22.5%, #5d9eff 22.5%, #5d9eff 100%);
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .appointment::after {
+  position: absolute;
+  height: 100%;
+  width: 77.5%;
+  top: 0;
+  right: 0;
+  content: "";
+  border-top: 0.2rem groove #0062f6;
+  border-right: 0.2rem groove #0062f6;
+  border-bottom: 0.2rem groove #0062f6;
+}
+.app-landing-container .blue-and-white .appoint-me-container__sub-container__calendar .appointment--spacer {
+  background-image: linear-gradient(to right, rgba(250, 250, 250, 0.7) 22.5%, #333333 22.5%, #333333 100%);
 }
 .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-date, .app-landing-container .blue-and-white .appoint-me-container__sub-container .modal--select-time {
   background-color: rgba(42, 127, 255, 0.975);
@@ -42891,7 +42933,7 @@
 }
 
 .blue-and-white {
-  background-color: #2a7fff;
+  background-color: #5d9eff;
   border: 0.5rem groove #0062f6;
 }
 .blue-and-white .form--declined__section__input {

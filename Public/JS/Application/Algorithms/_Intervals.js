@@ -403,7 +403,7 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
     let dateISO = date.dataset.date;
     let year = DateTime.fromISO(dateISO).year;
     let month = DateTime.fromISO(dateISO).month;
-    let day = DateTime.fromISO(dateISO);
+    let day = DateTime.fromISO(dateISO).day;
     let dayEnd;
 
     timeOfDayOne.textContent === `PM` ? (hourOne = Number(hourOne) + 12) : (hourOne = hourOne);
@@ -413,8 +413,8 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
       date: date.dataset.date,
       humanStartTime: `${humanStart}:${minutesOne} ${timeOfDayOne.textContent}`,
       humanEndTime: `${humanEnd}:${minutesTwo} ${timeOfDayTwo.textContent}`,
-      startTime: DateTime.local(year, month, day.day, Number(hourOne), Number(startMinute.value), 0).toISO(),
-      endTime: DateTime.local(year, month, day.day, Number(hourTwo), Number(endMinute.value), 0).toISO(),
+      startTime: DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO(),
+      endTime: DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toISO(),
       firstname: firstname,
       lastname: lastname,
       email: email,
@@ -431,7 +431,7 @@ export const createIntervals = (hours, interval, modal, data, utility) => {
     if (day.day !== dayEnd) {
       appointmentObject.endTime = DateTime.local(year, month, dayEnd, Number(hourTwo), Number(endMinute.value), 0).toISO();
     } else {
-      appointmentObject.endTime = DateTime.local(year, month, day.day, Number(hourTwo), Number(endMinute.value), 0).toISO();
+      appointmentObject.endTime = DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toISO();
     }
     console.log(appointmentObject.endTime);
 

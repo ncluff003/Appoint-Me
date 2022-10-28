@@ -4925,7 +4925,7 @@ var createIntervals = function createIntervals(hours, interval, modal, data, uti
     var dateISO = date.dataset.date;
     var year = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateISO).year;
     var month = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateISO).month;
-    var day = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateISO);
+    var day = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(dateISO).day;
     var dayEnd;
     timeOfDayOne.textContent === "PM" ? hourOne = Number(hourOne) + 12 : hourOne = hourOne;
     timeOfDayTwo.textContent === "PM" ? hourTwo = Number(hourTwo) + 12 : hourTwo = hourTwo;
@@ -4933,8 +4933,8 @@ var createIntervals = function createIntervals(hours, interval, modal, data, uti
       date: date.dataset.date,
       humanStartTime: "".concat(humanStart, ":").concat(minutesOne, " ").concat(timeOfDayOne.textContent),
       humanEndTime: "".concat(humanEnd, ":").concat(minutesTwo, " ").concat(timeOfDayTwo.textContent),
-      startTime: luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day.day, Number(hourOne), Number(startMinute.value), 0).toISO(),
-      endTime: luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day.day, Number(hourTwo), Number(endMinute.value), 0).toISO(),
+      startTime: luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO(),
+      endTime: luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toISO(),
       firstname: firstname,
       lastname: lastname,
       email: email,
@@ -4942,17 +4942,23 @@ var createIntervals = function createIntervals(hours, interval, modal, data, uti
       communicationPreference: communicationPreference,
       myCompany: data.company
     };
+    console.log(appointmentObject.endTime);
 
-    if (timeOfDayOne === "PM" && timeOfDayTwo === "AM") {
-      dayEnd = day.plus({
+    if (timeOfDayOne.textContent === "PM" && timeOfDayTwo.textContent === "AM") {
+      dayEnd = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.fromISO(appointmentObject.endTime).plus({
         days: 1
       }).day;
     }
 
-    day.day !== dayEnd ? appointmentObject.endTime = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, Number(dayEnd), Number(hourTwo), Number(endMinute.value), 0).toISO() : appointmentObject.endTime = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day.day, Number(hourTwo), Number(endMinute.value), 0).toISO();
+    if (day.day !== dayEnd) {
+      appointmentObject.endTime = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, dayEnd, Number(hourTwo), Number(endMinute.value), 0).toISO();
+    } else {
+      appointmentObject.endTime = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toISO();
+    }
+
+    console.log(appointmentObject.endTime);
     console.log(hourOne, startMinute.value, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0), luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO());
     console.log(appointmentObject, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toISO());
-    console.log(data.company, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourOne), Number(startMinute.value), 0).toBSON(), luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(year, month, day, Number(hourTwo), Number(endMinute.value), 0).toBSON());
     (0,_Schedule__WEBPACK_IMPORTED_MODULE_4__.submitAppointment)(appointmentObject);
   });
 };
@@ -5694,6 +5700,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Algorithms_Intervals__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Algorithms/_Intervals */ "./Public/JS/Application/Algorithms/_Intervals.js");
 /* harmony import */ var _Algorithms_Schedule__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Algorithms/_Schedule */ "./Public/JS/Application/Algorithms/_Schedule.js");
 /* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
+/* harmony import */ var _Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./../Classes/FrontEnd-Calendar */ "./Public/JS/Classes/FrontEnd-Calendar.js");
 /* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
 
 
@@ -5705,8 +5712,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var adjustDeclinedAppointment = function adjustDeclinedAppointment(data, container, utility) {
-  console.log(data);
   var date = document.querySelector('.appointment-declined-container__heading__date');
   var requestedDate = date.textContent;
   var currentDate = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.now();
@@ -5725,9 +5732,7 @@ var adjustDeclinedAppointment = function adjustDeclinedAppointment(data, contain
             case 0:
               e.preventDefault();
               _context.prev = 1;
-              console.log(company, email, start, end, requestedDate, currentDate);
               name = document.querySelector('.appointment-declined-container__heading__to').textContent.split(' ');
-              console.log(document.querySelector('.appointment-declined-container__heading__to').textContent);
               message = document.querySelector('.form--declined__message-input').value;
               inputs = document.querySelectorAll('.form--declined__section__input');
               subject = inputs[0].value;
@@ -5737,31 +5742,30 @@ var adjustDeclinedAppointment = function adjustDeclinedAppointment(data, contain
                 email: email,
                 subject: subject,
                 message: message
-              }; // `/App/Appointments/Declined/:date/:startTime/:endTime/:start/:end/:email/:firstname/:lastname/:myFirstName/:myLastName/:myCompany`
-
-              _context.next = 11;
+              };
+              _context.next = 9;
               return axios__WEBPACK_IMPORTED_MODULE_3___default()({
                 method: "POST",
                 url: "/App/Appointments/Declined/",
                 data: qs__WEBPACK_IMPORTED_MODULE_4___default().stringify(messageObject)
               });
 
-            case 11:
+            case 9:
               response = _context.sent;
-              _context.next = 17;
+              _context.next = 15;
               break;
 
-            case 14:
-              _context.prev = 14;
+            case 12:
+              _context.prev = 12;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
 
-            case 17:
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 14]]);
+      }, _callee, null, [[1, 12]]);
     }));
 
     return function (_x) {
@@ -5857,8 +5861,6 @@ var fillDateModal = function fillDateModal(modal, dateText, data) {
 
     console.log("Appointments Removed");
     data.appointments.forEach(function (time, i) {
-      console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(dateText.dataset.date).day, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.date).day);
-
       if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(dateText.dataset.date).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.date).day) {
         var day = document.querySelector('.appoint-me-container__sub-container__calendar');
         var appointment = document.createElement("section");
@@ -5870,7 +5872,6 @@ var fillDateModal = function fillDateModal(modal, dateText, data) {
         _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(appointmentHeader, ["appointment__header", "r__appointment__header"]);
         appointmentHeader.textContent = "Appointment at ".concat(time.startTime, " to ").concat(time.endTime);
         _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', appointment, appointmentHeader);
-        console.log(Number(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).hour));
         var startHour = Number(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).hour);
         var startMinute = Number(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minute);
         var startDivisor = startMinute / 60;
@@ -5879,13 +5880,7 @@ var fillDateModal = function fillDateModal(modal, dateText, data) {
         var endDivisor = startMinute / 60;
         var timeDifference, hourDifference, minuteDifference, timeOfDay, appointmentHeight;
         minuteDifference = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().minutes / 60;
-        hourDifference = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().hours;
-        console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['hours', 'minutes'], {
-          conversionAccuracy: 'longterm'
-        }).toObject());
-        console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['hours', 'minutes']).toObject());
-        console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start));
-        console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end), luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toFormat('a')); // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+        hourDifference = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['hours', 'minutes']).toObject().hours; // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
 
         if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toFormat('a') === "AM") {
           // PLACE APPOINTMENT
@@ -5951,10 +5946,10 @@ var retrieveInfo = /*#__PURE__*/function () {
 var renderAppointments = function renderAppointments(appointments, hours, utility) {
   var day = document.querySelector('.appoint-me-container__sub-container__calendar');
   var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
+  console.log(appointments);
   appointments.forEach(function (time, i) {
     if (utility.overnight === false) {
-      if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.date).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {
-        console.log(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day);
+      if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {
         var appointment = document.createElement("section");
         _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(appointment, ["appointment", "r__appointment"]);
         _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', day, appointment);
@@ -6045,11 +6040,264 @@ var renderAppointments = function renderAppointments(appointments, hours, utilit
         }
       }
     } else if (utility.overnight === true) {
-      console.log("No applicable appointments");
-
       if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day - luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day === 1) {
         console.log("Overnight Appointment Alert!");
       }
+
+      console.log(time);
+      var startHour, endHour;
+      startHour = time.startTime.split(' ')[0].split(':')[0];
+      endHour = time.endTime.split(' ')[0].split(':')[0];
+      var startTimeOfDay = time.startTime.split(' ')[1];
+      var endTimeOfDay = time.endTime.split(' ')[1];
+      console.log(startHour, endHour, startTimeOfDay, endTimeOfDay);
+
+      if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {
+        console.log("Appointment Starting...");
+
+        var _appointment = document.createElement("section");
+
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_appointment, ["appointment", "r__appointment"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', day, _appointment);
+        _appointment.dataset.start = time.start;
+        _appointment.dataset.end = time.end;
+
+        var _appointmentHeader = document.createElement('h3');
+
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_appointmentHeader, ["appointment__header", "r__appointment__header"]);
+        console.log("".concat(time.type, " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).monthLong, " at ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " to ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).monthLong));
+        _appointmentHeader.textContent = "".concat(time.type, " starting at ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).monthLong, " and ending at ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).monthLong);
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', _appointment, _appointmentHeader);
+
+        if (i > 0) {
+          console.log(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+            minutes: 15
+          }), ['hours', 'minutes']).toObject().hours), Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+            minutes: 15
+          }), ['hours', 'minutes']).toObject().minutes));
+          var _previousAppointment = appointments[i - 1];
+          console.log(_previousAppointment);
+
+          var _allDomAppointments = document.querySelectorAll('.appointment');
+
+          var _previousDomAppointment = _allDomAppointments[_allDomAppointments.length - 1];
+
+          if (Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_previousAppointment.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            var _spacer = document.createElement('div');
+
+            _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_spacer, ["appointment--spacer", "r__appointment--spacer"]);
+
+            var _convertedEndTime3 = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_previousAppointment.end).plus({
+              minutes: 0
+            });
+
+            var _appointmentEndHour3 = _convertedEndTime3.hour;
+
+            var _appointmentEndMinute3 = _convertedEndTime3.minute / 60;
+
+            var _appointmentEndSecond3 = _convertedEndTime3.second / 3600;
+
+            _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('afterend', _previousDomAppointment, _spacer);
+            _spacer.style.top = "".concat((Number(_appointmentEndHour3) + Number(_appointmentEndMinute3) + Number(_appointmentEndSecond3)) * 8, "rem");
+            _spacer.style.height = "".concat(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+              minutes: 15
+            }), ["minutes"]).toObject().minutes) / 60 * 8, "rem");
+          }
+        }
+
+        var _convertedStartTime = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+          minutes: 15
+        });
+
+        var _convertedEndTime2 = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).plus({
+          minutes: 0
+        });
+
+        var _appointmentStartHour = _convertedStartTime.hour;
+
+        var _appointmentStartMinute = _convertedStartTime.minute / 60;
+
+        var _appointmentStartSecond = _convertedStartTime.second / 3600;
+
+        var _appointmentEndHour2 = _convertedEndTime2.hour;
+
+        var _appointmentEndMinute2 = _convertedEndTime2.minute / 60;
+
+        var _appointmentEndSecond2 = _convertedEndTime2.second / 3600;
+
+        console.log(_convertedStartTime, _convertedEndTime2, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end));
+
+        var _hourDifference, _minuteDifference, _secondDifference, _appointmentHeight;
+
+        _hourDifference = _convertedEndTime2.diff(_convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().hours;
+        _minuteDifference = _convertedEndTime2.diff(_convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+        _secondDifference = _convertedEndTime2.diff(_convertedStartTime, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600; // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+
+        if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toFormat('a') === "AM") {
+          // PLACE APPOINTMENT
+          _appointment.style.top = "".concat((_appointmentStartHour + _appointmentStartMinute + _appointmentStartSecond) * 8, "rem"); // CALCULATE HEIGHT
+
+          _appointmentHeight = (_hourDifference + _minuteDifference + _secondDifference) * 8;
+          console.log(_appointmentHeight); // SET APPOINTMENT LENGTH
+
+          _appointment.style.height = "".concat(_appointmentHeight, "rem"); // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toFormat('a') === "PM") {
+          console.log(_minuteDifference); // PLACE APPOINTMENT
+
+          _appointment.style.top = "".concat((_appointmentStartHour + _appointmentStartMinute + _appointmentStartSecond) * 8, "rem");
+          console.log(_hourDifference, _minuteDifference, _secondDifference); // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+
+          if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toFormat('a') === "PM") {
+            // CALCULATE HEIGHT
+            _appointmentHeight = (_hourDifference + _minuteDifference + _secondDifference) * 8;
+            console.log(_appointmentHeight); // SET APPOINTMENT LENGTH
+
+            _appointment.style.height = "".concat(_appointmentHeight, "rem");
+          } else if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toFormat('a') === "AM") {
+            // GET MIDNIGHT TIME
+            var midnight = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedStartTime).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedStartTime).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedStartTime).plus({
+              days: 1
+            }).day, 0, 0, 0);
+            console.log(midnight);
+
+            var midnightHourDifference = _convertedEndTime2.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().hours;
+
+            var midnightMinuteDifference = _convertedEndTime2.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+            var midnightSecondDifference = _convertedEndTime2.diff(midnight, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+            console.log(midnightHourDifference, midnightMinuteDifference, midnightSecondDifference); // CALCULATE HEIGHT
+
+            _appointmentHeight = (midnightHourDifference + midnightMinuteDifference + midnightSecondDifference) * 8;
+            console.log(_appointmentHeight); // SET APPOINTMENT LENGTH
+
+            _appointment.style.height = "".concat(_appointmentHeight, "rem");
+          }
+        }
+      }
+
+      if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {
+        console.log("Appointment Ending...");
+
+        var _appointment2 = document.createElement("section");
+
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_appointment2, ["appointment", "r__appointment"]);
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', day, _appointment2);
+        _appointment2.dataset.start = time.start;
+        _appointment2.dataset.end = time.end;
+
+        var _appointmentHeader2 = document.createElement('h3');
+
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_appointmentHeader2, ["appointment__header", "r__appointment__header"]);
+        console.log("".concat(time.type, " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).monthLong, " at ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " to ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).monthLong));
+        _appointmentHeader2.textContent = "".concat(time.type, " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).monthLong, " at ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " to ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.TIME_SIMPLE), " on the ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day).concat(_Classes_FrontEnd_Calendar__WEBPACK_IMPORTED_MODULE_10__.myCalendar.getDaySuffix(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day), " of ").concat(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).monthLong);
+        _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('beforeend', _appointment2, _appointmentHeader2);
+
+        if (i > 0) {
+          console.log(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+            minutes: 15
+          }), ['minutes']).toObject().minutes));
+          var _previousAppointment2 = appointments[i - 1];
+
+          var _allDomAppointments2 = document.querySelectorAll('.appointment');
+
+          var _previousDomAppointment2 = _allDomAppointments2[_allDomAppointments2.length - 1];
+
+          if (Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_previousAppointment2.end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start), ['minutes']).toObject().minutes) < 45) {
+            var _spacer2 = document.createElement('div');
+
+            _Utility__WEBPACK_IMPORTED_MODULE_5__.addClasses(_spacer2, ["appointment--spacer", "r__appointment--spacer"]);
+
+            var _convertedEndTime5 = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_previousAppointment2.end).plus({
+              minutes: 0
+            });
+
+            var _appointmentEndHour5 = _convertedEndTime5.hour;
+
+            var _appointmentEndMinute5 = _convertedEndTime5.minute / 60;
+
+            var _appointmentEndSecond5 = _convertedEndTime5.second / 3600;
+
+            _Utility__WEBPACK_IMPORTED_MODULE_5__.insertElement('afterend', _previousDomAppointment2, _spacer2);
+            _spacer2.style.top = "".concat((Number(_appointmentEndHour5) + Number(_appointmentEndMinute5) + Number(_appointmentEndSecond5)) * 8, "rem");
+            _spacer2.style.height = "".concat(Math.abs(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(appointments[i - 1].end).diff(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+              minutes: 15
+            }), ["minutes"]).toObject().minutes) / 60 * 8, "rem");
+          }
+        }
+
+        var _convertedStartTime2 = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).minus({
+          minutes: 15
+        });
+
+        var _convertedEndTime4 = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).plus({
+          minutes: 0
+        });
+
+        var _appointmentStartHour2 = _convertedStartTime2.hour;
+
+        var _appointmentStartMinute2 = _convertedStartTime2.minute / 60;
+
+        var _appointmentStartSecond2 = _convertedStartTime2.second / 3600;
+
+        var _appointmentEndHour4 = _convertedEndTime4.hour;
+
+        var _appointmentEndMinute4 = _convertedEndTime4.minute / 60;
+
+        var _appointmentEndSecond4 = _convertedEndTime4.second / 3600;
+
+        console.log(_convertedStartTime2, _convertedEndTime4);
+
+        var _hourDifference2, _minuteDifference2, _secondDifference2, _appointmentHeight2;
+
+        _hourDifference2 = _convertedEndTime4.diff(_convertedStartTime2, ['hours', 'minutes', 'seconds']).toObject().hours;
+        _minuteDifference2 = _convertedEndTime4.diff(_convertedStartTime2, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+        _secondDifference2 = _convertedEndTime4.diff(_convertedStartTime2, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600; // IF TIME OF DAY IS ANTE MERIDIEM DO THESE THINGS:
+
+        if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toFormat('a') === "AM") {
+          // PLACE APPOINTMENT
+          _appointment2.style.top = "".concat((_appointmentStartHour2 + _appointmentStartMinute2 + _appointmentStartSecond2) * 8, "rem"); // CALCULATE HEIGHT
+
+          _appointmentHeight2 = (_hourDifference2 + _minuteDifference2 + _secondDifference2) * 8;
+          console.log(_appointmentHeight2); // SET APPOINTMENT LENGTH
+
+          _appointment2.style.height = "".concat(_appointmentHeight2, "rem"); // * -- BELOW HERE IS FOR PM APPOINTMENT STARTS --
+          // IF TIME OF DAY IS POST MERIDIEM DO THESE THINGS:
+        } else if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).toFormat('a') === "PM") {
+          console.log(_minuteDifference2); // CHECK IF APPOINTMENT DOES NOT GO PAST 11:59 PM
+
+          if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toFormat('a') === "PM") {
+            // PLACE APPOINTMENT
+            _appointment2.style.top = "".concat((_appointmentStartHour2 + _appointmentStartMinute2 + _appointmentStartSecond2) * 8, "rem"); // CALCULATE HEIGHT
+
+            _appointmentHeight2 = (_hourDifference2 + _minuteDifference2 + _secondDifference2) * 8;
+            console.log(_appointmentHeight2); // SET APPOINTMENT LENGTH
+
+            _appointment2.style.height = "".concat(_appointmentHeight2, "rem");
+          } else if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).toFormat('a') === "AM") {
+            // GET MIDNIGHT TIME
+            var _midnight = luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedEndTime4).year, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedEndTime4).month, luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(_convertedEndTime4).day, 0, 0, 0);
+
+            console.log(_midnight); // PLACE APPOINTMENT
+
+            _appointment2.style.top = "".concat((_midnight.hour + _midnight.minute + _midnight.second) * 8, "rem");
+
+            var _midnightHourDifference = _convertedEndTime4.diff(_midnight, ['hours', 'minutes', 'seconds']).toObject().hours;
+
+            var _midnightMinuteDifference = _convertedEndTime4.diff(_midnight, ['hours', 'minutes', 'seconds']).toObject().minutes / 60;
+
+            var _midnightSecondDifference = _convertedEndTime4.diff(_midnight, ['hours', 'minutes', 'seconds']).toObject().seconds / 3600;
+
+            console.log(_midnightHourDifference, _midnightMinuteDifference, _midnightSecondDifference); // CALCULATE HEIGHT
+
+            _appointmentHeight2 = (_midnightHourDifference + _midnightMinuteDifference + _midnightSecondDifference) * 8;
+            console.log(_appointmentHeight2); // SET APPOINTMENT LENGTH
+
+            _appointment2.style.height = "".concat(_appointmentHeight2, "rem");
+          }
+        }
+      }
+
+      if (luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.start).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day && luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(time.end).day === luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(date.dataset.date).day) {}
     }
   });
 };
@@ -6147,7 +6395,9 @@ var buildApp = /*#__PURE__*/function () {
               return app.remove();
             });
 
-            appointments = data.appointments;
+            appointments = data.appointments.sort(function (a, b) {
+              return luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(a.start) - luxon__WEBPACK_IMPORTED_MODULE_9__.DateTime.fromISO(b.start);
+            });
             renderAppointments(appointments, document.querySelectorAll('.hour'), utility);
             hourSelects = document.querySelectorAll('.form__select--hour');
             minuteSelects = document.querySelectorAll('.form__select--minute');
@@ -7547,6 +7797,372 @@ module.exports = {
 // }
 // export const storage = new CacheStore();
 // const newCache = await cache.open(`newCache`);
+
+/***/ }),
+
+/***/ "./Public/JS/Classes/FrontEnd-Calendar.js":
+/*!************************************************!*\
+  !*** ./Public/JS/Classes/FrontEnd-Calendar.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "myCalendar": () => (/* binding */ myCalendar)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Application_Utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../Application/Utility */ "./Public/JS/Application/Utility.js");
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! luxon */ "./node_modules/luxon/src/luxon.js");
+/* provided dependency */ var console = __webpack_require__(/*! ./node_modules/console-browserify/index.js */ "./node_modules/console-browserify/index.js");
+
+
+
+
+
+
+
+var Calendar = /*#__PURE__*/function () {
+  function Calendar() {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, Calendar);
+
+    this.date = new Date();
+    this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    this.months = luxon__WEBPACK_IMPORTED_MODULE_5__.Info.months("long");
+    this.monthIndex = this.date.getMonth();
+    this.hours = this.date.getHours();
+    this.day = this.date.getDay();
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Calendar, [{
+    key: "getMinutes",
+    value: function getMinutes() {
+      return this.date.getMinutes() < 10 ? "0".concat(this.date.getMinutes()) : this.date.getMinutes();
+    }
+  }, {
+    key: "getHour",
+    value: function getHour() {
+      if (this.hours === 0 || this.hours === 24) return this.hours = 12;
+
+      if (this.hours >= 13 && this.getMinutes() >= 0) {
+        return this.hours = this.hours - 12;
+      }
+
+      return this.hours;
+    }
+  }, {
+    key: "getTimeOfDay",
+    value: function getTimeOfDay() {
+      return this.date.getHours() < 12 ? this.timeOfDay = "AM" : this.timeOfDay = "PM";
+    }
+  }, {
+    key: "getDay",
+    value: function getDay() {
+      return this.date.getDate();
+    }
+  }, {
+    key: "getDaySuffix",
+    value: function getDaySuffix(day) {
+      if (day[day.length - 1] === 1) return "st";
+      if (day[day.length - 1] === 2) return "nd";
+      if (day[day.length - 1] === 3) return "rd";
+      return "th";
+    }
+  }, {
+    key: "getGreeting",
+    value: function getGreeting() {
+      if (this.hours < 12) {
+        return this.greeting = "Good Morning";
+      }
+
+      if (this.hours >= 12 && this.hours < 18) {
+        return this.greeting = "Good Afternoon";
+      }
+
+      if (this.hours >= 18) {
+        return this.greeting = "Good Evening";
+      }
+    }
+  }, {
+    key: "getWeekday",
+    value: function getWeekday() {
+      return this.days[this.day];
+    }
+  }, {
+    key: "getMonth",
+    value: function getMonth() {
+      return this.months[this.monthIndex];
+    }
+  }, {
+    key: "getMonthIndex",
+    value: function getMonthIndex() {
+      return this.date.getMonth();
+    }
+  }, {
+    key: "getYear",
+    value: function getYear() {
+      return this.date.getFullYear();
+    }
+  }, {
+    key: "compareEndOfYear",
+    value: function compareEndOfYear(date) {
+      var currentDate = new Date();
+      var endDate = new Date(currentDate.getFullYear(), 11, 31);
+      console.log(date, endDate);
+      return new Date(date) > currentDate && new Date(date) < endDate;
+    }
+  }, {
+    key: "getRemainingMonths",
+    value: function getRemainingMonths() {
+      var currentDate = new Date();
+      var endDate = new Date(currentDate.getFullYear(), 11, 31);
+      var months = 0;
+
+      while (currentDate <= endDate) {
+        currentDate = new Date(currentDate.setMonth(new Date(currentDate).getMonth() + 1));
+        months++;
+      }
+
+      return months;
+    }
+  }, {
+    key: "getYearRemaining",
+    value: function getYearRemaining(date, timing) {
+      var endDate = new Date(date.getFullYear(), 11, 31);
+      console.log(date, "|", timing, "|", endDate);
+      var numberOfTimes = 0;
+
+      if (timing === "Weekly") {
+        while (date <= endDate) {
+          date = new Date(date.setDate(new Date(date).getDate() + 7));
+          numberOfTimes++;
+        }
+
+        numberOfTimes = numberOfTimes - 1;
+        console.log(numberOfTimes);
+      }
+
+      if (timing === "Bi-Weekly") {
+        while (date <= endDate) {
+          date = new Date(date.setDate(new Date(date).getDate() + 14));
+          numberOfTimes++;
+        }
+
+        numberOfTimes = numberOfTimes - 1;
+        console.log(numberOfTimes);
+      }
+
+      if (timing === "Monthly") {
+        while (date <= endDate) {
+          date = new Date(date.setMonth(new Date(date).getMonth() + 1));
+          numberOfTimes++;
+          console.log(date, numberOfTimes);
+        }
+
+        numberOfTimes = numberOfTimes - 1;
+        console.log(date, numberOfTimes);
+      }
+    }
+  }, {
+    key: "monthRemaining",
+    value: function monthRemaining() {
+      var days;
+      var currentMonth = this.getMonth();
+      var currentDay = this.getDay();
+
+      if (currentMonth === "January" || currentMonth === "March" || currentMonth === "May" || currentMonth === "July" || currentMonth === "August" || currentMonth === "October" || currentMonth === "December") {
+        days = 31;
+      }
+
+      if (currentMonth === "April" || currentMonth === "June" || currentMonth === "September" || currentMonth === "November") {
+        days = 30;
+      }
+
+      if (currentMonth === "February") {
+        this.getYear() % 4 === 0 && !(this.getYear() % 100 === 0) || this.getYear() % 400 === 0 ? days = 29 : days = 28;
+      }
+
+      var remaining = days - currentDay;
+      var percentage = remaining / days;
+      var calculatedPercent = (100 * percentage).toFixed(0);
+      return "".concat(calculatedPercent, "%");
+    }
+  }, {
+    key: "goBackAMonth",
+    value: function goBackAMonth(month, year, dayClass, currentDayClass, unusedDayClass, utility, user) {
+      var selectedMonth = this.months[month];
+      this.makeCalendar(month, selectedMonth, year, dayClass, currentDayClass, unusedDayClass, utility, user);
+    }
+  }, {
+    key: "goForwardAMonth",
+    value: function goForwardAMonth(month, year, dayClass, currentDayClass, unusedDayClass, utility, user) {
+      var selectedMonth = this.months[month];
+      this.makeCalendar(month, selectedMonth, year, dayClass, currentDayClass, unusedDayClass, utility, user);
+    }
+  }, {
+    key: "_selectDay",
+    value: function _selectDay(monthDays, singleDay) {
+      monthDays.forEach(function (day, i) {
+        day.classList.remove('bill-calendar__days__single-day--current-day');
+      });
+      singleDay.classList.add('bill-calendar__days__single-day--current-day');
+    }
+  }, {
+    key: "_setupMonth",
+    value: function _setupMonth(monthIndex, monthDays, year, dayClass, currentDayClass, unusedDayClass, utility) {
+      var _this = this;
+
+      var dayStart = 1;
+      var days = document.querySelectorAll(dayClass); // GETTING A NEW DATE BASED OFF CURRENT DATE INFORMATION
+
+      var startDate = new Date(year, monthIndex, 1);
+      var manipulatedDate = new Date(year, monthIndex, 1);
+      var currentDate = new Date(year, monthIndex, this.getDay()); // CURRENT DAY'S INDEX IN THE WEEK
+
+      var dayIndex = startDate.getDay();
+      days.forEach(function (d) {
+        return d.textContent = '';
+      });
+
+      if (dayStart && dayIndex || dayStart && dayIndex === 0) {
+        while (dayStart <= monthDays) {
+          if (dayStart === 1) {
+            if (days[dayIndex]) {
+              days[dayIndex].textContent = utility.number.format(dayStart);
+              dayStart++;
+              dayIndex++;
+            }
+          }
+
+          manipulatedDate = new Date(manipulatedDate.setDate(manipulatedDate.getDate() + 1));
+
+          if (days[dayIndex]) {
+            days[dayIndex].textContent = utility.number.format(manipulatedDate.getDate());
+          }
+
+          dayStart++;
+          dayIndex++;
+        }
+      }
+
+      var currentDayIndex = currentDate.getDate();
+      days.forEach(function (d, i) {
+        d.classList.remove(currentDayClass);
+        if (d.textContent === '') _Application_Utility__WEBPACK_IMPORTED_MODULE_4__.addClasses(d, [unusedDayClass, "r__".concat(unusedDayClass)]);
+
+        if (d.textContent !== '') {
+          if (d.classList.contains('un-used-day')) d.classList.remove('un-used-day');
+          if (d.classList.contains('r__un-used-day')) d.classList.remove('r__un-used-day');
+
+          if (Number(d.textContent) === utility.number.format(currentDayIndex) || d.textContent === utility.number.format(currentDayIndex)) {
+            d.classList.add(currentDayClass);
+          }
+
+          d.addEventListener('click', function (e) {
+            _this._selectDay(days, d);
+          });
+        }
+      });
+    }
+  }, {
+    key: "_getDaysInMonth",
+    value: function _getDaysInMonth(month, value, year) {
+      if (month === "January" || month === "March" || month === "May" || month === "July" || month === "August" || month === "October" || month === "December") {
+        value = 31;
+      }
+
+      if (month === "April" || month === "June" || month === "September" || month === "November") {
+        value = 30;
+      }
+
+      if (month === "February") {
+        year % 4 === 0 && !(year % 100 === 0) || year % 400 === 0 ? value = 29 : value = 28;
+      }
+
+      return value;
+    }
+  }, {
+    key: "makeCalendar",
+    value: function () {
+      var _makeCalendar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(monthIndex, month, year, dayClass, currentDayClass, unusedDayClass, utility, user) {
+        var daysInMonth, billMonth, weekdays, weekdayDays, monthTranslation;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                daysInMonth = this._getDaysInMonth(month, daysInMonth, year);
+                billMonth = document.querySelector('.bill-calendar__header__title');
+                weekdays = document.querySelectorAll('.bill-calendar__weekdays__weekday');
+                weekdayDays = this.days;
+                weekdays.forEach( /*#__PURE__*/function () {
+                  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(weekday, i) {
+                    var weekdayText;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            _context.next = 2;
+                            return _Application_Utility__WEBPACK_IMPORTED_MODULE_4__.getTranslation(user, weekdayDays[i]);
+
+                          case 2:
+                            weekdayText = _context.sent;
+
+                            if (weekdayText !== undefined) {
+                              weekday.textContent = weekdayText[0].toUpperCase();
+                            }
+
+                          case 4:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function (_x9, _x10) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
+
+                if (!billMonth) {
+                  _context2.next = 10;
+                  break;
+                }
+
+                _context2.next = 8;
+                return _Application_Utility__WEBPACK_IMPORTED_MODULE_4__.getTranslation(user, month);
+
+              case 8:
+                monthTranslation = _context2.sent;
+                billMonth.textContent = "".concat(monthTranslation, " | ").concat(utility.number.format(year).replace(/[,.]/g, ''));
+
+              case 10:
+                this._setupMonth(monthIndex, daysInMonth, year, dayClass, currentDayClass, unusedDayClass, utility);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function makeCalendar(_x, _x2, _x3, _x4, _x5, _x6, _x7, _x8) {
+        return _makeCalendar.apply(this, arguments);
+      }
+
+      return makeCalendar;
+    }()
+  }]);
+
+  return Calendar;
+}();
+
+var myCalendar = new Calendar(Date.now());
 
 /***/ }),
 
