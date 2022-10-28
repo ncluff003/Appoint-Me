@@ -5095,45 +5095,50 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
   (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).forEach(function (hour, i) {
     var currentHour = hour;
     hour.addEventListener("click", function (e) {
-      e.preventDefault();
-      var date = document.querySelector('.appoint-me-container__sub-container__heading__date');
-      _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(timePickerModal, "closed", "open");
-      var modalDateHeader = document.querySelector('.modal--select-time__header');
-      modalDateHeader.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
-      modalDateHeader.dataset.date = date.dataset.date;
-      var splitHour = currentHour.dataset.time.split(':');
-      var splitMinutes = splitHour[1].split(' ');
+      e.preventDefault(); // DECLARE ESSENTIAL VARIABLES TO THE PROCESS OF REQUESTING AN APPOINTMENT
+
+      var dateText = document.querySelector('.appoint-me-container__sub-container__heading__date');
+      var date = document.querySelector('.appoint-me-container__sub-container__heading__date').dataset.date;
+      var modalHeader = document.querySelector('.modal--select-time__header');
       var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
       var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1]; // Open the modal
+
+      _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(timePickerModal, "closed", "open"); // Set the text and the data for the modal's header.
+
+      modalHeader.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
+      modalHeader.dataset.date = date; // Split the time on the timeslot to get the individual values.
+
+      var splitTime = currentHour.dataset.time.split(':');
+      var minutes = splitTime[1].split(' ')[0];
+      var hour = Number(splitTime[0]);
+      var meridiem = splitTime[1].split(' ')[1]; // Set the select values to the hour that was selected.
+
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
-      hourSelectTwo.value = Number(currentHour.dataset.value);
-      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+      hourSelectTwo.value = Number(currentHour.dataset.value); // Determine the correct time of day according to the value of the selected hour.
 
       if (hourSelectTwo.value >= 12) {
         timeOfDayTwo.textContent = "PM";
       } else {
         timeOfDayTwo.textContent = "AM";
-      }
+      } // Handling a schedule that is NOT an overnight one.
+
 
       if (utility.overnight === false) {
-        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child) {
-          if (child.value !== 0 && currentHour.dataset.time === "12:00 AM") {
-            child.disabled = true;
+        // Making only the selected hour be available for the start of the requested appointment.
+        // First, remove the 'blacked-out' class and enable each value.
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child, i) {
+          _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+          child.disabled = '';
+        }); // Disable all but the selected hour.
+
+
+        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child, i) {
+          console.log(hourSelectOne.selectedIndex);
+
+          if (i !== hourSelectOne.selectedIndex) {
             _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-          } else if (currentHour.dataset.time !== "12:00 AM") {
-            if (splitMinutes[1] === "AM" && Number(child.value) !== Number(splitHour[0])) {
-              child.disabled = true;
-              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-            } else if (splitMinutes[1] === "PM" && Number(child.value) !== Number(splitHour[0]) + 12) {
-              child.disabled = true;
-              _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-            } else {
-              child.disabled = false;
-              _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
-            }
-          } else {
-            child.disabled = false;
-            _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+            child.disabled = 'true';
           }
         }); // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
 

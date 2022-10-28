@@ -37,43 +37,53 @@ export const watchForAppointments = (app, data, utility) => {
     let currentHour = hour;
     hour.addEventListener(`click`, (e) => {
       e.preventDefault();
-      const date = document.querySelector('.appoint-me-container__sub-container__heading__date');
-      Utility.replaceClassName(timePickerModal, `closed`, `open`);
-      const modalDateHeader = document.querySelector('.modal--select-time__header');
-      modalDateHeader.textContent = DateTime.fromISO(date.dataset.date).toLocaleString(DateTime.DATE_HUGE);
-      modalDateHeader.dataset.date = date.dataset.date;
-      let splitHour = currentHour.dataset.time.split(':');
-      let splitMinutes = splitHour[1].split(' ');
+      // DECLARE ESSENTIAL VARIABLES TO THE PROCESS OF REQUESTING AN APPOINTMENT
+      const dateText = document.querySelector('.appoint-me-container__sub-container__heading__date');
+      const date = document.querySelector('.appoint-me-container__sub-container__heading__date').dataset.date;
+      const modalHeader = document.querySelector('.modal--select-time__header');
       let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
       let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
 
+      // Open the modal
+      Utility.replaceClassName(timePickerModal, `closed`, `open`);
+
+      // Set the text and the data for the modal's header.
+      modalHeader.textContent = DateTime.fromISO(date).toLocaleString(DateTime.DATE_HUGE);
+      modalHeader.dataset.date = date;
+
+      // Split the time on the timeslot to get the individual values.
+      let splitTime = currentHour.dataset.time.split(':');
+      let minutes = splitTime[1].split(' ')[0];
+      let hour = Number(splitTime[0]);
+      let meridiem = splitTime[1].split(' ')[1];
+
+      // Set the select values to the hour that was selected.
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
       hourSelectTwo.value = Number(currentHour.dataset.value);
-      let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
+
+      // Determine the correct time of day according to the value of the selected hour.
       if (hourSelectTwo.value >= 12) {
         timeOfDayTwo.textContent = `PM`;
       } else {
         timeOfDayTwo.textContent = `AM`;
       }
+
+      // Handling a schedule that is NOT an overnight one.
       if (utility.overnight === false) {
-        [...hourSelectOne.childNodes].forEach((child) => {
-          if (child.value !== 0 && currentHour.dataset.time === `12:00 AM`) {
-            child.disabled = true;
+        // Making only the selected hour be available for the start of the requested appointment.
+        // First, remove the 'blacked-out' class and enable each value.
+        [...hourSelectOne.childNodes].forEach((child, i) => {
+          Utility.removeClasses(child, [`blacked-out`]);
+          child.disabled = '';
+        });
+
+        // Disable all but the selected hour.
+        [...hourSelectOne.childNodes].forEach((child, i) => {
+          console.log(hourSelectOne.selectedIndex);
+          if (i !== hourSelectOne.selectedIndex) {
             Utility.addClasses(child, [`blacked-out`]);
-          } else if (currentHour.dataset.time !== `12:00 AM`) {
-            if (splitMinutes[1] === `AM` && Number(child.value) !== Number(splitHour[0])) {
-              child.disabled = true;
-              Utility.addClasses(child, [`blacked-out`]);
-            } else if (splitMinutes[1] === `PM` && Number(child.value) !== Number(splitHour[0]) + 12) {
-              child.disabled = true;
-              Utility.addClasses(child, [`blacked-out`]);
-            } else {
-              child.disabled = false;
-              Utility.removeClasses(child, [`blacked-out`]);
-            }
-          } else {
-            child.disabled = false;
-            Utility.removeClasses(child, [`blacked-out`]);
+            child.disabled = 'true';
           }
         });
 
