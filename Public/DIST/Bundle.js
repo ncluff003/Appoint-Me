@@ -4974,21 +4974,8 @@ var fillDay = function fillDay(container, intervals, data, utility) {
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement('beforeend', container, hour);
     var time = document.createElement('p');
     _Utility__WEBPACK_IMPORTED_MODULE_1__.addClasses(time, ["hour__time", "r__hour__time"]);
-
-    if (startHour === 0) {
-      time.textContent = "12:00 AM";
-      hour.dataset.time = "12:00 AM";
-    } else if (startHour > 0 && startHour < 12) {
-      time.textContent = "".concat(startHour, ":00 AM");
-      hour.dataset.time = "".concat(startHour, ":00 AM");
-    } else if (startHour === 12) {
-      time.textContent = "".concat(startHour, ":00 PM");
-      hour.dataset.time = "".concat(startHour, ":00 PM");
-    } else {
-      time.textContent = "".concat(startHour - 12, ":00 PM");
-      hour.dataset.time = "".concat(startHour - 12, ":00 PM");
-    }
-
+    time.textContent = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().year, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().month, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().day, startHour, 0, 0).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.TIME_SIMPLE);
+    hour.dataset.time = luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().year, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().month, luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.now().day, startHour, 0, 0).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_2__.DateTime.TIME_SIMPLE);
     _Utility__WEBPACK_IMPORTED_MODULE_1__.insertElement("beforeend", hour, time);
     startHour++;
   }
@@ -5078,18 +5065,43 @@ var submitAppointment = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+
+var getScheduleEndings = function getScheduleEndings(time) {
+  var endScheduleMeridiem, endScheduleHour;
+
+  if (time.length === 3) {
+    endScheduleHour = Number(time[0]);
+    endScheduleMeridiem = time.slice(1).toUpperCase();
+  } else if (time.length === 4) {
+    endScheduleHour = Number(time.slice(0, 1));
+    endScheduleMeridiem = time.slice(2).toUpperCase();
+  }
+
+  return {
+    endScheduleHour: endScheduleHour,
+    endScheduleMeridiem: endScheduleMeridiem
+  };
+};
+
+var disableAllOptions = function disableAllOptions(select) {
+  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(select.childNodes).forEach(function (child) {
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
+    child.disabled = 'true';
+  });
+};
+
+var enableAllOptions = function enableAllOptions(select) {
+  (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(select.childNodes).forEach(function (child) {
+    _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
+    child.disabled = '';
+  });
+};
+
 var watchForAppointments = function watchForAppointments(app, data, utility) {
   var schedule = data.schedule;
-  console.log(schedule);
-  var scheduleStart = schedule.split('-')[0];
-  var scheduleEnd = schedule.split('-')[1];
-  var startingTimeOfDay = scheduleStart.slice(scheduleStart.length - 2);
-  var endingTimeOfDay = scheduleEnd.slice(scheduleEnd.length - 2);
-  var scheduleStartingHour = Number(scheduleStart[0]);
-  var scheduleEndingHour = Number(scheduleEnd[0]);
-  console.log(scheduleStartingHour, startingTimeOfDay, scheduleEndingHour, endingTimeOfDay); // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
+  var appointments = data.appointments; // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
 
-  var timePickerModal = document.querySelector('.modal--select-time');
+  var appointmentRequestModal = document.querySelector('.modal--select-time');
   var hours = document.querySelectorAll('.hour');
 
   (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hours).forEach(function (hour, i) {
@@ -5102,20 +5114,24 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
       var modalHeader = document.querySelector('.modal--select-time__header');
       var hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
       var hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
-      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1]; // Open the modal
+      var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
+      var timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1]; // SET UP APPOINTMENT REQUEST MODAL
+      // Open the modal
 
-      _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(timePickerModal, "closed", "open"); // Set the text and the data for the modal's header.
+      _Utility__WEBPACK_IMPORTED_MODULE_3__.replaceClassName(appointmentRequestModal, "closed", "open"); // Set the text and the data for the modal's header.
 
       modalHeader.textContent = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).toLocaleString(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.DATE_HUGE);
-      modalHeader.dataset.date = date; // Split the time on the timeslot to get the individual values.
-
-      var splitTime = currentHour.dataset.time.split(':');
-      var minutes = splitTime[1].split(' ')[0];
-      var hour = Number(splitTime[0]);
-      var meridiem = splitTime[1].split(' ')[1]; // Set the select values to the hour that was selected.
+      modalHeader.dataset.date = date; // Set the select values to the hour that was selected.
 
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
-      hourSelectTwo.value = Number(currentHour.dataset.value); // Determine the correct time of day according to the value of the selected hour.
+      hourSelectTwo.value = Number(currentHour.dataset.value); // Set the first hour select element's value.
+
+      if (hourSelectOne.value >= 12) {
+        timeOfDayOne.textContent = "PM";
+      } else {
+        timeOfDayOne.textContent = "AM";
+      } // Set the second hour select element's value.
+
 
       if (hourSelectTwo.value >= 12) {
         timeOfDayTwo.textContent = "PM";
@@ -5126,91 +5142,86 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
 
       if (utility.overnight === false) {
         // Making only the selected hour be available for the start of the requested appointment.
-        // First, remove the 'blacked-out' class and enable each value.
-        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child, i) {
-          _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(child, ["blacked-out"]);
-          child.disabled = '';
-        }); // Disable all but the selected hour.
-
+        // First, enable all first hour options.
+        enableAllOptions(hourSelectOne); // Disable all but the selected hour.
 
         (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectOne.childNodes).forEach(function (child, i) {
-          console.log(hourSelectOne.selectedIndex);
-
           if (i !== hourSelectOne.selectedIndex) {
             _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
             child.disabled = 'true';
           }
-        }); // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
+        }); // Disable all second hour select options.
 
 
-        var firstHour;
+        disableAllOptions(hourSelectTwo); // Get the first hour that needs to be available to select for the end time of the potential appointment.
 
-        (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).forEach(function (child) {
-          _Utility__WEBPACK_IMPORTED_MODULE_3__.addClasses(child, ["blacked-out"]);
-          child.disabled = true;
-          var timeOfDay = splitMinutes[1];
+        var firstHour = hourSelectTwo.selectedIndex; // Get max appointment length.
 
-          if (timeOfDay === "AM" && Number(splitHour[0]) === 12) {
-            firstHour = 0;
-          } else if (timeOfDay === "AM" && Number(splitHour[0]) !== 12) {
-            firstHour = Number(splitHour[0]);
-          } else if (timeOfDay === "PM" && Number(splitHour[0]) === 12) {
-            firstHour = Number(splitHour[0]);
-          } else {
-            firstHour = Number(splitHour[0]) + 12;
-          }
-        });
+        var maxAppointmentLength = Number(data.maxAppointmentLength.split(' ')[0]); // Set the starting hour count.
 
-        var beginningHour = 0;
-        var endHour = 3;
-        var _scheduleEnd = data.schedule.split('-')[1];
-        var timeOfDay, time;
+        var hourCounter = 0; // Set default values for limiting how many hours in advance appointments can be made.
 
-        if ("".concat(_scheduleEnd).length === 3) {
-          timeOfDay = "".concat(_scheduleEnd).slice(1);
-          time = Number("".concat(_scheduleEnd).slice(0, 1));
-        } else if ("".concat(_scheduleEnd).length === 4) {
-          timeOfDay = "".concat(_scheduleEnd).slice(2);
-          time = Number("".concat(_scheduleEnd).slice(0, 2));
+        var endHour = maxAppointmentLength; // Split the schedule
+
+        var splitSchedule = schedule.split('-');
+        var scheduleStart = splitSchedule[0];
+        var scheduleEnd = splitSchedule[1]; // Get the end of the schedule
+
+        var _getScheduleEndings = getScheduleEndings(scheduleEnd),
+            endScheduleHour = _getScheduleEndings.endScheduleHour,
+            endScheduleMeridiem = _getScheduleEndings.endScheduleMeridiem; // Get maximum hours able to be selected for the potential requested appointment.
+
+
+        var endCheckTime, selectedTime;
+        selectedTime = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).year, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).month, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).day, Number(currentHour.dataset.value), 0, 0);
+
+        if (endScheduleMeridiem === 'PM' && endScheduleHour !== 12) {
+          endScheduleHour += 12;
+          endCheckTime = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).year, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).month, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).day, endScheduleHour, 0, 0);
+        } else if (endScheduleMeridiem === "AM" && endScheduleHour === 12) {
+          endScheduleHour = 0;
+          endCheckTime = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).year, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).month, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).day, endScheduleHour, 0, 0).plus({
+            days: 1
+          });
+        } else {
+          endCheckTime = luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).year, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).month, luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date).day, endScheduleHour, 0, 0);
         }
 
-        var _hour = Number(splitHour[0]);
-
-        if (_hour === time) {
+        if (endCheckTime.diff(selectedTime, ['hours']).toObject().hours === 0) {
           endHour = 1;
-        } else if (_hour === time - 1) {
+        } else if (endCheckTime.diff(selectedTime, ['hours']).toObject().hours === 1) {
           endHour = 2;
-        } else if (_hour === time - 2) {
-          endHour = 3;
-        }
+        } else {
+          endHour = maxAppointmentLength;
+        } // Enable the available hours for the potential requested appointment.
 
-        var appointments = data.appointments;
 
-        while (beginningHour < endHour) {
+        while (hourCounter < endHour) {
           _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[firstHour], ["blacked-out"]);
           hourSelectTwo.childNodes[firstHour].disabled = '';
           firstHour += 1;
-          beginningHour++;
-        }
+          hourCounter++;
+        } // Change the time of day text as needed upon the change of the second hour select element.
 
-        var timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
 
-        if (splitMinutes[1] === "PM") {
-          timeOfDayOne.textContent = "PM";
-        } else {
-          timeOfDayOne.textContent = "AM";
-        }
-
-        var _timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
         hourSelectTwo.addEventListener("change", function (e) {
           e.preventDefault();
 
           if (hourSelectTwo.value >= 12) {
-            _timeOfDayTwo.textContent = "PM";
+            timeOfDayTwo.textContent = "PM";
           } else {
-            _timeOfDayTwo.textContent = "AM";
+            timeOfDayTwo.textContent = "AM";
           }
-        }); // GETTING THE PREVIOUSLY ACCEPTED APPOINTMENTS TIME'S BLACKED OUT FOR POTENTIAL CLIENTS SO THEY COULD NOT ACCIDENTALLY OVERLAP ONTO PREVIOUS APPOINTMENTS.
+        });
+        /*
+          * THIS IS WHERE I AM -- THE SECOND HOUR SELECT IS NOW SHOWING HOURS BASED OFF OF THE FREELANCER'S CLOCK OUT TIME OR END OF SCHEDULE.  NEXT STEPS ARE AS FOLLOWS:
+           @ 1. Adjust the now available hours based on appointments.
+          @ 2. Adjust the available minutes to be selected on the first minute select element based on nearby appointments in the selected hour.
+           ~ -- The following steps happen in the Appoint-Me-App JavaScript file.
+          @ 3. Adjust the second minute select element available minutes based on the first minute selection.
+          @ 4. Adjust the second minute select element further based on the second hour selection.
+        */
+        // GETTING THE PREVIOUSLY ACCEPTED APPOINTMENTS TIME'S BLACKED OUT FOR POTENTIAL CLIENTS SO THEY COULD NOT ACCIDENTALLY OVERLAP ONTO PREVIOUS APPOINTMENTS.
 
         var minuteSelects = document.querySelectorAll('.form__select--minute');
         var firstMinute = minuteSelects[0];
@@ -5297,7 +5308,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo.textContent = "PM";
+                  timeOfDayTwo.textContent = "PM";
                 }
               } else if (hourDifference === 1 && convertedStartTime >= luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).year), Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).month), Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).day), _nextHour, 0, 0)) {
                 newAvailableHours = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).filter(function (hour) {
@@ -5309,7 +5320,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo.textContent = "PM";
+                  timeOfDayTwo.textContent = "PM";
                 }
               } else if (hourDifference === 2) {
                 console.log("Zero Hours Blacked Out.");
@@ -5318,7 +5329,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo.textContent = "PM";
+                  timeOfDayTwo.textContent = "PM";
                 }
               }
             } // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT
@@ -5401,28 +5412,27 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
         });
 
         console.log(_firstHour);
-        var _beginningHour = 0;
+        var beginningHour = 0;
         var _endHour = 3;
-        var _scheduleEnd2 = data.schedule.split('-')[1];
+        var _scheduleEnd = data.schedule.split('-')[1];
+        var timeOfDay, time;
 
-        var _timeOfDay, _time;
-
-        if ("".concat(_scheduleEnd2).length === 3) {
-          _timeOfDay = "".concat(_scheduleEnd2).slice(1);
-          _time = Number("".concat(_scheduleEnd2).slice(0, 1));
-        } else if ("".concat(_scheduleEnd2).length === 4) {
-          _timeOfDay = "".concat(_scheduleEnd2).slice(2);
-          _time = Number("".concat(_scheduleEnd2).slice(0, 2));
+        if ("".concat(_scheduleEnd).length === 3) {
+          timeOfDay = "".concat(_scheduleEnd).slice(1);
+          time = Number("".concat(_scheduleEnd).slice(0, 1));
+        } else if ("".concat(_scheduleEnd).length === 4) {
+          timeOfDay = "".concat(_scheduleEnd).slice(2);
+          time = Number("".concat(_scheduleEnd).slice(0, 2));
         } // WORKING OUT HOW MANY HOURS UNTIL THE END OF THE HOURS THAT ARE SELECTABLE BY THE POTENTIAL CLIENT.
 
 
-        var _hour2 = Number(splitHour[0]);
+        var _hour = Number(splitHour[0]);
 
-        if (_hour2 === _time) {
+        if (_hour === time) {
           _endHour = 1;
-        } else if (_hour2 === _time - 1) {
+        } else if (_hour === time - 1) {
           _endHour = 2;
-        } else if (_hour2 === _time - 2) {
+        } else if (_hour === time - 2) {
           _endHour = 3;
         } else {
           _endHour = 3;
@@ -5431,7 +5441,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
         console.log(_endHour);
         var _appointments = data.appointments;
 
-        while (_beginningHour < _endHour) {
+        while (beginningHour < _endHour) {
           _Utility__WEBPACK_IMPORTED_MODULE_3__.removeClasses(hourSelectTwo.childNodes[_firstHour], ["blacked-out"]);
           hourSelectTwo.childNodes[_firstHour].disabled = '';
 
@@ -5440,7 +5450,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
           }
 
           _firstHour += 1;
-          _beginningHour++;
+          beginningHour++;
         }
 
         var _timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
@@ -5451,14 +5461,14 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
           _timeOfDayOne.textContent = "AM";
         }
 
-        var _timeOfDayTwo2 = document.querySelectorAll('.form__section__tod')[1];
+        var _timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
         hourSelectTwo.addEventListener("change", function (e) {
           e.preventDefault();
 
           if (hourSelectTwo.value >= 12) {
-            _timeOfDayTwo2.textContent = "PM";
+            _timeOfDayTwo.textContent = "PM";
           } else {
-            _timeOfDayTwo2.textContent = "AM";
+            _timeOfDayTwo.textContent = "AM";
           }
         }); // * THIS IS WHERE I AM CURRENTLY.  GETTING THE PROPER REQUESTED TIME FOR OVERNIGHT SCHEDULES IS DONE, BUT DOING IT AROUND OTHER APPOINTMENTS HAPPENS AFTER THIS.  THAT ONLY CAN HAPPEN WITH THE APPROPRIATE APPOINTMENTS TO DEAL WITH.
         // GETTING THE PREVIOUSLY ACCEPTED APPOINTMENTS TIME'S BLACKED OUT FOR POTENTIAL CLIENTS SO THEY COULD NOT ACCIDENTALLY OVERLAP ONTO PREVIOUS APPOINTMENTS.
@@ -5552,7 +5562,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo2.textContent = "PM";
+                  _timeOfDayTwo.textContent = "PM";
                 }
               } else if (hourDifference === 1 && convertedStartTime >= luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.local(Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).year), Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).month), Number(luxon__WEBPACK_IMPORTED_MODULE_7__.DateTime.fromISO(date.dataset.date).day), _nextHour3, 0, 0)) {
                 newAvailableHours = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(hourSelectTwo.childNodes).filter(function (hour) {
@@ -5564,7 +5574,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo2.textContent = "PM";
+                  _timeOfDayTwo.textContent = "PM";
                 }
               } else if (hourDifference === 2) {
                 console.log("Zero Hours Blacked Out.");
@@ -5573,7 +5583,7 @@ var watchForAppointments = function watchForAppointments(app, data, utility) {
                 hourSelectTwo.selectedIndex = Number(newAvailableHours[0].value);
 
                 if (hourSelectTwo.selectedIndex > 12) {
-                  _timeOfDayTwo2.textContent = "PM";
+                  _timeOfDayTwo.textContent = "PM";
                 }
               }
             } // DECLARE PREVIOUS APPOINTMENT AND NEXT APPOINTMENT

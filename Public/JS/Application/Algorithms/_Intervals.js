@@ -459,19 +459,9 @@ export const fillDay = (container, intervals, data, utility) => {
     const time = document.createElement('p');
     Utility.addClasses(time, [`hour__time`, `r__hour__time`]);
 
-    if (startHour === 0) {
-      time.textContent = `12:00 AM`;
-      hour.dataset.time = `12:00 AM`;
-    } else if (startHour > 0 && startHour < 12) {
-      time.textContent = `${startHour}:00 AM`;
-      hour.dataset.time = `${startHour}:00 AM`;
-    } else if (startHour === 12) {
-      time.textContent = `${startHour}:00 PM`;
-      hour.dataset.time = `${startHour}:00 PM`;
-    } else {
-      time.textContent = `${startHour - 12}:00 PM`;
-      hour.dataset.time = `${startHour - 12}:00 PM`;
-    }
+    time.textContent = DateTime.local(DateTime.now().year, DateTime.now().month, DateTime.now().day, startHour, 0, 0).toLocaleString(DateTime.TIME_SIMPLE);
+    hour.dataset.time = DateTime.local(DateTime.now().year, DateTime.now().month, DateTime.now().day, startHour, 0, 0).toLocaleString(DateTime.TIME_SIMPLE);
+
     Utility.insertElement(`beforeend`, hour, time);
     startHour++;
   }

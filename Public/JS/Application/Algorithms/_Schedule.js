@@ -20,18 +20,37 @@ export const submitAppointment = async (details) => {
   }
 };
 
+const getScheduleEndings = (time) => {
+  let endScheduleMeridiem, endScheduleHour;
+  if (time.length === 3) {
+    endScheduleHour = Number(time[0]);
+    endScheduleMeridiem = time.slice(1).toUpperCase();
+  } else if (time.length === 4) {
+    endScheduleHour = Number(time.slice(0, 1));
+    endScheduleMeridiem = time.slice(2).toUpperCase();
+  }
+  return { endScheduleHour, endScheduleMeridiem };
+};
+
+const disableAllOptions = (select) => {
+  [...select.childNodes].forEach((child) => {
+    Utility.addClasses(child, [`blacked-out`]);
+    child.disabled = 'true';
+  });
+};
+
+const enableAllOptions = (select) => {
+  [...select.childNodes].forEach((child) => {
+    Utility.removeClasses(child, [`blacked-out`]);
+    child.disabled = '';
+  });
+};
+
 export const watchForAppointments = (app, data, utility) => {
   const schedule = data.schedule;
-  console.log(schedule);
-  let scheduleStart = schedule.split('-')[0];
-  let scheduleEnd = schedule.split('-')[1];
-  let startingTimeOfDay = scheduleStart.slice(scheduleStart.length - 2);
-  let endingTimeOfDay = scheduleEnd.slice(scheduleEnd.length - 2);
-  let scheduleStartingHour = Number(scheduleStart[0]);
-  let scheduleEndingHour = Number(scheduleEnd[0]);
-  console.log(scheduleStartingHour, startingTimeOfDay, scheduleEndingHour, endingTimeOfDay);
+  const appointments = data.appointments;
   // THIS FIRST THING IS TO GET THE FREELANCER'S SCHEDULE MADE
-  const timePickerModal = document.querySelector('.modal--select-time');
+  const appointmentRequestModal = document.querySelector('.modal--select-time');
   const hours = document.querySelectorAll('.hour');
   [...hours].forEach((hour, i) => {
     let currentHour = hour;
@@ -43,26 +62,29 @@ export const watchForAppointments = (app, data, utility) => {
       const modalHeader = document.querySelector('.modal--select-time__header');
       let hourSelectOne = document.querySelectorAll('.form__select--hour')[0];
       let hourSelectTwo = document.querySelectorAll('.form__select--hour')[1];
+      let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
       let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
 
+      // SET UP APPOINTMENT REQUEST MODAL
       // Open the modal
-      Utility.replaceClassName(timePickerModal, `closed`, `open`);
+      Utility.replaceClassName(appointmentRequestModal, `closed`, `open`);
 
       // Set the text and the data for the modal's header.
       modalHeader.textContent = DateTime.fromISO(date).toLocaleString(DateTime.DATE_HUGE);
       modalHeader.dataset.date = date;
 
-      // Split the time on the timeslot to get the individual values.
-      let splitTime = currentHour.dataset.time.split(':');
-      let minutes = splitTime[1].split(' ')[0];
-      let hour = Number(splitTime[0]);
-      let meridiem = splitTime[1].split(' ')[1];
-
       // Set the select values to the hour that was selected.
       hourSelectOne.selectedIndex = Number(currentHour.dataset.value);
       hourSelectTwo.value = Number(currentHour.dataset.value);
 
-      // Determine the correct time of day according to the value of the selected hour.
+      // Set the first hour select element's value.
+      if (hourSelectOne.value >= 12) {
+        timeOfDayOne.textContent = `PM`;
+      } else {
+        timeOfDayOne.textContent = `AM`;
+      }
+
+      // Set the second hour select element's value.
       if (hourSelectTwo.value >= 12) {
         timeOfDayTwo.textContent = `PM`;
       } else {
@@ -72,75 +94,69 @@ export const watchForAppointments = (app, data, utility) => {
       // Handling a schedule that is NOT an overnight one.
       if (utility.overnight === false) {
         // Making only the selected hour be available for the start of the requested appointment.
-        // First, remove the 'blacked-out' class and enable each value.
-        [...hourSelectOne.childNodes].forEach((child, i) => {
-          Utility.removeClasses(child, [`blacked-out`]);
-          child.disabled = '';
-        });
+        // First, enable all first hour options.
+        enableAllOptions(hourSelectOne);
 
         // Disable all but the selected hour.
         [...hourSelectOne.childNodes].forEach((child, i) => {
-          console.log(hourSelectOne.selectedIndex);
           if (i !== hourSelectOne.selectedIndex) {
             Utility.addClasses(child, [`blacked-out`]);
             child.disabled = 'true';
           }
         });
 
-        // DECLARING THE FIRST HOUR THAT IS AVAILABLE TO THE SECOND HOUR SELECT
-        let firstHour;
-        [...hourSelectTwo.childNodes].forEach((child) => {
-          Utility.addClasses(child, [`blacked-out`]);
-          child.disabled = true;
-          let timeOfDay = splitMinutes[1];
-          if (timeOfDay === `AM` && Number(splitHour[0]) === 12) {
-            firstHour = 0;
-          } else if (timeOfDay === `AM` && Number(splitHour[0]) !== 12) {
-            firstHour = Number(splitHour[0]);
-          } else if (timeOfDay === `PM` && Number(splitHour[0]) === 12) {
-            firstHour = Number(splitHour[0]);
-          } else {
-            firstHour = Number(splitHour[0]) + 12;
-          }
-        });
+        // Disable all second hour select options.
+        disableAllOptions(hourSelectTwo);
 
-        let beginningHour = 0;
-        let endHour = 3;
-        let scheduleEnd = data.schedule.split('-')[1];
-        let timeOfDay, time;
-        if (`${scheduleEnd}`.length === 3) {
-          timeOfDay = `${scheduleEnd}`.slice(1);
-          time = Number(`${scheduleEnd}`.slice(0, 1));
-        } else if (`${scheduleEnd}`.length === 4) {
-          timeOfDay = `${scheduleEnd}`.slice(2);
-          time = Number(`${scheduleEnd}`.slice(0, 2));
+        // Get the first hour that needs to be available to select for the end time of the potential appointment.
+        let firstHour = hourSelectTwo.selectedIndex;
+
+        // Get max appointment length.
+        const maxAppointmentLength = Number(data.maxAppointmentLength.split(' ')[0]);
+
+        // Set the starting hour count.
+        let hourCounter = 0;
+        // Set default values for limiting how many hours in advance appointments can be made.
+        let endHour = maxAppointmentLength;
+
+        // Split the schedule
+        const splitSchedule = schedule.split('-');
+        const scheduleStart = splitSchedule[0];
+        const scheduleEnd = splitSchedule[1];
+
+        // Get the end of the schedule
+        let { endScheduleHour, endScheduleMeridiem } = getScheduleEndings(scheduleEnd);
+
+        // Get maximum hours able to be selected for the potential requested appointment.
+        let endCheckTime, selectedTime;
+        selectedTime = DateTime.local(DateTime.fromISO(date).year, DateTime.fromISO(date).month, DateTime.fromISO(date).day, Number(currentHour.dataset.value), 0, 0);
+        if (endScheduleMeridiem === 'PM' && endScheduleHour !== 12) {
+          endScheduleHour += 12;
+          endCheckTime = DateTime.local(DateTime.fromISO(date).year, DateTime.fromISO(date).month, DateTime.fromISO(date).day, endScheduleHour, 0, 0);
+        } else if (endScheduleMeridiem === `AM` && endScheduleHour === 12) {
+          endScheduleHour = 0;
+          endCheckTime = DateTime.local(DateTime.fromISO(date).year, DateTime.fromISO(date).month, DateTime.fromISO(date).day, endScheduleHour, 0, 0).plus({ days: 1 });
+        } else {
+          endCheckTime = DateTime.local(DateTime.fromISO(date).year, DateTime.fromISO(date).month, DateTime.fromISO(date).day, endScheduleHour, 0, 0);
         }
 
-        let hour = Number(splitHour[0]);
-        if (hour === time) {
+        if (endCheckTime.diff(selectedTime, ['hours']).toObject().hours === 0) {
           endHour = 1;
-        } else if (hour === time - 1) {
+        } else if (endCheckTime.diff(selectedTime, ['hours']).toObject().hours === 1) {
           endHour = 2;
-        } else if (hour === time - 2) {
-          endHour = 3;
+        } else {
+          endHour = maxAppointmentLength;
         }
 
-        const appointments = data.appointments;
-        while (beginningHour < endHour) {
+        // Enable the available hours for the potential requested appointment.
+        while (hourCounter < endHour) {
           Utility.removeClasses(hourSelectTwo.childNodes[firstHour], [`blacked-out`]);
           hourSelectTwo.childNodes[firstHour].disabled = '';
           firstHour += 1;
-          beginningHour++;
+          hourCounter++;
         }
 
-        let timeOfDayOne = document.querySelectorAll('.form__section__tod')[0];
-        if (splitMinutes[1] === `PM`) {
-          timeOfDayOne.textContent = `PM`;
-        } else {
-          timeOfDayOne.textContent = `AM`;
-        }
-        let timeOfDayTwo = document.querySelectorAll('.form__section__tod')[1];
-
+        // Change the time of day text as needed upon the change of the second hour select element.
         hourSelectTwo.addEventListener(`change`, (e) => {
           e.preventDefault();
           if (hourSelectTwo.value >= 12) {
@@ -150,6 +166,16 @@ export const watchForAppointments = (app, data, utility) => {
           }
         });
 
+        /*
+          * THIS IS WHERE I AM -- THE SECOND HOUR SELECT IS NOW SHOWING HOURS BASED OFF OF THE FREELANCER'S CLOCK OUT TIME OR END OF SCHEDULE.  NEXT STEPS ARE AS FOLLOWS:
+
+          @ 1. Adjust the now available hours based on appointments.
+          @ 2. Adjust the available minutes to be selected on the first minute select element based on nearby appointments in the selected hour.
+
+          ~ -- The following steps happen in the Appoint-Me-App JavaScript file.
+          @ 3. Adjust the second minute select element available minutes based on the first minute selection.
+          @ 4. Adjust the second minute select element further based on the second hour selection.
+        */
         // GETTING THE PREVIOUSLY ACCEPTED APPOINTMENTS TIME'S BLACKED OUT FOR POTENTIAL CLIENTS SO THEY COULD NOT ACCIDENTALLY OVERLAP ONTO PREVIOUS APPOINTMENTS.
 
         const minuteSelects = document.querySelectorAll('.form__select--minute');
